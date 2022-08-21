@@ -1,3 +1,14 @@
 @import './utils/normalize';
+@import './utils/visually-hidden';
+@import './utils/variables';
+@import './utils/placeholders';
+@import './utils/mixins';
+@import './utils/global';
 
-@import './header/header';
+@import './components/shared/section';
+@import './components/shared/container';
+@import './components/shared/image';
+
+@import './components/header/header';
+
+@import './components/footer/footer';
