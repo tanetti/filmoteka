@@ -1,0 +1,1 @@
+export const LOCALE_TRANSITION_TIME = 150;

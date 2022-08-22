@@ -5,6 +5,11 @@ export const localeDB = {
       home: 'Home',
       library: 'My library',
       signIn: 'Sign In',
+      placeholder: 'Search movies',
+    },
+
+    footer: {
+      rights: 'All Rights Reserved',
     },
   },
 
@@ -14,6 +19,11 @@ export const localeDB = {
       home: 'Головна',
       library: 'Бібліотека',
       signIn: 'Увійти',
+      placeholder: 'Пошук фільмів',
+    },
+
+    footer: {
+      rights: 'Bсі Права Захищено',
     },
   },
 };

@@ -14,7 +14,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 
-  &.isLoaded {
+  &.is-loaded {
     transition: color $transition-timing $transition-function,
       background-color $transition-timing $transition-function;
   }
@@ -26,5 +26,25 @@ body {
 
   &.modal-is-open {
     overflow-y: hidden;
+  }
+}
+
+.opacity-transition {
+  transition: opacity $transition-timing $transition-function;
+}
+
+.opacity {
+  opacity: 0;
+}
+
+.placeholder-opacity-transition {
+  &::placeholder {
+    transition: opacity $transition-timing $transition-function;
+  }
+}
+
+.placeholder-opacity {
+  &::placeholder {
+    opacity: 0;
   }
 }

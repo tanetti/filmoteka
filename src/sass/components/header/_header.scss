@@ -41,7 +41,10 @@
 
 .header__navigation-link {
   @extend %link-decor;
+
   display: block;
+
+  color: inherit;
 
   padding: 10px;
 }

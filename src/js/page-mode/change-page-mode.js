@@ -1,5 +1,5 @@
 import { pageState } from '../state';
-import { setPageMode } from './set-page-mode';
+import { setPageMode } from './';
 
 export const changePageMode = () => {
   pageState.mode = pageState.mode === 'light' ? 'dark' : 'light';

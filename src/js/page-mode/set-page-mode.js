@@ -1,18 +1,20 @@
+import { rootRefs } from '../root-refs';
+import { MAIN_TRANSITION_TIME } from '../constants';
+
 export const setPageMode = mode => {
   bodyClassRef = document.body.classList;
-  switchRef = document.querySelector('[data-mode_switch]');
 
   if (mode === 'light' && bodyClassRef.contains('dark-mode')) {
     bodyClassRef.remove('dark-mode');
-    switchRef.checked = false;
+    rootRefs.modeSwitch.checked = false;
     return;
   }
 
   if (mode === 'dark' && !bodyClassRef.contains('dark-mode')) {
     bodyClassRef.add('dark-mode');
-    switchRef.checked = true;
+    rootRefs.modeSwitch.checked = true;
   }
 
-  if (!bodyClassRef.contains('isLoaded'))
-    setTimeout(() => bodyClassRef.add('isLoaded'), 250);
+  if (!bodyClassRef.contains('is-loaded'))
+    setTimeout(() => bodyClassRef.add('is-loaded'), MAIN_TRANSITION_TIME);
 };
