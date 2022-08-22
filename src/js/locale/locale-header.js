@@ -9,7 +9,7 @@ const refs = {
 };
 
 export const setHeaderLocaleFields = locale => {
-  for (const localeField of Array.from(refs.headerLocaleFields)) {
+  for (const localeField of refs.headerLocaleFields) {
     if (localeField.placeholder) {
       if (document.body.classList.contains('is-loaded')) {
         localeField.classList.add(

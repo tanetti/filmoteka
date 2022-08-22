@@ -8,8 +8,19 @@ export const localeDB = {
       placeholder: 'Search movies',
     },
 
+    main: {
+      title: 'Movies library',
+    },
+
     footer: {
       rights: 'All Rights Reserved',
+    },
+
+    fetcher: {
+      errors: {
+        general: 'Whooops, something went wrong',
+        notFound: 'Nothing was found',
+      },
     },
   },
 
@@ -22,8 +33,19 @@ export const localeDB = {
       placeholder: 'Пошук фільмів',
     },
 
+    main: {
+      title: 'Бібліотека фільмів',
+    },
+
     footer: {
       rights: 'Bсі Права Захищено',
+    },
+
+    fetcher: {
+      errors: {
+        general: 'Тай біда, щось пішло не так',
+        notFound: 'Нічого не знайдено',
+      },
     },
   },
 };
