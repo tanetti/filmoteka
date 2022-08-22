@@ -1,3 +1,43 @@
 <header class="header">
-  <div class="header__container" id="header-container"></div>
+  <div class="header__container" data-header>
+    <div class="header__settings-container">
+      <button
+        class="header__locale-button"
+        type="button"
+        data-locale_switch
+        data-locale_field="locale"
+      >
+        EN
+      </button>
+      <input type="checkbox" name="mode" data-mode_switch />
+    </div>
+    <div class="header__navigation-container">
+      <a class="header__logo-container" href="#">
+        <h1 class="header__title">Filmoteka</h1>
+      </a>
+      <div class="heared__navigation">
+        <nav class="header__main-navigation">
+          <a class="header__navigation-link" href="#" data-locale_field="home"
+            >Home</a
+          >
+          <a
+            class="header__navigation-link"
+            href="#"
+            data-locale_field="library"
+            >My library</a
+          >
+        </nav>
+        <a class="header__navigation-link" href="#" data-locale_field="signIn"
+          >Sign In</a
+        >
+      </div>
+    </div>
+    <input
+      class="header__search-input"
+      type="text"
+      autocomplete="off"
+      name="search"
+      id="search-input"
+    />
+  </div>
 </header>

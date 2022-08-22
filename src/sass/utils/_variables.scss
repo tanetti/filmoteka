@@ -1,0 +1,21 @@
+// ------------ FONTS ------------
+$main-font: 'DM Sans', sans-serif;
+$secondary-font: 'Titan One', cursive;
+
+// ------------ TEXT & ACCENTS COLORS ------------
+// Text Colors
+$main-light-text-color: #000;
+$main-dark-text-color: #f1f1f1;
+$white-text-color: #fff;
+
+// Accents Colors
+$main-accent-color: #d41443;
+$secondary-accen-color: #ffa5ba;
+
+// Background Colors
+$main-light-bg-color: #fff;
+$main-dark-bg-color: #212121;
+
+// ------------ TRANSITION PROPS ------------
+$transition-timing: 250ms;
+$transition-function: cubic-bezier(0.4, 0, 0.2, 1);

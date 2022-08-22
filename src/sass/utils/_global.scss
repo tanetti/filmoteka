@@ -1,0 +1,30 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100vw;
+  min-height: 100%;
+
+  font-family: $main-font;
+  font-weight: 500;
+  color: $main-light-text-color;
+  background-color: $main-light-bg-color;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &.isLoaded {
+    transition: color $transition-timing $transition-function,
+      background-color $transition-timing $transition-function;
+  }
+
+  &.dark-mode {
+    color: $main-dark-text-color;
+    background-color: $main-dark-bg-color;
+  }
+
+  &.modal-is-open {
+    overflow-y: hidden;
+  }
+}

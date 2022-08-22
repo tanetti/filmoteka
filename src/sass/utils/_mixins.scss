@@ -1,0 +1,6 @@
+@mixin font-size($font-size-value: 16, $line-height-value: $font-size-value) {
+  font-size: $font-size-value + px;
+  $line-height: calc($line-height-value / $font-size-value) * 100;
+  $rounded-line-height: round($line-height);
+  line-height: calc($rounded-line-height / 100);
+}
