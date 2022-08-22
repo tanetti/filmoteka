@@ -2,7 +2,7 @@ import { rootRefs } from '../root-refs';
 import { MAIN_TRANSITION_TIME } from '../constants';
 
 export const setPageMode = mode => {
-  bodyClassRef = document.body.classList;
+  const bodyClassRef = document.body.classList;
 
   if (mode === 'light' && bodyClassRef.contains('dark-mode')) {
     bodyClassRef.remove('dark-mode');
