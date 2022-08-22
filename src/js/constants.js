@@ -1,1 +1,2 @@
+export const MAIN_TRANSITION_TIME = 250;
 export const LOCALE_TRANSITION_TIME = 150;
