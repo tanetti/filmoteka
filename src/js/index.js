@@ -6,7 +6,7 @@ import { rootRefs } from './root-refs';
 import { setGlobalLocale, onChangeLocaleClick } from './locale';
 import { setPageMode, onChangePageMode } from './page-mode';
 import { onSearchMoviesInputChange } from './search';
-import { onWindowScroll } from './scroll/scroll';
+import { onWindowScroll, onScrollToTopClick } from './scroll';
 import { SEARCH_DEBOUNCE_DELAY, SCROLL_THROTTLE_DELAY } from './constants';
 
 setPageMode(pageState.mode);
@@ -24,3 +24,4 @@ window.addEventListener(
   'scroll',
   throttle(onWindowScroll, SCROLL_THROTTLE_DELAY)
 );
+rootRefs.scrollToTopButton.addEventListener('click', onScrollToTopClick);

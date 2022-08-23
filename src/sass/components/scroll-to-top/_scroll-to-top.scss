@@ -1,0 +1,31 @@
+.stt {
+  position: fixed;
+  bottom: $scroll-to-top-offset;
+  right: $scroll-to-top-offset;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: $scroll-to-top-size;
+  height: $scroll-to-top-size;
+
+  border-width: 0;
+  border-radius: 50%;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(200%);
+
+  transition: opacity $transition-timing $transition-function,
+    visibility $transition-timing $transition-function,
+    transform $transition-timing $transition-function;
+
+  cursor: pointer;
+
+  &.is-shown {
+    opacity: 1;
+    visibility: initial;
+    transform: translateX(0);
+  }
+}
