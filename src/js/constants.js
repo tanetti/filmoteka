@@ -13,3 +13,4 @@ export const TABLET_MAX_MOVIES_RENDER = 6;
 export const DESKTOP_MAX_MOVIES_RENDER = 9;
 
 export const SEARCH_DEBOUNCE_DELAY = 500;
+export const SCROLL_THROTTLE_DELAY = 700;

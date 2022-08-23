@@ -51,22 +51,26 @@ export class Fetcher {
   }
 
   #createMoviesMarkupArray(moviesData) {
-    const moviesMarkupArray = moviesData.map(
-      ({ title, original_title, poster_path, release_date, vote_average }) => `
+    const moviesMarkupArray = moviesData.map(movieData => {
+      const { title, original_title, poster_path, release_date, vote_average } =
+        movieData;
+      return `
     <li class="movie">
-        <button class="movie__container" aria-label="${title}" aria-expanded="false">
-            <img class="movie__image" src="https://image.tmdb.org/t/p/w500${poster_path}" width="200" alt="${title}" loading="lazy"></img>
+        <button class="movie__container" aria-label="${title}" aria-expanded="false" data-movie="${JSON.stringify(
+        movieData
+      )}">
+            <img class="movie__image" src="https://image.tmdb.org/t/p/w500${poster_path}" width="300" alt="${title}" loading="lazy"></img>
             <div class="movie__data">
                 <p>
                     ${title}
-                    ${pageState.locale === 'ua' ? ` - ${original_title}` : null}
+                    ${pageState.locale === 'ua' ? ` - ${original_title}` : ''}
                 </p>
                 <p>${release_date}</p>
                 <p>${vote_average}</p>
             </div>
         </button>
-    </li>`
-    );
+    </li>`;
+    });
 
     return moviesMarkupArray;
   }

@@ -5,6 +5,8 @@ export class State {
     this._locale = 'en';
     this._mode = 'light';
     this._currentPage = 'home';
+    this._currentMoviePage = 1;
+    this._yPosition = 0;
   }
 
   get locale() {
@@ -43,6 +45,26 @@ export class State {
     this.#recordStateToLS();
   }
 
+  get currentMoviePage() {
+    return this._currentMoviePage;
+  }
+
+  set currentMoviePage(currentMoviePage) {
+    this._currentMoviePage = currentMoviePage;
+
+    this.#recordStateToLS();
+  }
+
+  get yPosition() {
+    return this._yPosition;
+  }
+
+  set yPosition(yPosition) {
+    this._yPosition = yPosition;
+
+    this.#recordStateToLS();
+  }
+
   init() {
     const savedState = this.#loadStateFromLS();
 
@@ -50,6 +72,8 @@ export class State {
     this._locale = savedState.locale;
     this._mode = savedState.mode;
     this._currentPage = savedState.currentPage;
+    this._currentMoviePage = savedState.currentMoviePage;
+    this._yPosition = savedState.yPosition;
   }
 
   #loadStateFromLS() {
@@ -60,7 +84,16 @@ export class State {
       const parsedState = JSON.parse(loadedState);
 
       for (const key of Object.keys(parsedState)) {
-        if (!['locale', 'mode', 'currentPage'].includes(key)) throw new Error();
+        if (
+          ![
+            'locale',
+            'mode',
+            'currentPage',
+            'currentMoviePage',
+            'yPosition',
+          ].includes(key)
+        )
+          throw new Error();
       }
 
       return parsedState;
@@ -74,6 +107,8 @@ export class State {
       locale: this._locale,
       mode: this._mode,
       currentPage: this._currentPage,
+      currentMoviePage: this._currentMoviePage,
+      yPosition: this._yPosition,
     };
 
     localStorage.setItem(STATE_LS_KEY, JSON.stringify(currentState));

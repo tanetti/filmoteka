@@ -3,8 +3,11 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+
   width: 100vw;
-  min-height: 100%;
+  min-height: 100vh;
 
   font-family: $main-font;
   font-weight: 500;

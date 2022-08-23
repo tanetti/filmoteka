@@ -1,11 +1,14 @@
 export const localeDB = {
   en: {
+    html: 'en',
+
     header: {
       locale: 'EN',
       home: 'Home',
       library: 'My library',
       signIn: 'Sign In',
       placeholder: 'Search movies',
+      modeSwitch: 'Page mode switch',
     },
 
     main: {
@@ -25,12 +28,15 @@ export const localeDB = {
   },
 
   ua: {
+    html: 'uk',
+
     header: {
       locale: 'UA',
       home: 'Головна',
       library: 'Бібліотека',
       signIn: 'Увійти',
       placeholder: 'Пошук фільмів',
+      modeSwitch: 'Перемикач теми сторінки',
     },
 
     main: {

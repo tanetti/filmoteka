@@ -16,6 +16,20 @@ $secondary-accen-color: #ffa5ba;
 $main-light-bg-color: #fff;
 $main-dark-bg-color: #212121;
 
+// Header Sizes
+$header-height: 300px;
+
+// Movie Sizes
+$movie-mobile-width: 280px;
+$movie-tablet-width: 290px;
+$movie-desktop-width: 330px;
+
+$movie-mobile-margin: 20px;
+$movie-gap: 30px;
+
+// Footer Sizes
+$footer-height: 150px;
+
 // ------------ TRANSITION PROPS ------------
 $transition-timing: 250ms;
 $transition-function: cubic-bezier(0.4, 0, 0.2, 1);

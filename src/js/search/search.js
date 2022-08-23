@@ -1,7 +1,7 @@
 import { moviesFetcher } from '../api';
 import { onEscPress } from './';
 
-export const searchMovies = ({ target }) => {
+export const onSearchMoviesInputChange = ({ target }) => {
   if (!target.value) {
     moviesFetcher.query = null;
     moviesFetcher.renderTrending();
