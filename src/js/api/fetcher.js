@@ -71,8 +71,9 @@ export class Fetcher {
     return moviesMarkupArray;
   }
 
-  #renderMovies(moviesData) {
-    if (this._observerIteration === 0) rootRefs.moviesContainer.innerHTML = '';
+  #renderMovies(moviesData, isReRender = false) {
+    if (this._observerIteration === 0 || isReRender)
+      rootRefs.moviesContainer.innerHTML = '';
 
     const moviesMarkupArray = this.#createMoviesMarkupArray(moviesData);
 
@@ -80,30 +81,45 @@ export class Fetcher {
     let end = null;
 
     if (window.innerWidth < TABLET_MIN_WIDTH) {
-      start = this._observerIteration * MOBILE_MAX_MOVIES_RENDER;
+      start = isReRender
+        ? 0
+        : this._observerIteration * MOBILE_MAX_MOVIES_RENDER;
       end =
-        start + MOBILE_MAX_MOVIES_RENDER >= moviesMarkupArray.length - 1
+        this._observerIteration * MOBILE_MAX_MOVIES_RENDER +
+          MOBILE_MAX_MOVIES_RENDER >=
+        moviesMarkupArray.length - 1
           ? moviesMarkupArray.length - 1
-          : start + MOBILE_MAX_MOVIES_RENDER;
+          : this._observerIteration * MOBILE_MAX_MOVIES_RENDER +
+            MOBILE_MAX_MOVIES_RENDER;
     }
 
     if (
       window.innerWidth < DESKTOP_MIN_WIDTH &&
       window.innerWidth >= TABLET_MIN_WIDTH
     ) {
-      start = this._observerIteration * TABLET_MAX_MOVIES_RENDER;
+      start = isReRender
+        ? 0
+        : this._observerIteration * TABLET_MAX_MOVIES_RENDER;
       end =
-        start + TABLET_MAX_MOVIES_RENDER >= moviesMarkupArray.length - 1
+        this._observerIteration * TABLET_MAX_MOVIES_RENDER +
+          TABLET_MAX_MOVIES_RENDER >=
+        moviesMarkupArray.length - 1
           ? moviesMarkupArray.length - 1
-          : start + TABLET_MAX_MOVIES_RENDER;
+          : this._observerIteration * TABLET_MAX_MOVIES_RENDER +
+            TABLET_MAX_MOVIES_RENDER;
     }
 
     if (window.innerWidth >= DESKTOP_MIN_WIDTH) {
-      start = this._observerIteration * DESKTOP_MAX_MOVIES_RENDER;
+      start = isReRender
+        ? 0
+        : this._observerIteration * DESKTOP_MAX_MOVIES_RENDER;
       end =
-        start + DESKTOP_MAX_MOVIES_RENDER >= moviesMarkupArray.length - 1
+        this._observerIteration * DESKTOP_MAX_MOVIES_RENDER +
+          DESKTOP_MAX_MOVIES_RENDER >=
+        moviesMarkupArray.length - 1
           ? moviesMarkupArray.length - 1
-          : start + DESKTOP_MAX_MOVIES_RENDER;
+          : this._observerIteration * DESKTOP_MAX_MOVIES_RENDER +
+            DESKTOP_MAX_MOVIES_RENDER;
     }
 
     rootRefs.moviesContainer.insertAdjacentHTML(
@@ -139,7 +155,7 @@ export class Fetcher {
   }
 
   async reRenderWithLocale() {
-    this._observerIteration -= 1;
+    rootRefs.moviesContainer.innerHTML = '';
 
     const urlParams = {
       api_key: API_KEY,
@@ -150,7 +166,10 @@ export class Fetcher {
 
     const moviesData = await this.#fetchMovies(this._lastURL, urlParams);
 
-    setTimeout(() => this.#renderMovies(moviesData), MOVIES_TRANSITION_TIME);
+    setTimeout(
+      () => this.#renderMovies(moviesData, true),
+      MOVIES_TRANSITION_TIME
+    );
   }
 
   async renderTrending(page) {
