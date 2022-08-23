@@ -2,7 +2,16 @@ import axios from 'axios';
 import { rootRefs } from '../root-refs';
 import { pageState } from '../state';
 import { localeDB } from '../locale';
-import { API_KEY, API_BASE_URL, MOVIES_TRANSITION_TIME } from '../constants';
+import {
+  API_KEY,
+  API_BASE_URL,
+  MOVIES_TRANSITION_TIME,
+  TABLET_MIN_WIDTH,
+  DESKTOP_MIN_WIDTH,
+  MOBILE_MAX_MOVIES_RENDER,
+  TABLET_MAX_MOVIES_RENDER,
+  DESKTOP_MAX_MOVIES_RENDER,
+} from '../constants';
 
 axios.defaults.baseURL = API_BASE_URL;
 
@@ -12,11 +21,10 @@ export class Fetcher {
     this._currentPage = 1;
 
     this._lastURL = null;
+    this._lastQuery = null;
     this._lastQueryType = null;
-  }
 
-  get query() {
-    return this._query;
+    this._observerIteration = 0;
   }
 
   set query(value) {
@@ -42,19 +50,12 @@ export class Fetcher {
     return results;
   }
 
-  #renderMovies(moviesData) {
-    rootRefs.moviesContainer.innerHTML = moviesData
-      .map(
-        ({
-          title,
-          original_title,
-          poster_path,
-          release_date,
-          vote_average,
-        }) => `
+  #createMoviesMarkupArray(moviesData) {
+    const moviesMarkupArray = moviesData.map(
+      ({ title, original_title, poster_path, release_date, vote_average }) => `
     <li class="movie">
         <button class="movie__container" aria-label="${title}" aria-expanded="false">
-            <img class="movie__image" src="https://image.tmdb.org/t/p/w500${poster_path}" width="200" alt="${title}"></img>
+            <img class="movie__image" src="https://image.tmdb.org/t/p/w500${poster_path}" width="200" alt="${title}" loading="lazy"></img>
             <div class="movie__data">
                 <p>
                     ${title}
@@ -65,13 +66,81 @@ export class Fetcher {
             </div>
         </button>
     </li>`
-      )
-      .join('');
+    );
+
+    return moviesMarkupArray;
+  }
+
+  #renderMovies(moviesData) {
+    if (this._observerIteration === 0) rootRefs.moviesContainer.innerHTML = '';
+
+    const moviesMarkupArray = this.#createMoviesMarkupArray(moviesData);
+
+    let start = null;
+    let end = null;
+
+    if (window.innerWidth < TABLET_MIN_WIDTH) {
+      start = this._observerIteration * MOBILE_MAX_MOVIES_RENDER;
+      end =
+        start + MOBILE_MAX_MOVIES_RENDER >= moviesMarkupArray.length - 1
+          ? moviesMarkupArray.length - 1
+          : start + MOBILE_MAX_MOVIES_RENDER;
+    }
+
+    if (
+      window.innerWidth < DESKTOP_MIN_WIDTH &&
+      window.innerWidth >= TABLET_MIN_WIDTH
+    ) {
+      start = this._observerIteration * TABLET_MAX_MOVIES_RENDER;
+      end =
+        start + TABLET_MAX_MOVIES_RENDER >= moviesMarkupArray.length - 1
+          ? moviesMarkupArray.length - 1
+          : start + TABLET_MAX_MOVIES_RENDER;
+    }
+
+    if (window.innerWidth >= DESKTOP_MIN_WIDTH) {
+      start = this._observerIteration * DESKTOP_MAX_MOVIES_RENDER;
+      end =
+        start + DESKTOP_MAX_MOVIES_RENDER >= moviesMarkupArray.length - 1
+          ? moviesMarkupArray.length - 1
+          : start + DESKTOP_MAX_MOVIES_RENDER;
+    }
+
+    rootRefs.moviesContainer.insertAdjacentHTML(
+      'beforeend',
+      moviesMarkupArray.slice(start, end).join('')
+    );
+
+    if (end < moviesMarkupArray.length - 1)
+      this.#createInfiniteScrollObserver(moviesData);
 
     rootRefs.moviesContainer.classList.add('is-shown');
   }
 
+  #createInfiniteScrollObserver(moviesData) {
+    const infiniteScrollObserver = new IntersectionObserver(
+      this.#onInfiniteScrollIntersection.bind(this, moviesData),
+      { threshold: 0.3 }
+    );
+    const lastLoadedImage = rootRefs.moviesContainer.lastElementChild;
+
+    lastLoadedImage && infiniteScrollObserver.observe(lastLoadedImage);
+  }
+
+  #onInfiniteScrollIntersection(moviesData, entries, infiniteScrollObserver) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        this._observerIteration += 1;
+
+        infiniteScrollObserver.unobserve(entry.target);
+        this.#renderMovies(moviesData);
+      }
+    });
+  }
+
   async reRenderWithLocale() {
+    this._observerIteration -= 1;
+
     const urlParams = {
       api_key: API_KEY,
       page: this._currentPage,
@@ -85,7 +154,10 @@ export class Fetcher {
   }
 
   async renderTrending(page) {
-    this._lastQueryType !== 'trending' && (this._currentPage = 1);
+    if (this._lastQueryType !== 'trending') {
+      this._currentPage = 1;
+      this._observerIteration = 0;
+    }
 
     const url = '/trending/movie/week';
     const urlParams = {
@@ -102,11 +174,15 @@ export class Fetcher {
     );
 
     this._lastQueryType = 'trending';
+    this._lastQuery = null;
     page && (this._currentPage = page);
   }
 
   async renderSearched(page) {
-    this._lastQueryType !== 'searched' && (this._currentPage = 1);
+    if (this._lastQueryType !== 'searched' || this._lastQuery !== this._query) {
+      this._currentPage = 1;
+      this._observerIteration = 0;
+    }
 
     const url = '/search/movie';
     const urlParams = {
@@ -124,6 +200,7 @@ export class Fetcher {
     );
 
     this._lastQueryType = 'searched';
+    this._lastQuery = this._query;
     page && (this._currentPage = page);
   }
 }
