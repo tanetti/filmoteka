@@ -155,8 +155,6 @@ export class Fetcher {
   }
 
   async reRenderWithLocale() {
-    rootRefs.moviesContainer.innerHTML = '';
-
     const urlParams = {
       api_key: API_KEY,
       page: this._currentPage,
