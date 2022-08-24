@@ -160,8 +160,7 @@ export class Fetcher {
     });
   }
 
-  #renderPagination(totalPages1) {
-    const totalPages = 10;
+  #renderPagination(totalPages) {
     if (totalPages === 1) return;
 
     let paginationMarkup = '';
@@ -183,41 +182,17 @@ export class Fetcher {
         continue;
       }
 
-      if (this._currentPage === totalPages) {
-        paginationMarkup += `${
-          i === 2 ? '<span>...</span>' : ''
-        }<button type="button" ${
-          this._currentPage === this._currentPage + i - 5
-            ? 'disabled="true"'
-            : ''
-        } data-actions="${this._currentPage + i - 5}">${
-          this._currentPage + i - 5
-        }</button>`;
-        continue;
-      }
+      if (this._currentPage >= totalPages - 3) {
+        const shift = this._currentPage - (totalPages - 7);
 
-      if (this._currentPage >= totalPages - 1) {
         paginationMarkup += `${
           i === 2 ? '<span>...</span>' : ''
         }<button type="button" ${
-          this._currentPage === this._currentPage + i - 4
+          this._currentPage === this._currentPage + i - shift
             ? 'disabled="true"'
             : ''
-        } data-actions="${this._currentPage + i - 4}">${
-          this._currentPage + i - 4
-        }</button>`;
-        continue;
-      }
-
-      if (this._currentPage >= totalPages - 2) {
-        paginationMarkup += `${
-          i === 2 ? '<span>...</span>' : ''
-        }<button type="button" ${
-          this._currentPage === this._currentPage + i - 3
-            ? 'disabled="true"'
-            : ''
-        } data-actions="${this._currentPage + i - 3}">${
-          this._currentPage + i - 3
+        } data-actions="${this._currentPage + i - shift}">${
+          this._currentPage + i - shift
         }</button>`;
         continue;
       }
@@ -243,8 +218,6 @@ export class Fetcher {
       paginationMarkup += `<button type="button" data-actions="next">></button>`;
 
     rootRefs.moviesPagination.innerHTML = paginationMarkup;
-
-    console.log(this._currentPage);
   }
 
   async reRenderMovies(isTriggeredByPagination = false) {

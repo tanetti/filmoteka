@@ -1,12 +1,16 @@
 import { rootRefs } from '../root-refs';
 import { moviesFetcher } from '../api';
+import { onScrollToTopClick } from '../scroll';
+import { PAGINATION_ACTION_DELAY } from '../constants';
 
 export const onEscPress = ({ code }) => {
   if (code === 'Escape') {
-    rootRefs.searchField.value = '';
+    onScrollToTopClick();
 
+    rootRefs.searchField.value = '';
     moviesFetcher.query = null;
-    moviesFetcher.renderTrending();
+
+    setTimeout(() => moviesFetcher.renderTrending(), PAGINATION_ACTION_DELAY);
 
     window.removeEventListener('keydown', onEscPress);
   }
