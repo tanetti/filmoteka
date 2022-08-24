@@ -6,13 +6,16 @@ export const localeDB = {
       locale: 'EN',
       home: 'Home',
       library: 'My library',
-      signIn: 'Sign In',
       placeholder: 'Search movies',
       modeSwitch: 'Page mode switch',
     },
 
     main: {
       title: 'Movies library',
+    },
+
+    movie: {
+      rating: 'Rating',
     },
 
     footer: {
@@ -34,13 +37,16 @@ export const localeDB = {
       locale: 'UA',
       home: 'Головна',
       library: 'Бібліотека',
-      signIn: 'Увійти',
       placeholder: 'Пошук фільмів',
       modeSwitch: 'Перемикач теми сторінки',
     },
 
     main: {
       title: 'Бібліотека фільмів',
+    },
+
+    movie: {
+      rating: 'Рейтинг',
     },
 
     footer: {
