@@ -5,6 +5,6 @@ import { moviesFetcher } from '../api';
 export const onChangeLocaleClick = () => {
   pageState.locale = pageState.locale === 'en' ? 'ua' : 'en';
 
-  moviesFetcher.reRenderByLocale();
+  moviesFetcher.reRenderMovies();
   setGlobalLocale(pageState.locale);
 };

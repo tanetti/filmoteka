@@ -4,14 +4,14 @@ import { moviesFetcher } from '../api';
 export const paginationAction = action => {
   if (action === 'prev') {
     pageState.currentMoviePage -= 1;
-    moviesFetcher.reRenderByPagination();
+    moviesFetcher.reRenderMovies(true);
 
     return;
   }
 
   if (action === 'next') {
     pageState.currentMoviePage += 1;
-    moviesFetcher.reRenderByPagination();
+    moviesFetcher.reRenderMovies(true);
 
     return;
   }
@@ -21,5 +21,5 @@ export const paginationAction = action => {
   if (!parsedPage) return;
 
   pageState.currentMoviePage = parsedPage;
-  moviesFetcher.reRenderByPagination();
+  moviesFetcher.reRenderMovies(true);
 };

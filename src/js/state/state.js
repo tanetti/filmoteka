@@ -7,6 +7,8 @@ export class State {
     this._currentPage = 'home';
     this._currentMoviePage = 1;
     this._yPosition = 0;
+
+    this._windowWidth = window.innerWidth;
   }
 
   get locale() {
@@ -63,6 +65,14 @@ export class State {
     this._yPosition = yPosition;
 
     this.#recordStateToLS();
+  }
+
+  get windowWidth() {
+    return this._windowWidth;
+  }
+
+  set windowWidth(windowWidth) {
+    this._windowWidth = windowWidth;
   }
 
   init() {

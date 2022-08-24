@@ -25,6 +25,8 @@ export class Fetcher {
     this._lastQueryType = null;
 
     this._observerIteration = 0;
+
+    this._infiniteScrollObserver = null;
   }
 
   set query(value) {
@@ -91,8 +93,8 @@ export class Fetcher {
       end =
         this._observerIteration * MOBILE_MAX_MOVIES_RENDER +
           MOBILE_MAX_MOVIES_RENDER >=
-        moviesMarkupArray.length - 1
-          ? moviesMarkupArray.length - 1
+        moviesMarkupArray.length
+          ? moviesMarkupArray.length
           : this._observerIteration * MOBILE_MAX_MOVIES_RENDER +
             MOBILE_MAX_MOVIES_RENDER;
     }
@@ -107,8 +109,8 @@ export class Fetcher {
       end =
         this._observerIteration * TABLET_MAX_MOVIES_RENDER +
           TABLET_MAX_MOVIES_RENDER >=
-        moviesMarkupArray.length - 1
-          ? moviesMarkupArray.length - 1
+        moviesMarkupArray.length
+          ? moviesMarkupArray.length
           : this._observerIteration * TABLET_MAX_MOVIES_RENDER +
             TABLET_MAX_MOVIES_RENDER;
     }
@@ -120,8 +122,8 @@ export class Fetcher {
       end =
         this._observerIteration * DESKTOP_MAX_MOVIES_RENDER +
           DESKTOP_MAX_MOVIES_RENDER >=
-        moviesMarkupArray.length - 1
-          ? moviesMarkupArray.length - 1
+        moviesMarkupArray.length
+          ? moviesMarkupArray.length
           : this._observerIteration * DESKTOP_MAX_MOVIES_RENDER +
             DESKTOP_MAX_MOVIES_RENDER;
     }
@@ -138,13 +140,13 @@ export class Fetcher {
   }
 
   #createInfiniteScrollObserver(moviesData) {
-    const infiniteScrollObserver = new IntersectionObserver(
+    this._infiniteScrollObserver = new IntersectionObserver(
       this.#onInfiniteScrollIntersection.bind(this, moviesData),
       { threshold: 0.3 }
     );
     const lastLoadedImage = rootRefs.moviesContainer.lastElementChild;
 
-    lastLoadedImage && infiniteScrollObserver.observe(lastLoadedImage);
+    lastLoadedImage && this._infiniteScrollObserver.observe(lastLoadedImage);
   }
 
   #onInfiniteScrollIntersection(moviesData, entries, infiniteScrollObserver) {
@@ -158,7 +160,8 @@ export class Fetcher {
     });
   }
 
-  #renderPagination(totalPages) {
+  #renderPagination(totalPages1) {
+    const totalPages = 10;
     if (totalPages === 1) return;
 
     let paginationMarkup = '';
@@ -170,17 +173,49 @@ export class Fetcher {
       this._currentPage === 1 ? 'disabled="true"' : ''
     } data-actions="1">1</button>`;
 
-    if (totalPages > 2) {
-      if (totalPages - 2 > 3) {
-        if (this._currentPage >= 1 && this._currentPage <= 3) {
-          for (let i = 2; i <= 4; i += 1) {
-            paginationMarkup += `<button type="button" ${
-              this._currentPage === i ? 'disabled="true"' : ''
-            } data-actions="${i}">${i}</button>`;
-          }
-        }
+    for (let i = 2; i <= Math.min(4, totalPages); i += 1) {
+      if (this._currentPage <= 3) {
+        paginationMarkup += `<button type="button" ${
+          this._currentPage === i ? 'disabled="true"' : ''
+        } data-actions="${i}">${i}</button>${
+          i === 4 && totalPages - 4 > 1 ? '<span>...</span>' : ''
+        }`;
+        continue;
       }
+
+      // if (this._currentPage >= totalPages - 2) {
+      //   paginationMarkup += `${
+      //     i === 2 ? '<span>...</span>' : ''
+      //   }<button type="button" ${
+      //     this._currentPage === i ? 'disabled="true"' : ''
+      //   } data-actions="${i}">${i}</button>;
+      //   continue;
+      // }
+
+      paginationMarkup += `${
+        i === 2 ? '<span>...</span>' : ''
+      }<button type="button" ${
+        this._currentPage === this._currentPage - 3 + i ? 'disabled="true"' : ''
+      } data-actions="${this._currentPage - 3 + i}">${
+        this._currentPage - 3 + i
+      }</button>${
+        i === 4 && totalPages - this._currentPage - 3 + i > 1
+          ? '<span>...</span>'
+          : ''
+      }`;
     }
+
+    // if (totalPages > 2) {
+    //   if (totalPages - 2 > 3) {
+    //     if (this._currentPage >= 1 && this._currentPage <= 3) {
+    //       for (let i = 2; i <= 4; i += 1) {
+    // paginationMarkup += `<button type="button" ${
+    //   this._currentPage === i ? 'disabled="true"' : ''
+    // } data-actions="${i}">${i}</button>`;
+    //       }
+    //     }
+    //   }
+    // }
 
     paginationMarkup += `<button type="button" ${
       this._currentPage === totalPages ? 'disabled="true"' : ''
@@ -190,9 +225,16 @@ export class Fetcher {
       paginationMarkup += `<button type="button" data-actions="next">></button>`;
 
     rootRefs.moviesPagination.innerHTML = paginationMarkup;
+
+    console.log(this._currentPage);
   }
 
-  async reRenderByLocale() {
+  async reRenderMovies(isTriggeredByPagination = false) {
+    if (isTriggeredByPagination) {
+      this._currentPage = pageState.currentMoviePage;
+      this._observerIteration = 0;
+    }
+
     const urlParams = {
       api_key: API_KEY,
       page: this._currentPage,
@@ -206,27 +248,8 @@ export class Fetcher {
       () => this.#renderMovies(fetchData.results, true),
       MOVIES_TRANSITION_TIME
     );
-  }
 
-  async reRenderByPagination() {
-    this._currentPage = pageState.currentMoviePage;
-    this._observerIteration = 0;
-
-    const urlParams = {
-      api_key: API_KEY,
-      page: this._currentPage,
-      language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
-      query: this._query,
-    };
-
-    const fetchData = await this.#fetchMovies(this._lastURL, urlParams);
-
-    setTimeout(
-      () => this.#renderMovies(fetchData.results, true),
-      MOVIES_TRANSITION_TIME
-    );
-
-    this.#renderPagination(fetchData.total_pages);
+    isTriggeredByPagination && this.#renderPagination(fetchData.total_pages);
   }
 
   async renderTrending(page) {

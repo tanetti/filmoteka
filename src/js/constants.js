@@ -14,6 +14,7 @@ export const DESKTOP_MAX_MOVIES_RENDER = 9;
 
 export const SEARCH_DEBOUNCE_DELAY = 500;
 export const SCROLL_THROTTLE_DELAY = 300;
+export const RESIZE_THROTTLE_DELAY = 100;
 
 export const MIN_OFFSET_FOR_SCROLL_TO_TOP_APEAR = 150;
 

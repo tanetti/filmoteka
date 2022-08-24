@@ -8,7 +8,12 @@ import { setPageMode, onChangePageMode, onSystemModeChange } from './page-mode';
 import { onSearchMoviesInputChange } from './search';
 import { onWindowScroll, onScrollToTopClick } from './scroll';
 import { onPaginationClick } from './pagination-actions';
-import { SEARCH_DEBOUNCE_DELAY, SCROLL_THROTTLE_DELAY } from './constants';
+import { onWindowResize } from './resize';
+import {
+  SEARCH_DEBOUNCE_DELAY,
+  SCROLL_THROTTLE_DELAY,
+  RESIZE_THROTTLE_DELAY,
+} from './constants';
 
 setPageMode(pageState.mode);
 setGlobalLocale(pageState.locale);
@@ -21,6 +26,10 @@ window
 window.addEventListener(
   'scroll',
   throttle(onWindowScroll, SCROLL_THROTTLE_DELAY)
+);
+window.addEventListener(
+  'resize',
+  throttle(onWindowResize, RESIZE_THROTTLE_DELAY)
 );
 rootRefs.scrollToTopButton.addEventListener('click', onScrollToTopClick);
 rootRefs.localeSwitch.addEventListener('click', onChangeLocaleClick);
