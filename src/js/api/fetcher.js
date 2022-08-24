@@ -173,49 +173,67 @@ export class Fetcher {
       this._currentPage === 1 ? 'disabled="true"' : ''
     } data-actions="1">1</button>`;
 
-    for (let i = 2; i <= Math.min(4, totalPages); i += 1) {
-      if (this._currentPage <= 3) {
+    for (let i = 2; i <= Math.min(6, totalPages); i += 1) {
+      if (this._currentPage <= 4) {
         paginationMarkup += `<button type="button" ${
           this._currentPage === i ? 'disabled="true"' : ''
         } data-actions="${i}">${i}</button>${
-          i === 4 && totalPages - 4 > 1 ? '<span>...</span>' : ''
+          i === 6 && totalPages - 6 > 1 ? '<span>...</span>' : ''
         }`;
         continue;
       }
 
-      // if (this._currentPage >= totalPages - 2) {
-      //   paginationMarkup += `${
-      //     i === 2 ? '<span>...</span>' : ''
-      //   }<button type="button" ${
-      //     this._currentPage === i ? 'disabled="true"' : ''
-      //   } data-actions="${i}">${i}</button>;
-      //   continue;
-      // }
+      if (this._currentPage === totalPages) {
+        paginationMarkup += `${
+          i === 2 ? '<span>...</span>' : ''
+        }<button type="button" ${
+          this._currentPage === this._currentPage + i - 5
+            ? 'disabled="true"'
+            : ''
+        } data-actions="${this._currentPage + i - 5}">${
+          this._currentPage + i - 5
+        }</button>`;
+        continue;
+      }
+
+      if (this._currentPage >= totalPages - 1) {
+        paginationMarkup += `${
+          i === 2 ? '<span>...</span>' : ''
+        }<button type="button" ${
+          this._currentPage === this._currentPage + i - 4
+            ? 'disabled="true"'
+            : ''
+        } data-actions="${this._currentPage + i - 4}">${
+          this._currentPage + i - 4
+        }</button>`;
+        continue;
+      }
+
+      if (this._currentPage >= totalPages - 2) {
+        paginationMarkup += `${
+          i === 2 ? '<span>...</span>' : ''
+        }<button type="button" ${
+          this._currentPage === this._currentPage + i - 3
+            ? 'disabled="true"'
+            : ''
+        } data-actions="${this._currentPage + i - 3}">${
+          this._currentPage + i - 3
+        }</button>`;
+        continue;
+      }
 
       paginationMarkup += `${
         i === 2 ? '<span>...</span>' : ''
       }<button type="button" ${
-        this._currentPage === this._currentPage - 3 + i ? 'disabled="true"' : ''
-      } data-actions="${this._currentPage - 3 + i}">${
-        this._currentPage - 3 + i
+        this._currentPage === this._currentPage - 4 + i ? 'disabled="true"' : ''
+      } data-actions="${this._currentPage - 4 + i}">${
+        this._currentPage - 4 + i
       }</button>${
-        i === 4 && totalPages - this._currentPage - 3 + i > 1
+        i === 6 && totalPages - this._currentPage - 4 + i > 1
           ? '<span>...</span>'
           : ''
       }`;
     }
-
-    // if (totalPages > 2) {
-    //   if (totalPages - 2 > 3) {
-    //     if (this._currentPage >= 1 && this._currentPage <= 3) {
-    //       for (let i = 2; i <= 4; i += 1) {
-    // paginationMarkup += `<button type="button" ${
-    //   this._currentPage === i ? 'disabled="true"' : ''
-    // } data-actions="${i}">${i}</button>`;
-    //       }
-    //     }
-    //   }
-    // }
 
     paginationMarkup += `<button type="button" ${
       this._currentPage === totalPages ? 'disabled="true"' : ''
