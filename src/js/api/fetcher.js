@@ -161,7 +161,7 @@ export class Fetcher {
   }
 
   #renderPagination(totalPages) {
-    if (totalPages === 1) return;
+    if (totalPages === 1 || !totalPages) return;
 
     let paginationMarkup = '';
 
@@ -172,21 +172,22 @@ export class Fetcher {
       this._currentPage === 1 ? 'disabled="true"' : ''
     } data-actions="1">1</button>`;
 
-    for (let i = 2; i <= Math.min(6, totalPages); i += 1) {
-      if (this._currentPage <= 4) {
+    for (let i = 2; i < Math.min(7, totalPages); i += 1) {
+      if (this._currentPage <= 4 || totalPages < 7) {
         paginationMarkup += `<button type="button" ${
           this._currentPage === i ? 'disabled="true"' : ''
         } data-actions="${i}">${i}</button>${
           i === 6 && totalPages - 6 > 1 ? '<span>...</span>' : ''
         }`;
+
         continue;
       }
 
-      if (this._currentPage >= totalPages - 3) {
+      if (this._currentPage > totalPages - 4) {
         const shift = this._currentPage - (totalPages - 7);
 
         paginationMarkup += `${
-          i === 2 ? '<span>...</span>' : ''
+          i === 2 && totalPages > 7 ? '<span>...</span>' : ''
         }<button type="button" ${
           this._currentPage === this._currentPage + i - shift
             ? 'disabled="true"'
@@ -194,6 +195,7 @@ export class Fetcher {
         } data-actions="${this._currentPage + i - shift}">${
           this._currentPage + i - shift
         }</button>`;
+
         continue;
       }
 
