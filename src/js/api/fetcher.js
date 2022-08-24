@@ -66,7 +66,7 @@ export class Fetcher {
             <img class="movie__image" ${
               poster_path
                 ? `src="https://image.tmdb.org/t/p/w500${poster_path}"`
-                : `src="${noImage}"`
+                : `src="22"`
             } width="400" height="600" alt="${title}" loading="lazy"></img>
             <div class="movie__data">
                 <p>
