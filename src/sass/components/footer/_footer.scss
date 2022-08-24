@@ -1,10 +1,12 @@
 .footer {
   width: 100vw;
-  height: $footer-height;
 
-  background-color: $main-dark-bg-color;
+  background-color: $secondary-light-bg-color;
 }
 
 .footer__container {
   @extend .container;
+
+  padding-top: 28px;
+  padding-bottom: 28px;
 }

@@ -1,38 +1,41 @@
 // ------------ FONTS ------------
-$main-font: 'DM Sans', sans-serif;
-$secondary-font: 'Titan One', cursive;
+$main-font: 'Roboto', sans-serif;
 
 // ------------ TEXT & ACCENTS COLORS ------------
 // Text Colors
 $main-light-text-color: #000;
+$secondary-light-text-color: #545454;
 $main-dark-text-color: #f1f1f1;
+$secondary-dark-text-color: #545454;
 $white-text-color: #fff;
 
-// Accents Colors
-$main-accent-color: #d41443;
-$secondary-accen-color: #ffa5ba;
+$modal-caption-text-color: #8c8c8c;
+
+// Accent Colors
+$main-accent-color: #ff6b08;
+$secondary-accent-color: #ff001b;
 
 // Background Colors
 $main-light-bg-color: #fff;
+$secondary-light-bg-color: #f7f7f7;
 $main-dark-bg-color: #212121;
+$secondary-dark-bg-color: #474747;
 
 // Header Sizes
-$header-height: 300px;
+$header-height: 216px;
 
 // Movie Sizes
 $movie-mobile-width: 280px;
-$movie-tablet-width: 290px;
-$movie-desktop-width: 330px;
+$movie-tablet-width: 336px;
+$movie-desktop-width: 395px;
 
 $movie-mobile-margin: 20px;
-$movie-gap: 30px;
+$movie-tablet-gap: 32px;
+$movie-desktop-gap: 16px;
 
 // ScrollToTop Sizes
 $scroll-to-top-size: 50px;
 $scroll-to-top-offset: 20px;
-
-// Footer Sizes
-$footer-height: 150px;
 
 // ------------ TRANSITION PROPS ------------
 $transition-timing: 250ms;

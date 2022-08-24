@@ -1,0 +1,25 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+// ...
+.pagination__delimiter {
+}
+
+.pagination__button {
+  background-color: #fff;
+
+  cursor: pointer;
+
+  // disabled = isActive
+  &:disabled {
+  }
+
+  // previous & next buttons
+  &--side {
+    // just disabled :)
+    &:disabled {
+    }
+  }
+}

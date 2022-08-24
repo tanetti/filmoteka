@@ -20,7 +20,7 @@
     justify-self: center;
   }
 
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1280px) {
     width: $movie-desktop-width;
     height: calc($movie-desktop-width / 16 * 24);
   }

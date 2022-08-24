@@ -165,59 +165,103 @@ export class Fetcher {
 
     let paginationMarkup = '';
 
-    if (this._currentPage > 1)
-      paginationMarkup += `<button type="button" data-actions="prev"><</button>`;
-
-    paginationMarkup += `<button type="button" ${
+    paginationMarkup += `<button class="pagination__button pagination__button--side" type="button" ${
       this._currentPage === 1 ? 'disabled="true"' : ''
-    } data-actions="1">1</button>`;
+    } data-actions="prev"><</button>`;
 
-    for (let i = 2; i < Math.min(7, totalPages); i += 1) {
-      if (this._currentPage <= 4 || totalPages < 7) {
-        paginationMarkup += `<button type="button" ${
-          this._currentPage === i ? 'disabled="true"' : ''
-        } data-actions="${i}">${i}</button>${
-          i === 6 && totalPages - 6 > 1 ? '<span>...</span>' : ''
-        }`;
+    if (window.innerWidth < TABLET_MIN_WIDTH) {
+      for (let i = 1; i < Math.min(6, totalPages); i += 1) {
+        if (this._currentPage <= 3 || totalPages < 6) {
+          paginationMarkup += `<button class="pagination__button" type="button" ${
+            this._currentPage === i ? 'disabled="true"' : ''
+          } data-actions="${i}">${i}</button>`;
 
-        continue;
-      }
+          continue;
+        }
 
-      if (this._currentPage > totalPages - 4) {
-        const shift = this._currentPage - (totalPages - 7);
+        if (this._currentPage > totalPages - 3) {
+          const shift = this._currentPage - (totalPages - 5);
 
-        paginationMarkup += `${
-          i === 2 && totalPages > 7 ? '<span>...</span>' : ''
-        }<button type="button" ${
-          this._currentPage === this._currentPage + i - shift
+          paginationMarkup += `<button class="pagination__button" type="button" ${
+            this._currentPage === this._currentPage + i - shift
+              ? 'disabled="true"'
+              : ''
+          } data-actions="${this._currentPage + i - shift}">${
+            this._currentPage + i - shift
+          }</button>`;
+
+          continue;
+        }
+
+        paginationMarkup += `<button class="pagination__button" type="button" ${
+          this._currentPage === this._currentPage - 3 + i
             ? 'disabled="true"'
             : ''
-        } data-actions="${this._currentPage + i - shift}">${
-          this._currentPage + i - shift
+        } data-actions="${this._currentPage - 3 + i}">${
+          this._currentPage - 3 + i
         }</button>`;
-
-        continue;
       }
-
-      paginationMarkup += `${
-        i === 2 ? '<span>...</span>' : ''
-      }<button type="button" ${
-        this._currentPage === this._currentPage - 4 + i ? 'disabled="true"' : ''
-      } data-actions="${this._currentPage - 4 + i}">${
-        this._currentPage - 4 + i
-      }</button>${
-        i === 6 && totalPages - this._currentPage - 4 + i > 1
-          ? '<span>...</span>'
-          : ''
-      }`;
     }
 
-    paginationMarkup += `<button type="button" ${
-      this._currentPage === totalPages ? 'disabled="true"' : ''
-    } data-actions="${totalPages}">${totalPages}</button>`;
+    if (window.innerWidth >= TABLET_MIN_WIDTH) {
+      paginationMarkup += `<button class="pagination__button" type="button" ${
+        this._currentPage === 1 ? 'disabled="true"' : ''
+      } data-actions="1">1</button>`;
 
-    if (this._currentPage < totalPages)
-      paginationMarkup += `<button type="button" data-actions="next">></button>`;
+      for (let i = 2; i < Math.min(7, totalPages); i += 1) {
+        if (this._currentPage <= 4 || totalPages < 7) {
+          paginationMarkup += `<button class="pagination__button" type="button" ${
+            this._currentPage === i ? 'disabled="true"' : ''
+          } data-actions="${i}">${i}</button>${
+            i === 6 && totalPages - 6 > 1
+              ? '<div class="pagination__delimiter">...</div>'
+              : ''
+          }`;
+
+          continue;
+        }
+
+        if (this._currentPage > totalPages - 4) {
+          const shift = this._currentPage - (totalPages - 7);
+
+          paginationMarkup += `${
+            i === 2 && totalPages > 7
+              ? '<div class="pagination__delimiter">...</div>'
+              : ''
+          }<button class="pagination__button" type="button" ${
+            this._currentPage === this._currentPage + i - shift
+              ? 'disabled="true"'
+              : ''
+          } data-actions="${this._currentPage + i - shift}">${
+            this._currentPage + i - shift
+          }</button>`;
+
+          continue;
+        }
+
+        paginationMarkup += `${
+          i === 2 ? '<div class="pagination__delimiter">...</div>' : ''
+        }<button class="pagination__button" type="button" ${
+          this._currentPage === this._currentPage - 4 + i
+            ? 'disabled="true"'
+            : ''
+        } data-actions="${this._currentPage - 4 + i}">${
+          this._currentPage - 4 + i
+        }</button>${
+          i === 6 && totalPages - this._currentPage - 4 + i > 1
+            ? '<div class="pagination__delimiter">...</div>'
+            : ''
+        }`;
+      }
+
+      paginationMarkup += `<button class="pagination__button" type="button" ${
+        this._currentPage === totalPages ? 'disabled="true"' : ''
+      } data-actions="${totalPages}">${totalPages}</button>`;
+    }
+
+    paginationMarkup += `<button class="pagination__button pagination__button--side" type="button" ${
+      this._currentPage === totalPages ? 'disabled="true"' : ''
+    } data-actions="next">></button>`;
 
     rootRefs.moviesPagination.innerHTML = paginationMarkup;
   }
@@ -242,7 +286,7 @@ export class Fetcher {
       MOVIES_TRANSITION_TIME
     );
 
-    isTriggeredByPagination && this.#renderPagination(fetchData.total_pages);
+    this.#renderPagination(fetchData.total_pages);
   }
 
   async renderTrending(page) {
