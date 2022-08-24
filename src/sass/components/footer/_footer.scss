@@ -2,6 +2,10 @@
   width: 100vw;
 
   background-color: $secondary-light-bg-color;
+
+  body.dark-mode & {
+    background-color: $secondary-dark-bg-color;
+  }
 }
 
 .footer__container {

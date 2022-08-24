@@ -2,6 +2,7 @@ import axios from 'axios';
 import { rootRefs } from '../root-refs';
 import { pageState } from '../state';
 import { localeDB } from '../locale';
+import noImage from '../../images/no-img.jpg';
 import {
   API_KEY,
   API_BASE_URL,
@@ -23,6 +24,7 @@ export class Fetcher {
     this._lastURL = null;
     this._lastQuery = null;
     this._lastQueryType = null;
+    this._lastQueryData = null;
 
     this._observerIteration = 0;
 
@@ -61,7 +63,11 @@ export class Fetcher {
         <button class="movie__container" aria-label="${title}" aria-expanded="false" data-movie="${JSON.stringify(
         movieData
       )}">
-            <img class="movie__image" src="https://image.tmdb.org/t/p/w500${poster_path}" width="300" alt="${title}" loading="lazy"></img>
+            <img class="movie__image" ${
+              poster_path
+                ? `src="https://image.tmdb.org/t/p/w500${poster_path}"`
+                : `src="${noImage}"`
+            } width="400" height="600" alt="${title}" loading="lazy"></img>
             <div class="movie__data">
                 <p>
                     ${title}
@@ -289,11 +295,18 @@ export class Fetcher {
     this.#renderPagination(fetchData.total_pages);
   }
 
+  reRenderMoviesByResizing() {
+    this.#renderMovies(this._lastQueryData.results, true);
+
+    this.#renderPagination(this._lastQueryData.total_pages);
+  }
+
   async renderTrending(page) {
     if (this._lastQueryType !== 'trending' && this._lastQueryType !== null) {
       this._currentPage = 1;
       pageState.currentMoviePage = this._currentPage;
       this._observerIteration = 0;
+      this._lastQueryData = null;
     }
 
     const url = '/trending/movie/week';
@@ -305,6 +318,8 @@ export class Fetcher {
 
     const fetchData = await this.#fetchMovies(url, urlParams);
 
+    this._lastQueryData = fetchData;
+
     setTimeout(
       () => this.#renderMovies(fetchData.results),
       MOVIES_TRANSITION_TIME
@@ -314,6 +329,7 @@ export class Fetcher {
 
     this._lastQueryType = 'trending';
     this._lastQuery = null;
+
     if (page) {
       this._currentPage = page;
       pageState.currentMoviePage = this._currentPage;
@@ -328,6 +344,7 @@ export class Fetcher {
       this._currentPage = 1;
       pageState.currentMoviePage = this._currentPage = 1;
       this._observerIteration = 0;
+      this._lastQueryData = null;
     }
 
     const url = '/search/movie';
@@ -340,6 +357,8 @@ export class Fetcher {
 
     const fetchData = await this.#fetchMovies(url, urlParams);
 
+    this._lastQueryData = fetchData;
+
     setTimeout(
       () => this.#renderMovies(fetchData.results),
       MOVIES_TRANSITION_TIME
@@ -349,6 +368,7 @@ export class Fetcher {
 
     this._lastQueryType = 'searched';
     this._lastQuery = this._query;
+
     if (page) {
       this._currentPage = page;
       pageState.currentMoviePage = this._currentPage;

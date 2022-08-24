@@ -2,6 +2,7 @@
   width: 100vw;
   height: $header-height;
 
+  color: $white-text-color;
   background-color: $main-dark-bg-color;
 }
 
@@ -31,17 +32,10 @@
 
 .heared__navigation {
   display: flex;
-  align-items: center;
-}
-
-.header__main-navigation {
-  display: flex;
 }
 
 .header__navigation-link {
   @extend %link-decor;
-
-  display: block;
 
   color: inherit;
 

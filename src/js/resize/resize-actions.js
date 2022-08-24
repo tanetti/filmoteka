@@ -15,7 +15,7 @@ export const onWindowResize = () => {
   const prevCase = getWindowCase(prevWidth);
   const currCase = getWindowCase(currWidth);
 
-  if (prevCase !== currCase) moviesFetcher.reRenderMovies();
+  if (prevCase !== currCase) moviesFetcher.reRenderMoviesByResizing();
 
   pageState.windowWidth = currWidth;
 };
