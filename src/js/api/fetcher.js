@@ -2,7 +2,7 @@ import axios from 'axios';
 import { rootRefs } from '../root-refs';
 import { pageState } from '../state';
 import { localeDB } from '../locale';
-import noImage from '../../images/no-img.jpg';
+import * as noImage from '../../images/no-img.jpg';
 import {
   API_KEY,
   API_BASE_URL,
@@ -66,7 +66,7 @@ export class Fetcher {
             <img class="movie__image" ${
               poster_path
                 ? `src="https://image.tmdb.org/t/p/w500${poster_path}"`
-                : `src="22"`
+                : `src="${noImage}"`
             } width="400" height="600" alt="${title}" loading="lazy"></img>
             <div class="movie__data">
                 <p>
