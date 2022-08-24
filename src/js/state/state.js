@@ -2,8 +2,8 @@ const STATE_LS_KEY = 'filmotekaPageState';
 
 export class State {
   constructor() {
-    this._locale = 'en';
-    this._mode = 'light';
+    this._locale = null;
+    this._mode = null;
     this._currentPage = 'home';
     this._currentMoviePage = 1;
     this._yPosition = 0;
@@ -68,7 +68,24 @@ export class State {
   init() {
     const savedState = this.#loadStateFromLS();
 
-    if (!savedState) return;
+    if (!savedState) {
+      if (
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      )
+        this._mode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light';
+
+      const systemLang = navigator.language || navigator.userLanguage;
+
+      this._locale = ['ru-RU', 'uk-UA', 'ru-UA'].includes(systemLang)
+        ? 'ua'
+        : 'en';
+
+      return;
+    }
+
     this._locale = savedState.locale;
     this._mode = savedState.mode;
     this._currentPage = savedState.currentPage;

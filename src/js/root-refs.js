@@ -5,6 +5,8 @@ export const rootRefs = {
 
   searchField: document.querySelector('[data-search_field]'),
   moviesContainer: document.querySelector('[data-movies]'),
+  moviesError: document.querySelector('[data-movies_error]'),
+  moviesPagination: document.querySelector('[data-movies_pagination]'),
 
   scrollToTopButton: document.querySelector('[data-stt]'),
 

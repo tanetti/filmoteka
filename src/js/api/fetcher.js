@@ -18,7 +18,7 @@ axios.defaults.baseURL = API_BASE_URL;
 export class Fetcher {
   constructor() {
     this._query = null;
-    this._currentPage = 1;
+    this._currentPage = pageState.currentMoviePage;
 
     this._lastURL = null;
     this._lastQuery = null;
@@ -34,20 +34,20 @@ export class Fetcher {
   async #fetchMovies(url, urlParams) {
     rootRefs.moviesContainer.classList.remove('is-shown');
 
-    const {
-      data: { results },
-    } = await axios.get(url, { params: urlParams }).catch(error => {
-      if (error.response.status === 404) {
-        console.log(localeDB[pageState.locale].fetcher.errors.notFound);
-        return;
-      }
+    const { data } = await axios
+      .get(url, { params: urlParams })
+      .catch(error => {
+        if (error.response.status === 404) {
+          console.log(localeDB[pageState.locale].fetcher.errors.notFound);
+          return;
+        }
 
-      console.log(localeDB[pageState.locale].fetcher.errors.general);
-    });
+        console.log(localeDB[pageState.locale].fetcher.errors.general);
+      });
 
     this._lastURL = url;
 
-    return results;
+    return data;
   }
 
   #createMoviesMarkupArray(moviesData) {
@@ -158,7 +158,41 @@ export class Fetcher {
     });
   }
 
-  async reRenderWithLocale() {
+  #renderPagination(totalPages) {
+    if (totalPages === 1) return;
+
+    let paginationMarkup = '';
+
+    if (this._currentPage > 1)
+      paginationMarkup += `<button type="button" data-actions="prev"><</button>`;
+
+    paginationMarkup += `<button type="button" ${
+      this._currentPage === 1 ? 'disabled="true"' : ''
+    } data-actions="1">1</button>`;
+
+    if (totalPages > 2) {
+      if (totalPages - 2 > 3) {
+        if (this._currentPage >= 1 && this._currentPage <= 3) {
+          for (let i = 2; i <= 4; i += 1) {
+            paginationMarkup += `<button type="button" ${
+              this._currentPage === i ? 'disabled="true"' : ''
+            } data-actions="${i}">${i}</button>`;
+          }
+        }
+      }
+    }
+
+    paginationMarkup += `<button type="button" ${
+      this._currentPage === totalPages ? 'disabled="true"' : ''
+    } data-actions="${totalPages}">${totalPages}</button>`;
+
+    if (this._currentPage < totalPages)
+      paginationMarkup += `<button type="button" data-actions="next">></button>`;
+
+    rootRefs.moviesPagination.innerHTML = paginationMarkup;
+  }
+
+  async reRenderByLocale() {
     const urlParams = {
       api_key: API_KEY,
       page: this._currentPage,
@@ -166,17 +200,39 @@ export class Fetcher {
       query: this._query,
     };
 
-    const moviesData = await this.#fetchMovies(this._lastURL, urlParams);
+    const fetchData = await this.#fetchMovies(this._lastURL, urlParams);
 
     setTimeout(
-      () => this.#renderMovies(moviesData, true),
+      () => this.#renderMovies(fetchData.results, true),
       MOVIES_TRANSITION_TIME
     );
   }
 
+  async reRenderByPagination() {
+    this._currentPage = pageState.currentMoviePage;
+    this._observerIteration = 0;
+
+    const urlParams = {
+      api_key: API_KEY,
+      page: this._currentPage,
+      language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
+      query: this._query,
+    };
+
+    const fetchData = await this.#fetchMovies(this._lastURL, urlParams);
+
+    setTimeout(
+      () => this.#renderMovies(fetchData.results, true),
+      MOVIES_TRANSITION_TIME
+    );
+
+    this.#renderPagination(fetchData.total_pages);
+  }
+
   async renderTrending(page) {
-    if (this._lastQueryType !== 'trending') {
+    if (this._lastQueryType !== 'trending' && this._lastQueryType !== null) {
       this._currentPage = 1;
+      pageState.currentMoviePage = this._currentPage;
       this._observerIteration = 0;
     }
 
@@ -187,21 +243,30 @@ export class Fetcher {
       language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
     };
 
-    const trendingMovies = await this.#fetchMovies(url, urlParams);
+    const fetchData = await this.#fetchMovies(url, urlParams);
 
     setTimeout(
-      () => this.#renderMovies(trendingMovies),
+      () => this.#renderMovies(fetchData.results),
       MOVIES_TRANSITION_TIME
     );
 
+    this.#renderPagination(fetchData.total_pages);
+
     this._lastQueryType = 'trending';
     this._lastQuery = null;
-    page && (this._currentPage = page);
+    if (page) {
+      this._currentPage = page;
+      pageState.currentMoviePage = this._currentPage;
+    }
   }
 
   async renderSearched(page) {
-    if (this._lastQueryType !== 'searched' || this._lastQuery !== this._query) {
+    if (
+      (this._lastQueryType !== 'searched' && this._lastQueryType !== null) ||
+      this._lastQuery !== this._query
+    ) {
       this._currentPage = 1;
+      pageState.currentMoviePage = this._currentPage = 1;
       this._observerIteration = 0;
     }
 
@@ -213,15 +278,20 @@ export class Fetcher {
       query: this._query,
     };
 
-    const searchedMovies = await this.#fetchMovies(url, urlParams);
+    const fetchData = await this.#fetchMovies(url, urlParams);
 
     setTimeout(
-      () => this.#renderMovies(searchedMovies),
+      () => this.#renderMovies(fetchData.results),
       MOVIES_TRANSITION_TIME
     );
 
+    this.#renderPagination(fetchData.total_pages);
+
     this._lastQueryType = 'searched';
     this._lastQuery = this._query;
-    page && (this._currentPage = page);
+    if (page) {
+      this._currentPage = page;
+      pageState.currentMoviePage = this._currentPage;
+    }
   }
 }

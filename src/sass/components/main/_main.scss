@@ -10,6 +10,11 @@
 
 .main__container {
   @extend .container;
+
+  height: 100%;
+}
+
+.main__list {
   @extend %list;
 
   height: 100%;
@@ -31,4 +36,10 @@
   @media screen and (min-width: 1200px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
+}
+
+.main__error {
+}
+
+.main-pagination {
 }
