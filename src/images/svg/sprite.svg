@@ -12,5 +12,8 @@
 <symbol id="close" viewBox="0 0 32 32">
 <path stroke-linejoin="miter" stroke-linecap="butt" stroke-miterlimit="4" stroke-width="2.1333" d="M8.533 8.533l14.933 14.933M8.533 23.467l14.933-14.933"></path>
 </symbol>
+<symbol id="arrow" viewBox="0 0 16 16">
+<path stroke="#000" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round" d="M12.667 8H3.333M8 12.667 3.333 8 8 3.333"/></path>
+</symbol>
 </defs>
 </svg>
