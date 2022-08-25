@@ -160,8 +160,6 @@ export class State {
   }
 
   #recordStateToLS() {
-    // console.log(this._genresEN);
-    // console.log(this._genresUA);
     const currentState = {
       locale: this._locale,
       mode: this._mode,
