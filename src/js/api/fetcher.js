@@ -32,6 +32,8 @@ export class Fetcher {
     this._observerIteration = 0;
     this._currentImagesLoaded = 0;
 
+    this._abortController = null;
+
     this._infiniteScrollObserver = null;
   }
 
@@ -68,20 +70,31 @@ export class Fetcher {
         this._genres;
     }
 
-    const { data } = await axios
-      .get(url, { params: urlParams })
+    if (this._abortController) {
+      this._abortController.abort();
+
+      this._abortController = null;
+    }
+
+    this._abortController = new AbortController();
+
+    const fetchData = await axios
+      .get(url, { params: urlParams, signal: this._abortController.signal })
       .catch(error => {
-        if (error.response.status === 404) {
+        if (error.message === 'canceled') return;
+
+        if (error.response?.status === 404) {
           console.log(localeDB[pageState.locale].fetcher.errors.notFound);
           return;
         }
 
         console.log(localeDB[pageState.locale].fetcher.errors.general);
-      });
+      })
+      .finally(() => (this._abortController = null));
 
     this._lastURL = url;
 
-    return data;
+    return fetchData?.data;
   }
 
   #createGenresDescription(genre_ids) {
@@ -247,13 +260,13 @@ export class Fetcher {
       rootRefs.mainContainer.querySelectorAll('[data-movie_image]');
 
     for (let i = 0; i < needToLoad; i += 1) {
-      images[i].addEventListener('load', this.#onImageLoad.bind(this, false), {
+      images[i]?.addEventListener('load', this.#onImageLoad.bind(this, false), {
         once: true,
       });
     }
 
     for (let i = needToLoad; i < images.length; i += 1) {
-      images[i].addEventListener('load', this.#onImageLoad.bind(this, true), {
+      images[i]?.addEventListener('load', this.#onImageLoad.bind(this, true), {
         once: true,
       });
     }
@@ -404,6 +417,8 @@ export class Fetcher {
 
     const fetchData = await this.#fetchMovies(this._lastURL, urlParams);
 
+    if (!fetchData) return;
+
     this._lastQueryData = fetchData;
 
     setTimeout(
@@ -435,6 +450,8 @@ export class Fetcher {
     };
 
     const fetchData = await this.#fetchMovies(url, urlParams);
+
+    if (!fetchData) return;
 
     this._lastQueryData = fetchData;
 
@@ -474,6 +491,8 @@ export class Fetcher {
     };
 
     const fetchData = await this.#fetchMovies(url, urlParams);
+
+    if (!fetchData) return;
 
     this._lastQueryData = fetchData;
 
