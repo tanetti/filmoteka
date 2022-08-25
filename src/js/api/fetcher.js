@@ -123,6 +123,13 @@ export class Fetcher {
     return currGenresArray.join(', ');
   }
 
+  #choseImageSize(poster_path) {
+    if (window.innerWidth > DESKTOP_MIN_WIDTH)
+      return `src="https://image.tmdb.org/t/p/w500${poster_path}"`;
+
+    return `src="https://image.tmdb.org/t/p/w342${poster_path}"`;
+  }
+
   #createMoviesMarkupArray(moviesData) {
     const moviesMarkupArray = moviesData.map(movieData => {
       const { id, title, poster_path, release_date, vote_average, genre_ids } =
@@ -133,7 +140,7 @@ export class Fetcher {
           <div class="movie__image-container">  
             <img class="movie__image is-loading" ${
               poster_path
-                ? `src="https://image.tmdb.org/t/p/w500${poster_path}"`
+                ? this.#choseImageSize(poster_path)
                 : `src="${noImage}"`
             } width="400" height="600" alt="${title}" loading="lazy" data-movie_image></img>
           </div>
