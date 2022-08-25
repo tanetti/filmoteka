@@ -14,4 +14,5 @@ export const rootRefs = {
   modeSwitch: document.querySelector('[data-mode_switch]'),
 
   modalBackdrop: document.querySelector('[data-modal_backdrop]'),
+  modals: document.querySelectorAll('[data-modal]'),
 };
