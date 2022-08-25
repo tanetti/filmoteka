@@ -11,6 +11,10 @@
 
 @import './components/header/header';
 @import './components/main/main';
+@import './components/main/main-list';
+@import './components/main/main-pagination';
+@import './components/main/main-error';
+@import './components/loader/loader';
 @import './components/movie/movie';
 @import './components/pagination/pagination';
 @import './components/scroll-to-top/scroll-to-top';

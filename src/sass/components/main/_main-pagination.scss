@@ -1,0 +1,9 @@
+.main__pagination {
+  opacity: 0;
+
+  transition: opacity $transition-timing $transition-function;
+
+  &.is-shown {
+    opacity: 1;
+  }
+}

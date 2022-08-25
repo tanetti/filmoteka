@@ -11,39 +11,7 @@
 .main__container {
   @extend .container;
 
-  height: 100%;
-}
-
-.main__list {
-  @extend %list;
+  position: relative;
 
   height: 100%;
-  margin-bottom: 40px;
-
-  opacity: 0;
-
-  transition: opacity $transition-timing $transition-function;
-
-  &.is-shown {
-    opacity: 1;
-  }
-
-  @media screen and (min-width: 768px) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: $movie-tablet-gap;
-
-    margin-bottom: 60px;
-  }
-
-  @media screen and (min-width: 1280px) {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: $movie-desktop-gap;
-  }
-}
-
-.main__error {
-}
-
-.main-pagination {
 }

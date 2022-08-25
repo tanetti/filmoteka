@@ -30,6 +30,7 @@ export class Fetcher {
     this._lastQueryData = null;
 
     this._observerIteration = 0;
+    this._currentImagesLoaded = 0;
 
     this._infiniteScrollObserver = null;
   }
@@ -55,7 +56,9 @@ export class Fetcher {
   }
 
   async #fetchMovies(url, urlParams) {
+    rootRefs.moviesLoader.classList.add('is-shown');
     rootRefs.moviesContainer.classList.remove('is-shown');
+    rootRefs.moviesPagination.classList.remove('is-shown');
 
     if (!this._genres) {
       const genres = await this.#fetchGenres();
@@ -115,11 +118,11 @@ export class Fetcher {
     <li class="movie">
         <button class="movie__container" aria-label="${title}" aria-expanded="false" data-movie="${id}">
           <div class="movie__image-container">  
-            <img class="movie__image" ${
+            <img class="movie__image is-loading" ${
               poster_path
                 ? `src="https://image.tmdb.org/t/p/w500${poster_path}"`
                 : `src="${noImage}"`
-            } width="400" height="600" alt="${title}" loading="lazy"></img>
+            } width="400" height="600" alt="${title}" loading="lazy" data-movie_image></img>
           </div>
           <div class="movie__data">
             <p class="movie__title">${title}</p>
@@ -145,16 +148,50 @@ export class Fetcher {
     return moviesMarkupArray;
   }
 
+  #showContent() {
+    rootRefs.moviesLoader.classList.remove('is-shown');
+    rootRefs.moviesContainer.classList.add('is-shown');
+    rootRefs.moviesPagination.classList.add('is-shown');
+  }
+
+  #onImageLoad(rest = false, { currentTarget }) {
+    if (rest) {
+      currentTarget.classList.remove('is-loading');
+      return;
+    }
+
+    this._currentImagesLoaded += 1;
+
+    if (window.innerWidth < TABLET_MIN_WIDTH) {
+      if (this._currentImagesLoaded === 1) this.#showContent();
+    }
+
+    if (
+      window.innerWidth < DESKTOP_MIN_WIDTH &&
+      window.innerWidth >= TABLET_MIN_WIDTH
+    ) {
+      if (this._currentImagesLoaded === 2) this.#showContent();
+    }
+
+    if (window.innerWidth >= DESKTOP_MIN_WIDTH) {
+      if (this._currentImagesLoaded === 3) this.#showContent();
+    }
+  }
+
   #renderMovies(moviesData, isReRender = false) {
     if (this._observerIteration === 0 || isReRender)
       rootRefs.moviesContainer.innerHTML = '';
+
+    this._currentImagesLoaded = 0;
 
     const moviesMarkupArray = this.#createMoviesMarkupArray(moviesData);
 
     let start = null;
     let end = null;
+    let needToLoad = null;
 
     if (window.innerWidth < TABLET_MIN_WIDTH) {
+      needToLoad = 1;
       start = isReRender
         ? 0
         : this._observerIteration * MOBILE_MAX_MOVIES_RENDER;
@@ -171,6 +208,7 @@ export class Fetcher {
       window.innerWidth < DESKTOP_MIN_WIDTH &&
       window.innerWidth >= TABLET_MIN_WIDTH
     ) {
+      needToLoad = 2;
       start = isReRender
         ? 0
         : this._observerIteration * TABLET_MAX_MOVIES_RENDER;
@@ -184,6 +222,7 @@ export class Fetcher {
     }
 
     if (window.innerWidth >= DESKTOP_MIN_WIDTH) {
+      needToLoad = 3;
       start = isReRender
         ? 0
         : this._observerIteration * DESKTOP_MAX_MOVIES_RENDER;
@@ -204,7 +243,20 @@ export class Fetcher {
     if (end < moviesMarkupArray.length - 1)
       this.#createInfiniteScrollObserver(moviesData);
 
-    rootRefs.moviesContainer.classList.add('is-shown');
+    const images =
+      rootRefs.mainContainer.querySelectorAll('[data-movie_image]');
+
+    for (let i = 0; i < needToLoad; i += 1) {
+      images[i].addEventListener('load', this.#onImageLoad.bind(this, false), {
+        once: true,
+      });
+    }
+
+    for (let i = needToLoad; i < images.length; i += 1) {
+      images[i].addEventListener('load', this.#onImageLoad.bind(this, true), {
+        once: true,
+      });
+    }
   }
 
   #createInfiniteScrollObserver(moviesData) {

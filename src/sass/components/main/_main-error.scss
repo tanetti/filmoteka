@@ -1,0 +1,15 @@
+.main__error {
+  position: absolute;
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  transition: opacity $transition-timing $transition-function,
+    visibility $transition-timing $transition-function;
+
+  &.is-shown {
+    opacity: 1;
+    visibility: initial;
+  }
+}
