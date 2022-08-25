@@ -21,6 +21,9 @@ export class Fetcher {
     this._query = null;
     this._currentPage = pageState.currentMoviePage;
 
+    this._genres =
+      pageState[`genres${pageState.locale === 'en' ? 'EN' : 'UA'}`];
+
     this._lastURL = null;
     this._lastQuery = null;
     this._lastQueryType = null;
@@ -35,8 +38,28 @@ export class Fetcher {
     this._query = value;
   }
 
+  async #fetchGenres() {
+    const url = '/genre/movie/list';
+    const urlParams = {
+      api_key: API_KEY,
+      language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
+    };
+
+    const fetchData = await axios.get(url, { params: urlParams }).catch();
+
+    return fetchData.data.genres;
+  }
+
   async #fetchMovies(url, urlParams) {
     rootRefs.moviesContainer.classList.remove('is-shown');
+
+    if (!this._genres) {
+      const genres = await this.#fetchGenres();
+
+      this._genres = genres;
+      pageState[`genres${pageState.locale === 'en' ? 'EN' : 'UA'}`] =
+        this._genres;
+    }
 
     const { data } = await axios
       .get(url, { params: urlParams })
@@ -284,6 +307,9 @@ export class Fetcher {
       this._observerIteration = 0;
     }
 
+    this._genres =
+      pageState[`genres${pageState.locale === 'en' ? 'EN' : 'UA'}`];
+
     const urlParams = {
       api_key: API_KEY,
       page: this._currentPage,
@@ -305,7 +331,6 @@ export class Fetcher {
 
   reRenderMoviesByResizing() {
     this.#renderMovies(this._lastQueryData.results, true);
-
     this.#renderPagination(this._lastQueryData.total_pages);
   }
 

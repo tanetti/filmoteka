@@ -8,6 +8,9 @@ export class State {
     this._currentMoviePage = 1;
     this._yPosition = 0;
 
+    this._genresEN = null;
+    this._genresUA = null;
+
     this._windowWidth = window.innerWidth;
   }
 
@@ -75,6 +78,26 @@ export class State {
     this._windowWidth = windowWidth;
   }
 
+  get genresEN() {
+    return this._genresEN;
+  }
+
+  set genresEN(genresEN) {
+    this._genresEN = genresEN;
+
+    this.#recordStateToLS();
+  }
+
+  get genresUA() {
+    return this._genresUA;
+  }
+
+  set genresUA(genresUA) {
+    this._genresUA = genresUA;
+
+    this.#recordStateToLS();
+  }
+
   init() {
     const savedState = this.#loadStateFromLS();
 
@@ -82,10 +105,13 @@ export class State {
       if (
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches
-      )
+      ) {
         this._mode = window.matchMedia('(prefers-color-scheme: dark)').matches
           ? 'dark'
           : 'light';
+      } else {
+        this._mode = 'light';
+      }
 
       const systemLang = navigator.language || navigator.userLanguage;
 
@@ -101,6 +127,8 @@ export class State {
     this._currentPage = savedState.currentPage;
     this._currentMoviePage = savedState.currentMoviePage;
     this._yPosition = savedState.yPosition;
+    this._genresEN = savedState.genresEN;
+    this._genresUA = savedState.genresUA;
   }
 
   #loadStateFromLS() {
@@ -118,6 +146,8 @@ export class State {
             'currentPage',
             'currentMoviePage',
             'yPosition',
+            'genresEN',
+            'genresUA',
           ].includes(key)
         )
           throw new Error();
@@ -130,12 +160,16 @@ export class State {
   }
 
   #recordStateToLS() {
+    // console.log(this._genresEN);
+    // console.log(this._genresUA);
     const currentState = {
       locale: this._locale,
       mode: this._mode,
       currentPage: this._currentPage,
       currentMoviePage: this._currentMoviePage,
       yPosition: this._yPosition,
+      genresEN: this._genresEN,
+      genresUA: this._genresUA,
     };
 
     localStorage.setItem(STATE_LS_KEY, JSON.stringify(currentState));
