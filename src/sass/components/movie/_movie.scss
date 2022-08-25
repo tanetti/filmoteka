@@ -1,5 +1,25 @@
 .movie {
   @extend %no-padding;
+
+  width: $movie-mobile-width;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media screen and (max-width: 767.98px) {
+    &:not(:last-child) {
+      margin-bottom: $movie-mobile-margin;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    width: $movie-tablet-width;
+
+    margin: 0;
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: $movie-desktop-width;
+  }
 }
 
 .movie__container {
@@ -26,7 +46,7 @@
 .movie__image {
   @extend .image;
 
-  width: $movie-mobile-width;
+  width: 100%;
   height: calc($movie-mobile-width / 16 * 24);
 
   object-fit: cover;
@@ -38,23 +58,11 @@
     transform: scale(1.1);
   }
 
-  @media screen and (max-width: 767.98px) {
-    &:not(:last-child) {
-      margin-bottom: $movie-mobile-margin;
-    }
-  }
-
   @media screen and (min-width: 768px) {
-    width: $movie-tablet-width;
     height: calc($movie-tablet-width / 16 * 24);
-
-    margin: 0;
-
-    justify-self: center;
   }
 
   @media screen and (min-width: 1280px) {
-    width: $movie-desktop-width;
     height: calc($movie-desktop-width / 16 * 24);
   }
 }

@@ -71,7 +71,9 @@ export class Fetcher {
             <p class="movie__title">${title}</p>
             <p class="movie__description">
               <span class="movie__ganres"></span>
-              <span class="movie__year">${release_date.substring(0, 4)}</span>
+              <span class="movie__year">${
+                release_date ? release_date.substring(0, 4) : 'N/A'
+              }</span>
             </p>
           </div>
           <div class="movie__rating">
@@ -290,6 +292,8 @@ export class Fetcher {
     };
 
     const fetchData = await this.#fetchMovies(this._lastURL, urlParams);
+
+    this._lastQueryData = fetchData;
 
     setTimeout(
       () => this.#renderMovies(fetchData.results, true),
