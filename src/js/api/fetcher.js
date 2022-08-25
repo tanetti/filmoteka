@@ -38,6 +38,10 @@ export class Fetcher {
     this._query = value;
   }
 
+  get queryData() {
+    return this._lastQueryData?.results;
+  }
+
   async #fetchGenres() {
     const url = '/genre/movie/list';
     const urlParams = {

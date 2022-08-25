@@ -12,4 +12,6 @@ export const rootRefs = {
 
   localeSwitch: document.querySelector('[data-locale_switch]'),
   modeSwitch: document.querySelector('[data-mode_switch]'),
+
+  modalBackdrop: document.querySelector('[data-modal_backdrop]'),
 };
