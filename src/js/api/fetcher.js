@@ -77,9 +77,36 @@ export class Fetcher {
     return data;
   }
 
+  #createGenresDescription(genre_ids) {
+    const currGenresArray = genre_ids.map(genreID => {
+      let currGenre = null;
+
+      for (const savedGenre of this._genres) {
+        if (savedGenre.id === genreID) {
+          currGenre = savedGenre.name;
+
+          break;
+        }
+      }
+
+      return currGenre;
+    });
+
+    if (currGenresArray.length === 0)
+      return localeDB[pageState.locale].movie.noGenre;
+
+    if (currGenresArray.length < 4) return currGenresArray.join(', ');
+
+    currGenresArray.length = 2;
+    currGenresArray.push(localeDB[pageState.locale].movie.others);
+
+    return currGenresArray.join(', ');
+  }
+
   #createMoviesMarkupArray(moviesData) {
     const moviesMarkupArray = moviesData.map(movieData => {
-      const { id, title, poster_path, release_date, vote_average } = movieData;
+      const { id, title, poster_path, release_date, vote_average, genre_ids } =
+        movieData;
       return `
     <li class="movie">
         <button class="movie__container" aria-label="${title}" aria-expanded="false" data-movie="${id}">
@@ -93,7 +120,9 @@ export class Fetcher {
           <div class="movie__data">
             <p class="movie__title">${title}</p>
             <p class="movie__description">
-              <span class="movie__ganres"></span>
+              <span class="movie__ganres">${this.#createGenresDescription(
+                genre_ids
+              )}</span>
               <span class="movie__year">${
                 release_date ? release_date.substring(0, 4) : 'N/A'
               }</span>
