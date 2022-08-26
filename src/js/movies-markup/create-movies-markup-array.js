@@ -2,7 +2,7 @@ import { choseImageSize, createGenresDescription } from '.';
 import * as noImage from '../../images/no-image.png';
 
 export const createMoviesMarkupArray = (moviesData, savedGenres) =>
-  (moviesMarkupArray = moviesData.map(movieData => {
+  moviesData.map(movieData => {
     const { id, title, poster_path, release_date, vote_average, genre_ids } =
       movieData;
 
@@ -32,4 +32,4 @@ export const createMoviesMarkupArray = (moviesData, savedGenres) =>
           </div>
         </button>
     </li>`;
-  }));
+  });
