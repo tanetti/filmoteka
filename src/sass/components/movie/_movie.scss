@@ -68,15 +68,34 @@
 }
 
 .movie__data {
+  margin-top: 8px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  text-align: left;
+
+  @media screen and (min-width: 1280px) {
+    margin-top: 12px;
+    margin-bottom: 16px;
+    font-size: 20px;
+    line-height: 1.2;
+  }
 }
 
 .movie__title {
+  margin: 0;
+  text-transform: uppercase;
 }
 
 .movie__description {
+  margin: 0;
+  color: $main-accent-color;
 }
 
 .movie__ganres {
+  &::after {
+    content: " |";
+  }
 }
 
 .movie__year {
@@ -85,5 +104,15 @@
 .movie__rating {
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 0px;
+
+  margin: 0;
+  padding: 15px 40px;
+  background-color: $main-accent-color;
+  color: $white-text-color;
+
+  text-align: left;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
 }
