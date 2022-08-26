@@ -1,13 +1,13 @@
-import { localeDB } from '../locale';
-import { pageState } from '../state';
+export const createGenresDescription = (genre_ids, pageState, localeDB) => {
+  const localeGenres =
+    pageState[`genres${pageState.locale === 'en' ? 'EN' : 'UA'}`];
 
-export const createGenresDescription = (genre_ids, savedGenres) => {
   const currGenresArray = genre_ids.map(genreID => {
     let currGenre = null;
 
-    for (const savedGenre of savedGenres) {
-      if (savedGenre.id === genreID) {
-        currGenre = savedGenre.name;
+    for (const genre of localeGenres) {
+      if (genre.id === genreID) {
+        currGenre = genre.name;
 
         break;
       }

@@ -15,7 +15,6 @@ export const localeDB = {
     },
 
     movie: {
-      rating: 'Rating',
       others: 'Others',
       noGenre: 'Genres not specified',
     },

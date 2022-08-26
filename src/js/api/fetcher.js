@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { rootRefs } from '../root-refs';
-import { localeDB } from '../locale';
 import {
   API_KEY,
   API_BASE_URL,
@@ -14,6 +13,7 @@ axios.defaults.baseURL = API_BASE_URL;
 export class Fetcher {
   constructor() {
     this._pageState = null;
+    this._localeDB = null;
     this._renderPagination = null;
     this._createMoviesMarkupArray = null;
     this._calculateMoviesPartialLoadPoints = null;
@@ -43,12 +43,14 @@ export class Fetcher {
   init(settings) {
     const {
       pageState,
+      localeDB,
       createMoviesMarkupArray,
       paginationRendering,
       calculateMoviesPartialLoadPoints,
     } = settings;
 
     this._pageState = pageState;
+    this._localeDB = localeDB;
     this._createMoviesMarkupArray = createMoviesMarkupArray;
     this._renderPagination = paginationRendering;
     this._calculateMoviesPartialLoadPoints = calculateMoviesPartialLoadPoints;
@@ -95,11 +97,15 @@ export class Fetcher {
         if (error.message === 'canceled') return;
 
         if (error.response?.status === 404) {
-          console.log(localeDB[this._pageState.locale].fetcher.errors.notFound);
+          console.log(
+            this._localeDB[this._pageState.locale].fetcher.errors.notFound
+          );
           return;
         }
 
-        console.log(localeDB[this._pageState.locale].fetcher.errors.general);
+        console.log(
+          this._localeDB[this._pageState.locale].fetcher.errors.general
+        );
       })
       .finally(() => (this._abortController = null));
 
@@ -146,7 +152,8 @@ export class Fetcher {
 
     const moviesMarkupArray = this._createMoviesMarkupArray(
       moviesData,
-      this._pageState[`genres${this._pageState.locale === 'en' ? 'EN' : 'UA'}`]
+      this._pageState,
+      this._localeDB
     );
 
     const { start, end, needToLoad } = this._calculateMoviesPartialLoadPoints(
