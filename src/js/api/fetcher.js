@@ -144,7 +144,7 @@ export class Fetcher {
 
     this._currentImagesLoaded = 0;
 
-    const moviesMarkupArray = this._createMoviesMarkupArray(
+    const moviesMarkupArr = this._createMoviesMarkupArray(
       moviesData,
       this._pageState[`genres${this._pageState.locale === 'en' ? 'EN' : 'UA'}`]
     );
@@ -152,15 +152,15 @@ export class Fetcher {
     const { start, end, needToLoad } = this._calculateMoviesPartialLoadPoints(
       isReRender,
       this._observerIteration,
-      moviesMarkupArray
+      moviesMarkupArr
     );
 
     rootRefs.moviesContainer.insertAdjacentHTML(
       'beforeend',
-      moviesMarkupArray.slice(start, end).join('')
+      moviesMarkupArr.slice(start, end).join('')
     );
 
-    if (end < moviesMarkupArray.length - 1)
+    if (end < moviesMarkupArr.length - 1)
       this.#createInfiniteScrollObserver(moviesData);
 
     const images =
