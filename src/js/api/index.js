@@ -1,2 +1,2 @@
 export * from './fetcher';
-export * from './fether-instance';
+export * from './fetcher-instance';
