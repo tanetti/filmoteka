@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { rootRefs } from '../root-refs';
-import { pageState } from '../state';
 import { localeDB } from '../locale';
 import {
   API_KEY,
@@ -22,11 +21,6 @@ export class Fetcher {
     this._createMoviesMarkupArray = null;
 
     this._query = null;
-    this._currentPage = pageState.currentMoviePage;
-
-    this._genres =
-      pageState[`genres${pageState.locale === 'en' ? 'EN' : 'UA'}`];
-
     this._lastURL = null;
     this._lastQuery = null;
     this._lastQueryType = null;
@@ -49,8 +43,10 @@ export class Fetcher {
   }
 
   init(settings) {
-    const { createMoviesMarkupArray, paginationRendering } = settings;
+    const { pageState, createMoviesMarkupArray, paginationRendering } =
+      settings;
 
+    this._pageState = pageState;
     this._createMoviesMarkupArray = createMoviesMarkupArray;
     this._renderPagination = paginationRendering;
   }
@@ -59,7 +55,7 @@ export class Fetcher {
     const url = '/genre/movie/list';
     const urlParams = {
       api_key: API_KEY,
-      language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
+      language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
     };
 
     const fetchData = await axios.get(url, { params: urlParams }).catch();
@@ -72,12 +68,14 @@ export class Fetcher {
     rootRefs.moviesContainer.classList.remove('is-shown');
     rootRefs.moviesPagination.classList.remove('is-shown');
 
-    if (!this._genres) {
-      const genres = await this.#fetchGenres();
+    if (
+      !this._pageState[`genres${this._pageState.locale === 'en' ? 'EN' : 'UA'}`]
+    ) {
+      const fetchedGenres = await this.#fetchGenres();
 
-      this._genres = genres;
-      pageState[`genres${pageState.locale === 'en' ? 'EN' : 'UA'}`] =
-        this._genres;
+      this._pageState[
+        `genres${this._pageState.locale === 'en' ? 'EN' : 'UA'}`
+      ] = fetchedGenres;
     }
 
     if (this._abortController) {
@@ -94,11 +92,11 @@ export class Fetcher {
         if (error.message === 'canceled') return;
 
         if (error.response?.status === 404) {
-          console.log(localeDB[pageState.locale].fetcher.errors.notFound);
+          console.log(localeDB[this._pageState.locale].fetcher.errors.notFound);
           return;
         }
 
-        console.log(localeDB[pageState.locale].fetcher.errors.general);
+        console.log(localeDB[this._pageState.locale].fetcher.errors.general);
       })
       .finally(() => (this._abortController = null));
 
@@ -145,7 +143,7 @@ export class Fetcher {
 
     const moviesMarkupArray = this._createMoviesMarkupArray(
       moviesData,
-      this._genres
+      this._pageState[`genres${this._pageState.locale === 'en' ? 'EN' : 'UA'}`]
     );
 
     let start = null;
@@ -244,17 +242,13 @@ export class Fetcher {
 
   async reRenderMovies(isTriggeredByPagination = false) {
     if (isTriggeredByPagination) {
-      this._currentPage = pageState.currentMoviePage;
       this._observerIteration = 0;
     }
 
-    this._genres =
-      pageState[`genres${pageState.locale === 'en' ? 'EN' : 'UA'}`];
-
     const urlParams = {
       api_key: API_KEY,
-      page: this._currentPage,
-      language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
+      page: this._pageState.currentMoviePage,
+      language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
       query: this._query,
     };
 
@@ -270,7 +264,7 @@ export class Fetcher {
     );
 
     rootRefs.moviesPagination.innerHTML = this._renderPagination(
-      this._currentPage,
+      this._pageState.currentMoviePage,
       fetchData.total_pages
     );
   }
@@ -278,30 +272,26 @@ export class Fetcher {
   reRenderMoviesByResizing() {
     this.#renderMovies(this._lastQueryData.results, true);
     rootRefs.moviesPagination.innerHTML = this._renderPagination(
-      this._currentPage,
+      this._pageState.currentMoviePage,
       this._lastQueryData.total_pages
     );
   }
 
   async renderTrending(page) {
     if (this._lastQueryType === 'searched') {
-      this._currentPage = 1;
-      pageState.currentMoviePage = this._currentPage;
-      pageState.currentQuery = null;
+      this._pageState.currentMoviePage = 1;
+      this._pageState.currentQuery = null;
       this._observerIteration = 0;
       this._lastQueryData = null;
     }
 
-    if (page) {
-      this._currentPage = page;
-      pageState.currentMoviePage = this._currentPage;
-    }
+    if (page) this._pageState.currentMoviePage = page;
 
     const url = '/trending/movie/week';
     const urlParams = {
       api_key: API_KEY,
-      page: page ? page : this._currentPage,
-      language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
+      page: page ? page : this._pageState.currentMoviePage,
+      language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
     };
 
     const fetchData = await this.#fetchMovies(url, urlParams);
@@ -316,7 +306,7 @@ export class Fetcher {
     );
 
     rootRefs.moviesPagination.innerHTML = this._renderPagination(
-      this._currentPage,
+      this._pageState.currentMoviePage,
       fetchData.total_pages
     );
 
@@ -329,22 +319,18 @@ export class Fetcher {
       this._lastQueryType === 'trending' ||
       (this._lastQuery !== this._query && this._lastQuery !== null)
     ) {
-      this._currentPage = 1;
-      pageState.currentMoviePage = this._currentPage;
+      this._pageState.currentMoviePage = 1;
       this._observerIteration = 0;
       this._lastQueryData = null;
     }
 
-    if (page) {
-      this._currentPage = page;
-      pageState.currentMoviePage = this._currentPage;
-    }
+    if (page) this._pageState.currentMoviePage = page;
 
     const url = '/search/movie';
     const urlParams = {
       api_key: API_KEY,
-      page: page ? page : this._currentPage,
-      language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
+      page: page ? page : this._pageState.currentMoviePage,
+      language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
       query: this._query,
     };
 
@@ -360,12 +346,11 @@ export class Fetcher {
     );
 
     rootRefs.moviesPagination.innerHTML = this._renderPagination(
-      this._currentPage,
+      this._pageState.currentMoviePage,
       fetchData.total_pages
     );
 
     this._lastQueryType = 'searched';
-    this._lastQuery = this._query;
-    pageState.currentQuery = this._lastQuery;
+    this._pageState.currentQuery = this._query;
   }
 }
