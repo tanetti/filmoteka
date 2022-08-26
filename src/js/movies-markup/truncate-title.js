@@ -1,8 +1,9 @@
-import { DESKTOP_MIN_WIDTH } from '../constants';
+import { TABLET_MIN_WIDTH, DESKTOP_MIN_WIDTH } from '../constants';
 
 export const truncateTitle = title => {
-  let allovedTitleLength = 45;
+  let allovedTitleLength = 48;
 
+  if (window.innerWidth < TABLET_MIN_WIDTH) allovedTitleLength = 38;
   if (window.innerWidth >= DESKTOP_MIN_WIDTH) allovedTitleLength = 34;
 
   let truncatedTitleArr = [];
