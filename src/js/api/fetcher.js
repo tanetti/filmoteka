@@ -24,6 +24,8 @@ export class Fetcher {
     this._genres =
       pageState[`genres${pageState.locale === 'en' ? 'EN' : 'UA'}`];
 
+    this._renderPagination = null;
+
     this._lastURL = null;
     this._lastQuery = null;
     this._lastQueryType = null;
@@ -43,6 +45,14 @@ export class Fetcher {
 
   get queryData() {
     return this._lastQueryData?.results;
+  }
+
+  init(settings) {
+    const { paginationRendering } = settings;
+
+    this._renderPagination = paginationRendering;
+
+    console.log(this._renderPagination);
   }
 
   async #fetchGenres() {
@@ -300,116 +310,6 @@ export class Fetcher {
     });
   }
 
-  #renderPagination(totalPages) {
-    let paginationMarkup = '';
-
-    if (totalPages === 1 || !totalPages) {
-      rootRefs.moviesPagination.innerHTML = paginationMarkup;
-
-      return;
-    }
-
-    paginationMarkup += `<button class="pagination__button pagination__button--side" type="button" ${
-      this._currentPage === 1 ? 'disabled="true"' : ''
-    } data-actions="prev"><</button>`;
-
-    if (window.innerWidth < TABLET_MIN_WIDTH) {
-      for (let i = 1; i < Math.min(6, totalPages); i += 1) {
-        if (this._currentPage <= 3 || totalPages < 6) {
-          paginationMarkup += `<button class="pagination__button" type="button" ${
-            this._currentPage === i ? 'disabled="true"' : ''
-          } data-actions="${i}">${i}</button>`;
-
-          continue;
-        }
-
-        if (this._currentPage > totalPages - 3) {
-          const shift = this._currentPage - (totalPages - 5);
-
-          paginationMarkup += `<button class="pagination__button" type="button" ${
-            this._currentPage === this._currentPage + i - shift
-              ? 'disabled="true"'
-              : ''
-          } data-actions="${this._currentPage + i - shift}">${
-            this._currentPage + i - shift
-          }</button>`;
-
-          continue;
-        }
-
-        paginationMarkup += `<button class="pagination__button" type="button" ${
-          this._currentPage === this._currentPage - 3 + i
-            ? 'disabled="true"'
-            : ''
-        } data-actions="${this._currentPage - 3 + i}">${
-          this._currentPage - 3 + i
-        }</button>`;
-      }
-    }
-
-    if (window.innerWidth >= TABLET_MIN_WIDTH) {
-      paginationMarkup += `<button class="pagination__button" type="button" ${
-        this._currentPage === 1 ? 'disabled="true"' : ''
-      } data-actions="1">1</button>`;
-
-      for (let i = 2; i < Math.min(7, totalPages); i += 1) {
-        if (this._currentPage <= 4 || totalPages < 7) {
-          paginationMarkup += `<button class="pagination__button" type="button" ${
-            this._currentPage === i ? 'disabled="true"' : ''
-          } data-actions="${i}">${i}</button>${
-            i === 6 && totalPages - 6 > 1
-              ? '<div class="pagination__delimiter">...</div>'
-              : ''
-          }`;
-
-          continue;
-        }
-
-        if (this._currentPage > totalPages - 4) {
-          const shift = this._currentPage - (totalPages - 7);
-
-          paginationMarkup += `${
-            i === 2 && totalPages > 7
-              ? '<div class="pagination__delimiter">...</div>'
-              : ''
-          }<button class="pagination__button" type="button" ${
-            this._currentPage === this._currentPage + i - shift
-              ? 'disabled="true"'
-              : ''
-          } data-actions="${this._currentPage + i - shift}">${
-            this._currentPage + i - shift
-          }</button>`;
-
-          continue;
-        }
-
-        paginationMarkup += `${
-          i === 2 ? '<div class="pagination__delimiter">...</div>' : ''
-        }<button class="pagination__button" type="button" ${
-          this._currentPage === this._currentPage - 4 + i
-            ? 'disabled="true"'
-            : ''
-        } data-actions="${this._currentPage - 4 + i}">${
-          this._currentPage - 4 + i
-        }</button>${
-          i === 6 && totalPages - this._currentPage - 4 + i > 1
-            ? '<div class="pagination__delimiter">...</div>'
-            : ''
-        }`;
-      }
-
-      paginationMarkup += `<button class="pagination__button" type="button" ${
-        this._currentPage === totalPages ? 'disabled="true"' : ''
-      } data-actions="${totalPages}">${totalPages}</button>`;
-    }
-
-    paginationMarkup += `<button class="pagination__button pagination__button--side" type="button" ${
-      this._currentPage === totalPages ? 'disabled="true"' : ''
-    } data-actions="next">></button>`;
-
-    rootRefs.moviesPagination.innerHTML = paginationMarkup;
-  }
-
   async reRenderMovies(isTriggeredByPagination = false) {
     if (isTriggeredByPagination) {
       this._currentPage = pageState.currentMoviePage;
@@ -437,12 +337,18 @@ export class Fetcher {
       MOVIES_TRANSITION_TIME
     );
 
-    this.#renderPagination(fetchData.total_pages);
+    rootRefs.moviesPagination.innerHTML = this._renderPagination(
+      this._currentPage,
+      fetchData.total_pages
+    );
   }
 
   reRenderMoviesByResizing() {
     this.#renderMovies(this._lastQueryData.results, true);
-    this.#renderPagination(this._lastQueryData.total_pages);
+    rootRefs.moviesPagination.innerHTML = this._renderPagination(
+      this._currentPage,
+      this._lastQueryData.total_pages
+    );
   }
 
   async renderTrending(page) {
@@ -477,7 +383,10 @@ export class Fetcher {
       MOVIES_TRANSITION_TIME
     );
 
-    this.#renderPagination(fetchData.total_pages);
+    rootRefs.moviesPagination.innerHTML = this._renderPagination(
+      this._currentPage,
+      fetchData.total_pages
+    );
 
     this._lastQueryType = 'trending';
     this._lastQuery = null;
@@ -518,7 +427,10 @@ export class Fetcher {
       MOVIES_TRANSITION_TIME
     );
 
-    this.#renderPagination(fetchData.total_pages);
+    rootRefs.moviesPagination.innerHTML = this._renderPagination(
+      this._currentPage,
+      fetchData.total_pages
+    );
 
     this._lastQueryType = 'searched';
     this._lastQuery = this._query;
