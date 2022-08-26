@@ -5,7 +5,6 @@ import { PAGINATION_ACTION_DELAY } from '../constants';
 
 export const onEscPress = ({ code }) => {
   if (code === 'Escape') {
-    console.log('escape');
     onScrollToTopClick();
 
     rootRefs.searchField.value = '';

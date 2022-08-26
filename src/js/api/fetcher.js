@@ -2,7 +2,7 @@ import axios from 'axios';
 import { rootRefs } from '../root-refs';
 import { pageState } from '../state';
 import { localeDB } from '../locale';
-import * as noImage from '../../images/no-img.jpg';
+import * as noImage from '../../images/no-image.png';
 import {
   API_KEY,
   API_BASE_URL,
