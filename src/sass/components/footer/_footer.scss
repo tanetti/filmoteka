@@ -13,4 +13,29 @@
 
   padding-top: 28px;
   padding-bottom: 28px;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width:767px){
+    max-width: 304px;
+  }
+  @media screen and (min-width: 768px){
+    padding-bottom: 30px;
+    padding-top: 30px;
+  }
+}
+.footer__year{
+  margin-right: 10px;
+}
+.footer__rights{
+  margin-right: 10px;
+}
+.footer__svg{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.footer__link{
+  color: currentColor;
 }

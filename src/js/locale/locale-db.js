@@ -21,7 +21,8 @@ export const localeDB = {
     },
 
     footer: {
-      rights: 'All Rights Reserved',
+      rights: 'All Rights Reserved |',
+      develop: 'Developed with',
     },
 
     fetcher: {
@@ -54,7 +55,8 @@ export const localeDB = {
     },
 
     footer: {
-      rights: 'Bсі Права Захищено',
+      rights: 'Bсі Права Захищено |',
+      develop: 'Розроблений з',
     },
 
     fetcher: {
