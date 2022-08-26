@@ -6,7 +6,7 @@ export class State {
     this._mode = null;
     this._currentPage = 'home';
     this._currentMoviePage = 1;
-    this._yPosition = 0;
+    this._currentQuery = null;
 
     this._genresEN = null;
     this._genresUA = null;
@@ -60,12 +60,12 @@ export class State {
     this.#recordStateToLS();
   }
 
-  get yPosition() {
-    return this._yPosition;
+  get currentQuery() {
+    return this._currentQuery;
   }
 
-  set yPosition(yPosition) {
-    this._yPosition = yPosition;
+  set currentQuery(currentQuery) {
+    this._currentQuery = currentQuery;
 
     this.#recordStateToLS();
   }
@@ -126,7 +126,7 @@ export class State {
     this._mode = savedState.mode;
     this._currentPage = savedState.currentPage;
     this._currentMoviePage = savedState.currentMoviePage;
-    this._yPosition = savedState.yPosition;
+    this._currentQuery = savedState.currentQuery;
     this._genresEN = savedState.genresEN;
     this._genresUA = savedState.genresUA;
   }
@@ -145,7 +145,7 @@ export class State {
             'mode',
             'currentPage',
             'currentMoviePage',
-            'yPosition',
+            'currentQuery',
             'genresEN',
             'genresUA',
           ].includes(key)
@@ -165,7 +165,7 @@ export class State {
       mode: this._mode,
       currentPage: this._currentPage,
       currentMoviePage: this._currentMoviePage,
-      yPosition: this._yPosition,
+      currentQuery: this._currentQuery,
       genresEN: this._genresEN,
       genresUA: this._genresUA,
     };

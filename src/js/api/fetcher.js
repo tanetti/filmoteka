@@ -301,9 +301,13 @@ export class Fetcher {
   }
 
   #renderPagination(totalPages) {
-    if (totalPages === 1 || !totalPages) return;
-
     let paginationMarkup = '';
+
+    if (totalPages === 1 || !totalPages) {
+      rootRefs.moviesPagination.innerHTML = paginationMarkup;
+
+      return;
+    }
 
     paginationMarkup += `<button class="pagination__button pagination__button--side" type="button" ${
       this._currentPage === 1 ? 'disabled="true"' : ''
@@ -442,11 +446,17 @@ export class Fetcher {
   }
 
   async renderTrending(page) {
-    if (this._lastQueryType !== 'trending' && this._lastQueryType !== null) {
+    if (this._lastQueryType === 'searched') {
       this._currentPage = 1;
       pageState.currentMoviePage = this._currentPage;
+      pageState.currentQuery = null;
       this._observerIteration = 0;
       this._lastQueryData = null;
+    }
+
+    if (page) {
+      this._currentPage = page;
+      pageState.currentMoviePage = this._currentPage;
     }
 
     const url = '/trending/movie/week';
@@ -471,22 +481,22 @@ export class Fetcher {
 
     this._lastQueryType = 'trending';
     this._lastQuery = null;
-
-    if (page) {
-      this._currentPage = page;
-      pageState.currentMoviePage = this._currentPage;
-    }
   }
 
   async renderSearched(page) {
     if (
-      (this._lastQueryType !== 'searched' && this._lastQueryType !== null) ||
-      this._lastQuery !== this._query
+      this._lastQueryType === 'trending' ||
+      (this._lastQuery !== this._query && this._lastQuery !== null)
     ) {
       this._currentPage = 1;
-      pageState.currentMoviePage = this._currentPage = 1;
+      pageState.currentMoviePage = this._currentPage;
       this._observerIteration = 0;
       this._lastQueryData = null;
+    }
+
+    if (page) {
+      this._currentPage = page;
+      pageState.currentMoviePage = this._currentPage;
     }
 
     const url = '/search/movie';
@@ -512,10 +522,6 @@ export class Fetcher {
 
     this._lastQueryType = 'searched';
     this._lastQuery = this._query;
-
-    if (page) {
-      this._currentPage = page;
-      pageState.currentMoviePage = this._currentPage;
-    }
+    pageState.currentQuery = this._lastQuery;
   }
 }
