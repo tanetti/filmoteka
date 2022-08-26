@@ -42,13 +42,19 @@
 
   overflow: hidden;
   pointer-events: none;
+
+  margin-bottom: 10px;
+
+  @media screen and (min-width: 1280px) {
+    margin-bottom: 12px;
+  }
 }
 
 .movie__image {
   @extend .image;
 
   width: 100%;
-  height: calc($movie-mobile-width / 16 * 24);
+  height: calc($movie-mobile-width * 1.5);
 
   object-fit: cover;
 
@@ -60,38 +66,36 @@
   }
 
   @media screen and (min-width: 768px) {
-    height: calc($movie-tablet-width / 16 * 24);
+    height: calc($movie-tablet-width * 1.5);
   }
 
   @media screen and (min-width: 1280px) {
-    height: calc($movie-desktop-width / 16 * 24);
+    height: calc($movie-desktop-width * 1.5);
   }
 }
 
 .movie__data {
-  margin-top: 8px;
   font-weight: 500;
-  font-size: 12px;
-  line-height: 1.33;
+  @include font-size(12, 16);
+
   text-align: left;
 
   pointer-events: none;
 
   @media screen and (min-width: 1280px) {
-    margin-top: 12px;
-    margin-bottom: 16px;
-    font-size: 20px;
-    line-height: 1.2;
+    @include font-size(20, 24);
   }
 }
 
 .movie__title {
-  margin: 0;
+  @extend %no-margin;
+
   text-transform: uppercase;
 }
 
 .movie__description {
-  margin: 0;
+  @extend %no-margin;
+
   color: $main-accent-color;
 }
 
@@ -104,14 +108,29 @@
   top: 10px;
   right: 10px;
 
-  margin: 0;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: $main-accent-color;
-  color: $white-text-color;
+  padding: 1px 8px;
+
+  font-weight: 500;
+  line-height: 1.2;
 
   text-align: left;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
+
+  color: $main-dark-text-color;
+  background-color: $main-accent-color;
+
+  border-radius: 5px;
+
+  pointer-events: none;
+
+  transition: color $transition-timing $transition-function;
+
+  @media screen and (min-width: 1280px) {
+    @include font-size(20, 24);
+
+    padding: 0 10px;
+  }
+
+  body.dark-mode & {
+    color: $main-light-text-color;
+  }
 }

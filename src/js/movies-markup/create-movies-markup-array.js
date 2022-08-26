@@ -1,4 +1,4 @@
-import { choseImageSize, createGenresDescription } from '.';
+import { choseImageSize, createGenresDescription, truncateTitle } from '.';
 import * as noImage from '../../images/no-image.png';
 
 export const createMoviesMarkupArray = (moviesData, pageState, localeDB) =>
@@ -15,7 +15,7 @@ export const createMoviesMarkupArray = (moviesData, pageState, localeDB) =>
             } width="400" height="600" alt="${title}" loading="lazy" data-movie_image></img>
           </div>
           <div class="movie__data">
-            <p class="movie__title">${title}</p>
+            <p class="movie__title">${truncateTitle(title)}</p>
             <p class="movie__description">
               <span>${createGenresDescription(
                 genre_ids,
