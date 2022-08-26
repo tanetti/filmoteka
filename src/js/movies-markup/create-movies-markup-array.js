@@ -1,7 +1,7 @@
 import { choseImageSize, createGenresDescription } from '.';
 import * as noImage from '../../images/no-image.png';
 
-export const createMoviesMarkupArray = (moviesData, savedGenres) =>
+export const createMoviesMarkupArray = (moviesData, pageState, localeDB) =>
   moviesData.map(movieData => {
     const { id, title, poster_path, release_date, vote_average, genre_ids } =
       movieData;
@@ -17,7 +17,11 @@ export const createMoviesMarkupArray = (moviesData, savedGenres) =>
           <div class="movie__data">
             <p class="movie__title">${title}</p>
             <p class="movie__description">
-              <span>${createGenresDescription(genre_ids, savedGenres)}</span>
+              <span>${createGenresDescription(
+                genre_ids,
+                pageState,
+                localeDB
+              )}</span>
               ${
                 release_date &&
                 `<span class="movie__year">${release_date.substring(
