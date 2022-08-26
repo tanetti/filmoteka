@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { rootRefs } from '../root-refs';
-import { pageState } from '../state';
 import { localeDB } from '../locale';
-import * as noImage from '../../images/no-image.png';
 import {
   API_KEY,
   API_BASE_URL,
@@ -18,14 +16,11 @@ axios.defaults.baseURL = API_BASE_URL;
 
 export class Fetcher {
   constructor() {
-    this._query = null;
-    this._currentPage = pageState.currentMoviePage;
-
-    this._genres =
-      pageState[`genres${pageState.locale === 'en' ? 'EN' : 'UA'}`];
-
+    this._pageState = null;
     this._renderPagination = null;
+    this._createMoviesMarkupArray = null;
 
+    this._query = null;
     this._lastURL = null;
     this._lastQuery = null;
     this._lastQueryType = null;
@@ -48,18 +43,19 @@ export class Fetcher {
   }
 
   init(settings) {
-    const { paginationRendering } = settings;
+    const { pageState, createMoviesMarkupArray, paginationRendering } =
+      settings;
 
+    this._pageState = pageState;
+    this._createMoviesMarkupArray = createMoviesMarkupArray;
     this._renderPagination = paginationRendering;
-
-    console.log(this._renderPagination);
   }
 
   async #fetchGenres() {
     const url = '/genre/movie/list';
     const urlParams = {
       api_key: API_KEY,
-      language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
+      language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
     };
 
     const fetchData = await axios.get(url, { params: urlParams }).catch();
@@ -72,12 +68,14 @@ export class Fetcher {
     rootRefs.moviesContainer.classList.remove('is-shown');
     rootRefs.moviesPagination.classList.remove('is-shown');
 
-    if (!this._genres) {
-      const genres = await this.#fetchGenres();
+    if (
+      !this._pageState[`genres${this._pageState.locale === 'en' ? 'EN' : 'UA'}`]
+    ) {
+      const fetchedGenres = await this.#fetchGenres();
 
-      this._genres = genres;
-      pageState[`genres${pageState.locale === 'en' ? 'EN' : 'UA'}`] =
-        this._genres;
+      this._pageState[
+        `genres${this._pageState.locale === 'en' ? 'EN' : 'UA'}`
+      ] = fetchedGenres;
     }
 
     if (this._abortController) {
@@ -94,87 +92,17 @@ export class Fetcher {
         if (error.message === 'canceled') return;
 
         if (error.response?.status === 404) {
-          console.log(localeDB[pageState.locale].fetcher.errors.notFound);
+          console.log(localeDB[this._pageState.locale].fetcher.errors.notFound);
           return;
         }
 
-        console.log(localeDB[pageState.locale].fetcher.errors.general);
+        console.log(localeDB[this._pageState.locale].fetcher.errors.general);
       })
       .finally(() => (this._abortController = null));
 
     this._lastURL = url;
 
     return fetchData?.data;
-  }
-
-  #createGenresDescription(genre_ids) {
-    const currGenresArray = genre_ids.map(genreID => {
-      let currGenre = null;
-
-      for (const savedGenre of this._genres) {
-        if (savedGenre.id === genreID) {
-          currGenre = savedGenre.name;
-
-          break;
-        }
-      }
-
-      return currGenre;
-    });
-
-    if (currGenresArray.length === 0)
-      return localeDB[pageState.locale].movie.noGenre;
-
-    if (currGenresArray.length < 4) return currGenresArray.join(', ');
-
-    currGenresArray.length = 2;
-    currGenresArray.push(localeDB[pageState.locale].movie.others);
-
-    return currGenresArray.join(', ');
-  }
-
-  #choseImageSize(poster_path) {
-    if (window.innerWidth > DESKTOP_MIN_WIDTH)
-      return `src="https://image.tmdb.org/t/p/w500${poster_path}"`;
-
-    return `src="https://image.tmdb.org/t/p/w342${poster_path}"`;
-  }
-
-  #createMoviesMarkupArray(moviesData) {
-    const moviesMarkupArray = moviesData.map(movieData => {
-      const { id, title, poster_path, release_date, vote_average, genre_ids } =
-        movieData;
-      return `
-    <li class="movie">
-        <button class="movie__container" aria-label="${title}" aria-expanded="false" data-movie="${id}">
-          <div class="movie__image-container">  
-            <img class="movie__image is-loading" ${
-              poster_path
-                ? this.#choseImageSize(poster_path)
-                : `src="${noImage}"`
-            } width="400" height="600" alt="${title}" loading="lazy" data-movie_image></img>
-          </div>
-          <div class="movie__data">
-            <p class="movie__title">${title}</p>
-            <p class="movie__description">
-              <span class="movie__ganres">${this.#createGenresDescription(
-                genre_ids
-              )}</span>
-              <span class="movie__year">${
-                release_date ? release_date.substring(0, 4) : 'N/A'
-              }</span>
-            </p>
-          </div>
-          <div class="movie__rating">
-            <span">${vote_average.toFixed(1)}</span>
-          </div>
-          <div class="movie__trailer">
-          </div>
-        </button>
-    </li>`;
-    });
-
-    return moviesMarkupArray;
   }
 
   #showContent() {
@@ -213,7 +141,10 @@ export class Fetcher {
 
     this._currentImagesLoaded = 0;
 
-    const moviesMarkupArray = this.#createMoviesMarkupArray(moviesData);
+    const moviesMarkupArray = this._createMoviesMarkupArray(
+      moviesData,
+      this._pageState[`genres${this._pageState.locale === 'en' ? 'EN' : 'UA'}`]
+    );
 
     let start = null;
     let end = null;
@@ -311,17 +242,13 @@ export class Fetcher {
 
   async reRenderMovies(isTriggeredByPagination = false) {
     if (isTriggeredByPagination) {
-      this._currentPage = pageState.currentMoviePage;
       this._observerIteration = 0;
     }
 
-    this._genres =
-      pageState[`genres${pageState.locale === 'en' ? 'EN' : 'UA'}`];
-
     const urlParams = {
       api_key: API_KEY,
-      page: this._currentPage,
-      language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
+      page: this._pageState.currentMoviePage,
+      language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
       query: this._query,
     };
 
@@ -337,7 +264,7 @@ export class Fetcher {
     );
 
     rootRefs.moviesPagination.innerHTML = this._renderPagination(
-      this._currentPage,
+      this._pageState.currentMoviePage,
       fetchData.total_pages
     );
   }
@@ -345,30 +272,26 @@ export class Fetcher {
   reRenderMoviesByResizing() {
     this.#renderMovies(this._lastQueryData.results, true);
     rootRefs.moviesPagination.innerHTML = this._renderPagination(
-      this._currentPage,
+      this._pageState.currentMoviePage,
       this._lastQueryData.total_pages
     );
   }
 
   async renderTrending(page) {
     if (this._lastQueryType === 'searched') {
-      this._currentPage = 1;
-      pageState.currentMoviePage = this._currentPage;
-      pageState.currentQuery = null;
+      this._pageState.currentMoviePage = 1;
+      this._pageState.currentQuery = null;
       this._observerIteration = 0;
       this._lastQueryData = null;
     }
 
-    if (page) {
-      this._currentPage = page;
-      pageState.currentMoviePage = this._currentPage;
-    }
+    if (page) this._pageState.currentMoviePage = page;
 
     const url = '/trending/movie/week';
     const urlParams = {
       api_key: API_KEY,
-      page: page ? page : this._currentPage,
-      language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
+      page: page ? page : this._pageState.currentMoviePage,
+      language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
     };
 
     const fetchData = await this.#fetchMovies(url, urlParams);
@@ -383,7 +306,7 @@ export class Fetcher {
     );
 
     rootRefs.moviesPagination.innerHTML = this._renderPagination(
-      this._currentPage,
+      this._pageState.currentMoviePage,
       fetchData.total_pages
     );
 
@@ -396,22 +319,18 @@ export class Fetcher {
       this._lastQueryType === 'trending' ||
       (this._lastQuery !== this._query && this._lastQuery !== null)
     ) {
-      this._currentPage = 1;
-      pageState.currentMoviePage = this._currentPage;
+      this._pageState.currentMoviePage = 1;
       this._observerIteration = 0;
       this._lastQueryData = null;
     }
 
-    if (page) {
-      this._currentPage = page;
-      pageState.currentMoviePage = this._currentPage;
-    }
+    if (page) this._pageState.currentMoviePage = page;
 
     const url = '/search/movie';
     const urlParams = {
       api_key: API_KEY,
-      page: page ? page : this._currentPage,
-      language: pageState.locale === 'en' ? 'en-US' : 'uk-UA',
+      page: page ? page : this._pageState.currentMoviePage,
+      language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
       query: this._query,
     };
 
@@ -427,12 +346,11 @@ export class Fetcher {
     );
 
     rootRefs.moviesPagination.innerHTML = this._renderPagination(
-      this._currentPage,
+      this._pageState.currentMoviePage,
       fetchData.total_pages
     );
 
     this._lastQueryType = 'searched';
-    this._lastQuery = this._query;
-    pageState.currentQuery = this._lastQuery;
+    this._pageState.currentQuery = this._query;
   }
 }
