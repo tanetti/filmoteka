@@ -17,13 +17,14 @@ export const createMoviesMarkupArray = (moviesData, savedGenres) =>
           <div class="movie__data">
             <p class="movie__title">${title}</p>
             <p class="movie__description">
-              <span class="movie__ganres">${createGenresDescription(
-                genre_ids,
-                savedGenres
-              )}</span>
-              <span class="movie__year">${
-                release_date ? release_date.substring(0, 4) : 'N/A'
-              }</span>
+              <span>${createGenresDescription(genre_ids, savedGenres)}</span>
+              ${
+                release_date &&
+                `<span class="movie__year">${release_date.substring(
+                  0,
+                  4
+                )}</span>`
+              }
             </p>
           </div>
           <div class="movie__rating">

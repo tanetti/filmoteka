@@ -1,5 +1,10 @@
 import { State } from './state';
+import { STATE_LOCAL_STORAGE_KEY } from '../constants';
 
 export const pageState = new State();
 
-pageState.init();
+const options = {
+  localStorageKey: STATE_LOCAL_STORAGE_KEY,
+};
+
+pageState.init(options);
