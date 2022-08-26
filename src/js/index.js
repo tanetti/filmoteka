@@ -1,7 +1,7 @@
 import debounce from 'lodash.debounce';
 import throttle from 'lodash.throttle';
 import { pageState } from './state';
-import { moviesFetcher } from './api';
+import { onPageLoad } from './on-load';
 import { rootRefs } from './root-refs';
 import { setGlobalLocale, onChangeLocaleClick } from './locale';
 import { setPageMode, onChangePageMode, onSystemModeChange } from './page-mode';
@@ -18,7 +18,7 @@ import {
 setPageMode(pageState.mode);
 setGlobalLocale(pageState.locale);
 
-moviesFetcher.renderTrending();
+onPageLoad();
 
 window
   .matchMedia('(prefers-color-scheme: dark)')
