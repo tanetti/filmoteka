@@ -7,9 +7,6 @@ import {
   MOVIES_TRANSITION_TIME,
   TABLET_MIN_WIDTH,
   DESKTOP_MIN_WIDTH,
-  MOBILE_MAX_MOVIES_RENDER,
-  TABLET_MAX_MOVIES_RENDER,
-  DESKTOP_MAX_MOVIES_RENDER,
 } from '../constants';
 
 axios.defaults.baseURL = API_BASE_URL;
@@ -19,6 +16,7 @@ export class Fetcher {
     this._pageState = null;
     this._renderPagination = null;
     this._createMoviesMarkupArray = null;
+    this._calculateMoviesPartialLoadPoints = null;
 
     this._query = null;
     this._lastURL = null;
@@ -43,12 +41,17 @@ export class Fetcher {
   }
 
   init(settings) {
-    const { pageState, createMoviesMarkupArray, paginationRendering } =
-      settings;
+    const {
+      pageState,
+      createMoviesMarkupArray,
+      paginationRendering,
+      calculateMoviesPartialLoadPoints,
+    } = settings;
 
     this._pageState = pageState;
     this._createMoviesMarkupArray = createMoviesMarkupArray;
     this._renderPagination = paginationRendering;
+    this._calculateMoviesPartialLoadPoints = calculateMoviesPartialLoadPoints;
   }
 
   async #fetchGenres() {
@@ -146,54 +149,11 @@ export class Fetcher {
       this._pageState[`genres${this._pageState.locale === 'en' ? 'EN' : 'UA'}`]
     );
 
-    let start = null;
-    let end = null;
-    let needToLoad = null;
-
-    if (window.innerWidth < TABLET_MIN_WIDTH) {
-      needToLoad = 1;
-      start = isReRender
-        ? 0
-        : this._observerIteration * MOBILE_MAX_MOVIES_RENDER;
-      end =
-        this._observerIteration * MOBILE_MAX_MOVIES_RENDER +
-          MOBILE_MAX_MOVIES_RENDER >=
-        moviesMarkupArray.length
-          ? moviesMarkupArray.length
-          : this._observerIteration * MOBILE_MAX_MOVIES_RENDER +
-            MOBILE_MAX_MOVIES_RENDER;
-    }
-
-    if (
-      window.innerWidth < DESKTOP_MIN_WIDTH &&
-      window.innerWidth >= TABLET_MIN_WIDTH
-    ) {
-      needToLoad = 2;
-      start = isReRender
-        ? 0
-        : this._observerIteration * TABLET_MAX_MOVIES_RENDER;
-      end =
-        this._observerIteration * TABLET_MAX_MOVIES_RENDER +
-          TABLET_MAX_MOVIES_RENDER >=
-        moviesMarkupArray.length
-          ? moviesMarkupArray.length
-          : this._observerIteration * TABLET_MAX_MOVIES_RENDER +
-            TABLET_MAX_MOVIES_RENDER;
-    }
-
-    if (window.innerWidth >= DESKTOP_MIN_WIDTH) {
-      needToLoad = 3;
-      start = isReRender
-        ? 0
-        : this._observerIteration * DESKTOP_MAX_MOVIES_RENDER;
-      end =
-        this._observerIteration * DESKTOP_MAX_MOVIES_RENDER +
-          DESKTOP_MAX_MOVIES_RENDER >=
-        moviesMarkupArray.length
-          ? moviesMarkupArray.length
-          : this._observerIteration * DESKTOP_MAX_MOVIES_RENDER +
-            DESKTOP_MAX_MOVIES_RENDER;
-    }
+    const { start, end, needToLoad } = this._calculateMoviesPartialLoadPoints(
+      isReRender,
+      this._observerIteration,
+      moviesMarkupArray
+    );
 
     rootRefs.moviesContainer.insertAdjacentHTML(
       'beforeend',
