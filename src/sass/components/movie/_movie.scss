@@ -38,6 +38,7 @@
 }
 
 .movie__image-container {
+  pointer-events: none;
   border-radius: 5px;
 
   overflow: hidden;
@@ -68,6 +69,7 @@
 }
 
 .movie__data {
+  pointer-events: none;
 }
 
 .movie__title {
