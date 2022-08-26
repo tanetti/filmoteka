@@ -48,7 +48,6 @@ export const localeDB = {
     },
 
     movie: {
-      rating: 'Рейтинг',
       others: 'Інші',
       noGenre: 'Жанри не вказані',
     },

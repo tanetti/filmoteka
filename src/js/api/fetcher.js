@@ -166,10 +166,9 @@ export class Fetcher {
             </p>
           </div>
           <div class="movie__rating">
-            <span data-locale_field="rating">${
-              localeDB[pageState.locale].movie.rating
-            }</span>
-            : ${vote_average.toFixed(1)}
+            <span">${vote_average.toFixed(1)}</span>
+          </div>
+          <div class="movie__trailer">
           </div>
         </button>
     </li>`;
