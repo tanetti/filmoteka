@@ -95,9 +95,7 @@ export class Fetcher {
   }
 
   async #fetchMovies(url, urlParams) {
-    rootRefs.moviesLoader.classList.add('is-shown');
-    rootRefs.moviesContainer.classList.remove('is-shown');
-    rootRefs.moviesPagination.classList.remove('is-shown');
+    this.#hideContent();
 
     if (
       !this._pageState[`genres${this._pageState.locale === 'en' ? 'EN' : 'UA'}`]
@@ -121,36 +119,47 @@ export class Fetcher {
       .get(url, { params: urlParams, signal: this._abortController.signal })
       .catch(error => {
         if (error.message === 'canceled') return;
-
         if (error.response?.status === 404) {
-          console.log(
-            this._localeDB[this._pageState.locale].fetcher.errors.notFound
-          );
+          this.#error('no-results');
           return;
         }
 
-        console.log(
-          this._localeDB[this._pageState.locale].fetcher.errors.general
-        );
+        this.#error('generic');
       })
       .finally(() => (this._abortController = null));
 
     this._lastURL = url;
 
+    if (fetchData?.data?.results?.length === 0) this.#error('no-results');
+
     return fetchData?.data;
   }
 
   #showContent() {
+    rootRefs.moviesError.classList.remove('is-shown');
     rootRefs.moviesLoader.classList.remove('is-shown');
     rootRefs.moviesContainer.classList.add('is-shown');
     rootRefs.moviesPagination.classList.add('is-shown');
   }
 
+  #hideContent() {
+    rootRefs.moviesLoader.classList.add('is-shown');
+    rootRefs.moviesError.classList.remove('is-shown');
+    rootRefs.moviesContainer.classList.remove('is-shown');
+    rootRefs.moviesPagination.classList.remove('is-shown');
+  }
+
+  #error(error) {
+    rootRefs.moviesLoader.classList.remove('is-shown');
+    rootRefs.moviesContainer.classList.remove('is-shown');
+    rootRefs.moviesPagination.classList.remove('is-shown');
+    rootRefs.moviesError.classList.add('is-shown');
+  }
+
   #onImageLoad(rest = false, { currentTarget }) {
-    if (rest) {
-      currentTarget.classList.remove('is-loading');
-      return;
-    }
+    currentTarget.classList.remove('is-loading');
+
+    if (rest) return;
 
     this._currentImagesLoaded += 1;
 

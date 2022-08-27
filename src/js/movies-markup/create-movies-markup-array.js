@@ -3,15 +3,8 @@ import * as noImage from '../../images/no-image.png';
 
 export const createMoviesMarkupArray = (moviesData, pageState, localeDB) =>
   moviesData.map(movieData => {
-    const {
-      id,
-      title,
-      poster_path,
-      release_date,
-      vote_average,
-      genre_ids,
-      video,
-    } = movieData;
+    const { id, title, poster_path, release_date, vote_average, genre_ids } =
+      movieData;
 
     return `
     <li class="movie">
@@ -20,6 +13,7 @@ export const createMoviesMarkupArray = (moviesData, pageState, localeDB) =>
             <img class="movie__image is-loading" src="${
               poster_path ? choseImageSize(poster_path) : noImage
             }" width="400" height="600" alt="${title}" loading="lazy" data-movie_image />
+            <span class="movie__loader"><span></span><span></span><span></span><span></span></span>
           </span>
           <span class="movie__data">
             <span class="movie__title">${truncateTitle(title)}</span>
