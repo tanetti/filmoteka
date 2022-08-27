@@ -7,6 +7,7 @@ import { setGlobalLocale, onChangeLocaleClick } from './locale';
 import { setPageMode, onChangePageMode, onSystemModeChange } from './page-mode';
 import { onSearchMoviesInputChange } from './search';
 import { onWindowScroll, onScrollToTopClick } from './scroll';
+import { documentClickHandler } from './document-click-handler';
 import { onPaginationClick } from './pagination-actions';
 import { onWindowResize } from './resize';
 import {
@@ -31,11 +32,12 @@ window.addEventListener(
   'resize',
   throttle(onWindowResize, RESIZE_THROTTLE_DELAY)
 );
-rootRefs.scrollToTopButton.addEventListener('click', onScrollToTopClick);
-rootRefs.localeSwitch.addEventListener('click', onChangeLocaleClick);
-rootRefs.modeSwitch.addEventListener('change', onChangePageMode);
-rootRefs.moviesPagination.addEventListener('click', onPaginationClick);
 rootRefs.searchField.addEventListener(
   'input',
   debounce(onSearchMoviesInputChange, SEARCH_DEBOUNCE_DELAY)
 );
+document.body.addEventListener('click', documentClickHandler);
+// rootRefs.scrollToTopButton.addEventListener('click', onScrollToTopClick);
+// rootRefs.localeSwitch.addEventListener('click', onChangeLocaleClick);
+// rootRefs.modeSwitch.addEventListener('change', onChangePageMode);
+// rootRefs.moviesPagination.addEventListener('click', onPaginationClick);
