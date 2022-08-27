@@ -5,21 +5,60 @@
 
 // ...
 .pagination__delimiter {
+padding-top: 6px;
+margin-right: 5px;
 }
 
 .pagination__button {
-  background-color: #fff;
+  background-color: $white-text-color;
+  margin-right: 5px;
+  
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.33;
+
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
 
   cursor: pointer;
 
+  body.dark-mode & {
+    background-color: $modal-caption-text-color;   
+    color: black;
+
+    &:disabled {
+      background-color: $main-accent-color;
+      color: $white-text-color;
+    }  
+  }
+
+
+
   // disabled = isActive
   &:disabled {
+    border-radius: 5px;
+    color: $white-text-color;
+    background-color: $main-accent-color;    
   }
 
   // previous & next buttons
   &--side {
     // just disabled :)
-    &:disabled {
+    opacity: 1;
+    border-radius: 5px;
+    background-color: $secondary-light-bg-color;
+
+    body.dark-mode & {
+      color: $white-text-color;
+    }
+    
+    &:disabled { 
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity $transition-timing $transition-function,
+      visibility $transition-timing $transition-function;
     }
   }
 }

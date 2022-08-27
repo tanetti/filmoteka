@@ -340,7 +340,7 @@ export class Fetcher {
         paginationMarkup += `<button class="pagination__button" type="button" ${
           this._currentPage === this._currentPage - 3 + i
             ? 'disabled="true"'
-            : ''
+          : ''
         } data-actions="${this._currentPage - 3 + i}">${
           this._currentPage - 3 + i
         }</button>`;
