@@ -38,8 +38,6 @@
 }
 
 .movie__image-container {
-  pointer-events: none;
-
   position: relative;
 
   display: block;
@@ -94,8 +92,6 @@
 }
 
 .movie__data {
-  pointer-events: none;
-
   display: block;
 
   font-weight: 500;
