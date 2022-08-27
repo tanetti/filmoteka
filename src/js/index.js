@@ -14,6 +14,7 @@ import {
   SCROLL_THROTTLE_DELAY,
   RESIZE_THROTTLE_DELAY,
 } from './constants';
+import { onOpenModal } from './footerJS/footer';
 
 setPageMode(pageState.mode);
 setGlobalLocale(pageState.locale);
@@ -39,3 +40,4 @@ rootRefs.searchField.addEventListener(
   'input',
   debounce(onSearchMoviesInputChange, SEARCH_DEBOUNCE_DELAY)
 );
+rootRefs.footerButton.addEventListener('click', onOpenModal);
