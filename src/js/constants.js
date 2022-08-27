@@ -14,6 +14,10 @@ export const MOBILE_MAX_MOVIES_RENDER = 4;
 export const TABLET_MAX_MOVIES_RENDER = 6;
 export const DESKTOP_MAX_MOVIES_RENDER = 9;
 
+export const MOBILE_MAX_TITLE_LENGTH = 36;
+export const TABLET_MAX_TITLE_LENGTH = 48;
+export const DESKTOP_MAX_TITLE_LENGTH = 30;
+
 export const SEARCH_DEBOUNCE_DELAY = 500;
 export const SCROLL_THROTTLE_DELAY = 300;
 export const RESIZE_THROTTLE_DELAY = 100;

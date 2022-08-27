@@ -1,7 +1,43 @@
+import { onChangeLocaleClick } from '../locale';
+import { onChangePageMode } from '../page-mode';
+import { onScrollToTopClick } from '../scroll';
+import { onMovieClick, onTrailerClick } from '../modal';
+import { onPaginationClick } from '../pagination-actions';
+
 export const documentClickHandler = event => {
-  const dataset = event.target.dataset;
+  const clickID = event.target.dataset.click;
 
-  if (!dataset) return;
+  if (!clickID) return;
 
-  console.log(dataset);
+  switch (clickID) {
+    case 'page-locale': {
+      onChangeLocaleClick();
+      break;
+    }
+
+    case 'page-mode': {
+      onChangePageMode();
+      break;
+    }
+
+    case 'scroll-to-top': {
+      onScrollToTopClick();
+      break;
+    }
+
+    case 'movie': {
+      onMovieClick(event.target);
+      break;
+    }
+
+    case 'trailer': {
+      onTrailerClick(event.target);
+      break;
+    }
+
+    case 'pagination': {
+      onPaginationClick(event.target.dataset);
+      break;
+    }
+  }
 };

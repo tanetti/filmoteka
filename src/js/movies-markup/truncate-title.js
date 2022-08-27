@@ -1,10 +1,21 @@
-import { TABLET_MIN_WIDTH, DESKTOP_MIN_WIDTH } from '../constants';
+import {
+  TABLET_MIN_WIDTH,
+  DESKTOP_MIN_WIDTH,
+  MOBILE_MAX_TITLE_LENGTH,
+  TABLET_MAX_TITLE_LENGTH,
+  DESKTOP_MAX_TITLE_LENGTH,
+} from '../constants';
 
 export const truncateTitle = title => {
-  let allovedTitleLength = 48;
+  let allovedTitleLength = MOBILE_MAX_TITLE_LENGTH;
 
-  if (window.innerWidth < TABLET_MIN_WIDTH) allovedTitleLength = 38;
-  if (window.innerWidth >= DESKTOP_MIN_WIDTH) allovedTitleLength = 34;
+  if (
+    window.innerWidth >= TABLET_MIN_WIDTH &&
+    window.innerWidth < DESKTOP_MIN_WIDTH
+  )
+    allovedTitleLength = TABLET_MAX_TITLE_LENGTH;
+  if (window.innerWidth >= DESKTOP_MIN_WIDTH)
+    allovedTitleLength = DESKTOP_MAX_TITLE_LENGTH;
 
   let truncatedTitleArr = [];
 

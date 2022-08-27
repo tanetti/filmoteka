@@ -7,14 +7,14 @@ export const paginationRendering = (currentPage, totalPages) => {
 
   paginationMarkup += `<button class="pagination__button pagination__button--side" type="button" ${
     currentPage === 1 ? 'disabled="true"' : ''
-  } data-actions="prev"><</button>`;
+  } data-actions="prev" data-click="pagination"><</button>`;
 
   if (window.innerWidth < TABLET_MIN_WIDTH) {
     for (let i = 1; i < Math.min(6, totalPages); i += 1) {
       if (currentPage <= 3 || totalPages < 6) {
         paginationMarkup += `<button class="pagination__button" type="button" ${
           currentPage === i ? 'disabled="true"' : ''
-        } data-actions="${i}">${i}</button>`;
+        } data-actions="${i}" data-click="pagination">${i}</button>`;
 
         continue;
       }
@@ -24,7 +24,7 @@ export const paginationRendering = (currentPage, totalPages) => {
 
         paginationMarkup += `<button class="pagination__button" type="button" ${
           currentPage === currentPage + i - shift ? 'disabled="true"' : ''
-        } data-actions="${currentPage + i - shift}">${
+        } data-actions="${currentPage + i - shift}" data-click="pagination">${
           currentPage + i - shift
         }</button>`;
 
@@ -33,20 +33,22 @@ export const paginationRendering = (currentPage, totalPages) => {
 
       paginationMarkup += `<button class="pagination__button" type="button" ${
         currentPage === currentPage - 3 + i ? 'disabled="true"' : ''
-      } data-actions="${currentPage - 3 + i}">${currentPage - 3 + i}</button>`;
+      } data-actions="${currentPage - 3 + i}" data-click="pagination">${
+        currentPage - 3 + i
+      }</button>`;
     }
   }
 
   if (window.innerWidth >= TABLET_MIN_WIDTH) {
     paginationMarkup += `<button class="pagination__button" type="button" ${
       currentPage === 1 ? 'disabled="true"' : ''
-    } data-actions="1">1</button>`;
+    } data-actions="1" data-click="pagination">1</button>`;
 
     for (let i = 2; i < Math.min(7, totalPages); i += 1) {
       if (currentPage <= 4 || totalPages < 7) {
         paginationMarkup += `<button class="pagination__button" type="button" ${
           currentPage === i ? 'disabled="true"' : ''
-        } data-actions="${i}">${i}</button>${
+        } data-actions="${i}" data-click="pagination">${i}</button>${
           i === 6 && totalPages - 6 > 1
             ? '<div class="pagination__delimiter">...</div>'
             : ''
@@ -64,7 +66,7 @@ export const paginationRendering = (currentPage, totalPages) => {
             : ''
         }<button class="pagination__button" type="button" ${
           currentPage === currentPage + i - shift ? 'disabled="true"' : ''
-        } data-actions="${currentPage + i - shift}">${
+        } data-actions="${currentPage + i - shift}" data-click="pagination">${
           currentPage + i - shift
         }</button>`;
 
@@ -75,7 +77,9 @@ export const paginationRendering = (currentPage, totalPages) => {
         i === 2 ? '<div class="pagination__delimiter">...</div>' : ''
       }<button class="pagination__button" type="button" ${
         currentPage === currentPage - 4 + i ? 'disabled="true"' : ''
-      } data-actions="${currentPage - 4 + i}">${currentPage - 4 + i}</button>${
+      } data-actions="${currentPage - 4 + i}" data-click="pagination">${
+        currentPage - 4 + i
+      }</button>${
         i === 6 && totalPages - currentPage - 4 + i > 1
           ? '<div class="pagination__delimiter">...</div>'
           : ''
@@ -84,12 +88,12 @@ export const paginationRendering = (currentPage, totalPages) => {
 
     paginationMarkup += `<button class="pagination__button" type="button" ${
       currentPage === totalPages ? 'disabled="true"' : ''
-    } data-actions="${totalPages}">${totalPages}</button>`;
+    } data-actions="${totalPages}" data-click="pagination">${totalPages}</button>`;
   }
 
   paginationMarkup += `<button class="pagination__button pagination__button--side" type="button" ${
     currentPage === totalPages ? 'disabled="true"' : ''
-  } data-actions="next">></button>`;
+  } data-actions="next" data-click="pagination">></button>`;
 
   return paginationMarkup;
 };
