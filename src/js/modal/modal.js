@@ -30,17 +30,10 @@ function onContainerClick({ target }) {
 }
 
 function modalRenderMarkup(item) {
-  // console.log(item)
-  // console.log(items.genre_ids)
-  // if (items.genre_ids.legth >= 2) {
-
-  // }
-  // if (items.poster.patch === "") {
-  //     items.poster.patch = items.original_title
-  // }
-  const markup = `<div class="modal__container">
+ 
+  const markup = `
     <div class="modal__img">
-      <img ${
+      <img  class="modal__img-item"${
         item.poster_path
           ? moviesFetcher.choseImageSize(item.poster_path)
           : `src="${noImage}"`
@@ -48,12 +41,13 @@ function modalRenderMarkup(item) {
     </div>
     <div class="modal__text">
       <h2 class="modal__title"> ${item.original_title}</h2>
-      <tbody class="modal__table">
+      <table class="modal__table">
+      <tbody >
         <tr>
           <td class="table_first_column">Vote/Votes</td>
-          <td class="table_second_column"><p class="table_vote"><p class="modal_table_vote">${
+          <td class="table_second_column"><p class="table_vote"> <span class="modal_table_vote">${
             item.vote_average
-          }</p>/${item.vote_count}</p></td>
+          }</span>/${item.vote_count}</p></td>
 
         </tr>
         <tr>
@@ -72,19 +66,17 @@ function modalRenderMarkup(item) {
 
         </tr>
       </tbody>
+      </table>
       <h3 class="modal_title_about">ABOUT</h3>
       <p class="modal_overview">${item.overview}</p>
-      <div>
-        <button type="button" class="modal_button"> WATCHED</button>
-        <button type="button" class="modal_button"> QUEUE</button>
+      <div class="modal_button_block">
+        <button type="button" class="modal_button modal_button-active"> ADD TO WATCHED</button>
+        <button type="button" class="modal_button modal_button-passive"> ADD TO QUEUE</button>
       </div>
     </div>
 
-   </div>
   `;
-  //
-
-  // console.log(markup);
+  
   modalMarkup.innerHTML = markup;
 }
 

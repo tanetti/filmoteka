@@ -1,9 +1,9 @@
- //   додані класи по модалці
-
+ //   контейнер модального вікна
  .modal__container {
      display: flex;
      flex-direction: column;
-     max-width: 800px;
+     max-height:940px;
+     max-width: 806px;
      margin-left: auto;
      margin-right: auto;
      
@@ -13,19 +13,26 @@
  @media screen and (min-width:767px) and (max-width:1279px) {
      .modal__container {
          flex-direction: row;
+         max-width: 704px;
+         height: 100vh;
+         max-height: 552px;
      }
 
  }
 
  @media screen and (min-width:1280px) {
      .modal__container {
-         width: 96%;
+        max-width: 806px;
          flex-direction: row;
+         height: 100vh;
+         max-height: 558px;
      }
  }
 //  Постер фільму
  .modal__img {
-     width: 96%;
+    padding-top: 48px;
+     width: calc(100% - 40px);
+     margin-bottom: 20px;
     margin-left: auto;
         margin-right: auto;
 
@@ -34,24 +41,61 @@
 
  @media screen and (min-width:767px) and (max-width:1279px) {
      .modal__img {
+        margin-bottom: 0;
          width: 50%;
-         padding: 40px;
+         padding-top: 40px;
+         padding-left: 36px;
      }
 
  }
 
  @media screen and (min-width:1280px) {
     .modal__img {
+        margin: 0;
+        width: 50%;
         display: flex;
         align-items: flex-start;
-            width: 50%;
-            padding: 40px;
+            max-width: 375px;
+            height: 478px;
+            padding-left: 12px;
+            padding-top: 0;
+            margin-top: auto;
+            margin-bottom: auto;
+
         }
  }
 
+.modal__img-item {
+    border-radius: 5px;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+
+}
+
+@media screen and (min-width:767px) and (max-width:1279px) {
+    .modal__img-item {
+       max-width: 264px;
+       height: 374px;
+    }
+
+}
+
+@media screen and (min-width:1280px) {
+    .modal__img-item {
+       
+        width: 100%;
+        
+    }
+}
+
+
 //    Блок з текстом 
  .modal__text {
-     width: 96%;
+     width: calc(100% - 40px);
      margin-left: auto;
      margin-right: auto;
      display: flex;
@@ -63,7 +107,10 @@
  @media screen and (min-width:767px) and (max-width:1279px) {
      .modal__text {
          width: 50%;
-         padding: 40px;
+         padding-top: 40px;
+         padding-left: 12px;
+         padding-right: 72px;
+       
      }
 
  }
@@ -73,11 +120,14 @@
         display: flex;
         align-items: flex-start;
         width: 50%;
-        padding: 40px;
+        padding-left: 12px;
+        padding-top: 40px;
+       
     }
 }
 //  Назва фільму 
 .modal__title {
+    margin: 0;
     font-size: 20px;
 
 
@@ -86,6 +136,7 @@
 @media screen and (min-width:767px) and (max-width:1279px) {
     .modal__title {
         font-size: 20px;
+    
     }
 
 }
@@ -95,22 +146,81 @@
         font-size: 30px;
     }
 }
+.modal__table{
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.table_first_column{
+    width: 40%;
+    color:#8C8C8C;
+    font-size: 12px;
+    padding-bottom: 9px;
+}
+.table_second_column{
+    font-size: 12px;
+    padding-bottom: 9px;
+}
 .table_vote{
     display: flex;
+    align-items: baseline;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 .modal_table_vote{
+    text-align: center;
+    padding-top: 2px;
+    width: 36px;
+    height: 16px;
+    border-radius: 5px;
+    margin-right: 3px;
     background-color: #FF6B01;
     color: #FFFFFF;
     font-size: 12px;
 }
 .modal_title_about{
+    margin-top: 0;
+    margin-bottom: 8px;
     font-size: 12px;
 }
+.modal_button_block{
+    margin-bottom: 40px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
 .modal_button{
-    width: 136px;
+    width: 110px;
     height: 44px;
-    background: #FF6B01;
+    font-size: 12px;
     border-radius: 5px;
+    
+    margin-left: 15px;
+}
+@media screen and (min-width:767px) and (max-width:1279px) {
+    .modal_button{
+        width: 125px;
+    }
+}
+@media screen and (min-width:1280px) {
+   .modal_button{ width: 136px;}
+}
+.modal_button-active{
+    background: #FF6B01;
     color: #FFFFFF;
     border: none;
+}
+.modal_button-passive{
+    border: 1px solid #000000;
+    color: #000000;
+    background-color: #FFFFFF;
+}
+.modal_overview{
+    margin-top: 0;
+    font-size: 12px;
+    line-height: 1.67;
+    height: auto;
+    min-height: 180px;
+    margin-bottom: 20px;
+    overflow:scroll;
 }
