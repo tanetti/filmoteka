@@ -4,14 +4,15 @@ import { onScrollToTopClick } from '../scroll';
 import { PAGINATION_ACTION_DELAY } from '../constants';
 
 export const onEscPress = ({ code }) => {
-  if (code === 'Escape') {
-    onScrollToTopClick();
+  if (code !== 'Escape' || document.body.classList.contains('modal-is-open'))
+    return;
 
-    rootRefs.searchField.value = '';
-    moviesFetcher.query = null;
+  onScrollToTopClick();
 
-    setTimeout(() => moviesFetcher.renderTrending(), PAGINATION_ACTION_DELAY);
+  rootRefs.searchField.value = '';
+  moviesFetcher.query = null;
 
-    window.removeEventListener('keydown', onEscPress);
-  }
+  setTimeout(() => moviesFetcher.renderTrending(), PAGINATION_ACTION_DELAY);
+
+  window.removeEventListener('keydown', onEscPress);
 };

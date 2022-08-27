@@ -1,12 +1,12 @@
-const STATE_LS_KEY = 'filmotekaPageState';
-
 export class State {
   constructor() {
+    this._localStorageKey = null;
+
     this._locale = null;
     this._mode = null;
     this._currentPage = 'home';
     this._currentMoviePage = 1;
-    this._yPosition = 0;
+    this._currentQuery = null;
 
     this._genresEN = null;
     this._genresUA = null;
@@ -60,12 +60,12 @@ export class State {
     this.#recordStateToLS();
   }
 
-  get yPosition() {
-    return this._yPosition;
+  get currentQuery() {
+    return this._currentQuery;
   }
 
-  set yPosition(yPosition) {
-    this._yPosition = yPosition;
+  set currentQuery(currentQuery) {
+    this._currentQuery = currentQuery;
 
     this.#recordStateToLS();
   }
@@ -98,7 +98,9 @@ export class State {
     this.#recordStateToLS();
   }
 
-  init() {
+  init({ localStorageKey }) {
+    this._localStorageKey = localStorageKey;
+
     const savedState = this.#loadStateFromLS();
 
     if (!savedState) {
@@ -126,13 +128,13 @@ export class State {
     this._mode = savedState.mode;
     this._currentPage = savedState.currentPage;
     this._currentMoviePage = savedState.currentMoviePage;
-    this._yPosition = savedState.yPosition;
+    this._currentQuery = savedState.currentQuery;
     this._genresEN = savedState.genresEN;
     this._genresUA = savedState.genresUA;
   }
 
   #loadStateFromLS() {
-    const loadedState = localStorage.getItem(STATE_LS_KEY);
+    const loadedState = localStorage.getItem(this._localStorageKey);
     if (!loadedState) return;
 
     try {
@@ -145,7 +147,7 @@ export class State {
             'mode',
             'currentPage',
             'currentMoviePage',
-            'yPosition',
+            'currentQuery',
             'genresEN',
             'genresUA',
           ].includes(key)
@@ -155,7 +157,7 @@ export class State {
 
       return parsedState;
     } catch {
-      localStorage.removeItem(STATE_LS_KEY);
+      localStorage.removeItem(this._localStorageKey);
     }
   }
 
@@ -165,11 +167,11 @@ export class State {
       mode: this._mode,
       currentPage: this._currentPage,
       currentMoviePage: this._currentMoviePage,
-      yPosition: this._yPosition,
+      currentQuery: this._currentQuery,
       genresEN: this._genresEN,
       genresUA: this._genresUA,
     };
 
-    localStorage.setItem(STATE_LS_KEY, JSON.stringify(currentState));
+    localStorage.setItem(this._localStorageKey, JSON.stringify(currentState));
   }
 }

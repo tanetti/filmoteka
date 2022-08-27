@@ -28,7 +28,7 @@
   }
 }
 
-.modal__close-button {
+.trailer-modal__close-button {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -63,11 +63,11 @@
   }
 }
 
-.modal__close-button-icon {
+.trailer-modal__close-button-icon {
   stroke: currentColor;
 }
 
-.modal {
+.trailer-modal {
   position: fixed;
   top: 50%;
   left: calc((100% + (100vw - 100%)) / 2);
@@ -97,7 +97,7 @@
     opacity: 1;
     visibility: visible;
   }
-  @media screen and (min-width:768px)  and (max-width:1199px){
+  @media screen and (min-width: 768px) and (max-width: 1199px) {
     max-width: 704px;
   }
 
@@ -106,6 +106,4 @@
   }
 }
 
-  //   додані класи по модалці
-
- 
+//   додані класи по модалці
