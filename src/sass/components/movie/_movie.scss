@@ -38,6 +38,8 @@
 }
 
 .movie__image-container {
+  display: block;
+
   border-radius: 5px;
 
   overflow: hidden;
@@ -75,6 +77,8 @@
 }
 
 .movie__data {
+  display: block;
+
   font-weight: 500;
   @include font-size(12, 16);
 
@@ -88,14 +92,12 @@
 }
 
 .movie__title {
-  @extend %no-margin;
+  display: block;
 
   text-transform: uppercase;
 }
 
 .movie__description {
-  @extend %no-margin;
-
   color: $main-accent-color;
 }
 
@@ -106,7 +108,7 @@
 .movie__rating {
   position: absolute;
   top: 10px;
-  right: 10px;
+  left: 10px;
 
   padding: 1px 8px;
 
@@ -133,4 +135,15 @@
   body.dark-mode & {
     color: $main-light-text-color;
   }
+}
+
+.movie__trailer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  color: $main-dark-text-color;
+  background-color: $main-accent-color;
+
+  border-radius: 5px;
 }

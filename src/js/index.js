@@ -3,11 +3,12 @@ import throttle from 'lodash.throttle';
 import { pageState } from './state';
 import { onPageLoad } from './on-load';
 import { rootRefs } from './root-refs';
-import { setGlobalLocale, onChangeLocaleClick } from './locale';
-import { setPageMode, onChangePageMode, onSystemModeChange } from './page-mode';
+import { setGlobalLocale } from './locale';
+import { setPageMode, onSystemModeChange } from './page-mode';
 import { onSearchMoviesInputChange } from './search';
-import { onWindowScroll, onScrollToTopClick } from './scroll';
-import { onPaginationClick } from './pagination-actions';
+import { onWindowScroll } from './scroll';
+import { documentClickHandler } from './document-click-handler';
+
 import { onWindowResize } from './resize';
 import {
   SEARCH_DEBOUNCE_DELAY,
@@ -31,11 +32,8 @@ window.addEventListener(
   'resize',
   throttle(onWindowResize, RESIZE_THROTTLE_DELAY)
 );
-rootRefs.scrollToTopButton.addEventListener('click', onScrollToTopClick);
-rootRefs.localeSwitch.addEventListener('click', onChangeLocaleClick);
-rootRefs.modeSwitch.addEventListener('change', onChangePageMode);
-rootRefs.moviesPagination.addEventListener('click', onPaginationClick);
 rootRefs.searchField.addEventListener(
   'input',
   debounce(onSearchMoviesInputChange, SEARCH_DEBOUNCE_DELAY)
 );
+document.body.addEventListener('click', documentClickHandler);

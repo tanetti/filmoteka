@@ -56,6 +56,32 @@ export class Fetcher {
     this._calculateMoviesPartialLoadPoints = calculateMoviesPartialLoadPoints;
   }
 
+  async fetchVideos(movie_id) {
+    const url = `/movie/${movie_id}/videos`;
+    const urlParams = {
+      api_key: API_KEY,
+      language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
+    };
+
+    const fetchData = await axios.get(url, { params: urlParams }).catch();
+
+    if (
+      (fetchData.data.results.length === 0 &&
+        this._pageState.locale === 'en') ||
+      (fetchData.data.results.length > 0 && this._pageState.locale === 'ua')
+    )
+      return fetchData.data.results;
+
+    const urlParamsEN = {
+      api_key: API_KEY,
+      language: 'en-US',
+    };
+
+    const fetchDataEN = await axios.get(url, { params: urlParamsEN }).catch();
+
+    return fetchDataEN.data.results;
+  }
+
   async #fetchGenres() {
     const url = '/genre/movie/list';
     const urlParams = {
