@@ -7,7 +7,7 @@
   width: 100vw;
   height: 100vh;
 
-  background-color: $backdrop-light-bg-color;
+  background-color: $backdrop-dark-bg-color;
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
 
@@ -20,9 +20,5 @@
   &.is-shown {
     opacity: 1;
     visibility: visible;
-  }
-
-  body.dark-mode & {
-    background-color: $backdrop-dark-bg-color;
   }
 }
