@@ -29,12 +29,21 @@ openModal()
 
 ModalRenderMarkup(modalCurrentMovie)
 }
+let markup
 
-
-function ModalRenderMarkup(items) {
-    console.log(items)
-    const markup = items.map(item => {return`<div class="modal__container">
-    <div class="modal__img"> ${item.backdrop_patch}</div>
+function ModalRenderMarkup(item) {
+    
+    console.log(item)
+    // console.log(items.genre_ids)
+    // if (items.genre_ids.legth >= 2) {
+        
+    // }
+    // if (items.poster.patch === "") {
+    //     items.poster.patch = items.original_title
+    // }
+    markup = (item) => {
+        return `<div class="modal__container">
+    <div class="modal__img"> ${item.poster_patch}</div>
     <div class="modal__text"> 
       <h2 class="modal__title"> ${item.original_title}</h2>
       <tbody class="modal__table">
@@ -69,11 +78,13 @@ function ModalRenderMarkup(items) {
    
 
    </div>
-  `})
-//   
-    console.log(markup)
-modalMarkup.innerHTML=markup
+  `}
 }
+//   
+
+    // console.log(markup)
+modalMarkup.innerHTML = markup(item)
+
 
 function openModal() {
     modalWindow.classList.add('is-shown');
