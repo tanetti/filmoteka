@@ -11,6 +11,7 @@ margin-right: 5px;
 
 .pagination__button {
   background-color: $white-text-color;
+  color: $main-light-text-color;
   margin-right: 5px;
   
   font-size: 12px;
@@ -24,9 +25,28 @@ margin-right: 5px;
 
   cursor: pointer;
 
+
+  &:last-child {
+    margin-right: 0px;
+  }
+
+  &:hover {
+    background-color: $main-accent-color;
+    color: $white-text-color;
+    transition:  background-color $transition-timing $transition-function;
+  }
+
   body.dark-mode & {
     background-color: $modal-caption-text-color;   
-    color: black;
+    color: $main-light-text-color;
+
+    
+    &:hover {
+      background-color: $main-accent-color;
+      color: $white-text-color;
+      transition:  background-color $transition-timing $transition-function;
+    }
+
 
     &:disabled {
       background-color: $main-accent-color;
@@ -37,8 +57,8 @@ margin-right: 5px;
 
 
   // disabled = isActive
+
   &:disabled {
-    border-radius: 5px;
     color: $white-text-color;
     background-color: $main-accent-color;    
   }
@@ -50,15 +70,28 @@ margin-right: 5px;
     border-radius: 5px;
     background-color: $secondary-light-bg-color;
 
-    body.dark-mode & {
-      color: $white-text-color;
-    }
     
     &:disabled { 
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity $transition-timing $transition-function,
-      visibility $transition-timing $transition-function;
+      opacity: 0.5;
+      cursor: auto;
+      transition: opacity $transition-timing $transition-function;
+      background-color: $secondary-light-bg-color;  
+      color: $main-light-text-color;
+    }
+
+
+    body.dark-mode & {
+      color: $white-text-color;
+      background-color: $main-dark-bg-color;  
+
+      &:disabled { 
+        opacity: 0.5;
+        cursor: auto;
+        transition: opacity $transition-timing $transition-function;
+        background-color: $main-dark-bg-color;  
+    
+      }
     }
   }
 }
+
