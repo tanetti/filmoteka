@@ -7,7 +7,9 @@ export const localeDB = {
       home: 'Home',
       library: 'My library',
       placeholder: 'Search movies',
-      modeSwitch: 'Page mode switch',
+      modeSwitch: 'Thema',
+      watched: 'WATCHED',
+      queue: 'QUEUE',
     },
 
     main: {
@@ -39,7 +41,9 @@ export const localeDB = {
       home: 'Головна',
       library: 'Бібліотека',
       placeholder: 'Пошук фільмів',
-      modeSwitch: 'Перемикач теми сторінки',
+      modeSwitch: 'Тема',
+      watched: 'Переглянуто',
+      queue: 'В черзі',
     },
 
     main: {
