@@ -4,10 +4,19 @@ export const localeDB = {
 
     header: {
       locale: 'EN',
+<<<<<<< HEAD
       home: 'HOME',
       library: 'MY LIBRARY',
       placeholder: 'Movie search',
       modeSwitch: 'Thema',
+=======
+      home: 'Home',
+      library: 'My library',
+      placeholder: 'Search movies',
+      modeSwitch: 'Thema',
+      watched: 'WATCHED',
+      queue: 'QUEUE',
+>>>>>>> 864337b5a31691104602212533227be6fd9b67c5
     },
 
     main: {
@@ -40,6 +49,11 @@ export const localeDB = {
       library: 'Бібліотека',
       placeholder: 'Пошук фільмів',
       modeSwitch: 'Тема',
+<<<<<<< HEAD
+=======
+      watched: 'Переглянуто',
+      queue: 'В черзі',
+>>>>>>> 864337b5a31691104602212533227be6fd9b67c5
     },
 
     main: {
