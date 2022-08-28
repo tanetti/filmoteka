@@ -11,6 +11,7 @@ export const openModal = target => {
     document.body.classList.remove('modal-is-open');
 
     window.removeEventListener('keydown', onEscPress);
+    document.querySelector('.frame-wrapper').innerHTML = '';
   };
 
   const onEscPress = ({ code }) => {
