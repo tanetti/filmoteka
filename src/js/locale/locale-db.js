@@ -10,9 +10,9 @@ export const localeDB = {
       placeholder: 'Movie search',
       modeSwitch: 'Thema',
 
-      home: 'Home',
-      library: 'My library',
-      placeholder: 'Search movies',
+      home: 'HOME',
+      library: 'MY LIBRARY',
+      placeholder: 'Movie search',
       modeSwitch: 'Thema',
       watched: 'WATCHED',
       queue: 'QUEUE',
