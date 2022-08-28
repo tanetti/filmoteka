@@ -3,6 +3,7 @@ import { onChangePageMode } from '../page-mode';
 import { onScrollToTopClick } from '../scroll';
 import { onMovieClick, onTrailerClick } from '../modal';
 import { onPaginationClick } from '../pagination-actions';
+import { onModalButtonClick } from '../library-actions';
 
 export const documentClickHandler = event => {
   const clickID = event.target.dataset.click;
@@ -37,6 +38,16 @@ export const documentClickHandler = event => {
 
     case 'pagination': {
       onPaginationClick(event.target.dataset);
+      break;
+    }
+
+    case 'watched': {
+      onModalButtonClick(clickID, event.target.dataset.movie);
+      break;
+    }
+
+    case 'queue': {
+      onModalButtonClick(clickID, event.target.dataset.movie);
       break;
     }
   }
