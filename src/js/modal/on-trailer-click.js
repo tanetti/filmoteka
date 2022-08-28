@@ -7,10 +7,12 @@ export const onTrailerClick = async target => {
 
   function renderTrailer() {
     document.querySelector('.frame-wrapper').innerHTML = '';
-    let key = trailersData[0].key;
-    if (trailersData.length === 0) {
-      key = '2U76x2fD_tE';
-    }
+    let key;
+    // if (trailersData.length === 0) {
+    //   key = '2U76x2fD_tE';
+    // }
+
+    trailersData.length === 0 ? (key = '2U76x2fD_tE') : trailersData[0].key;
 
     trailersData.map(trailerData => {
       if (trailerData.name === 'Official Trailer') {
