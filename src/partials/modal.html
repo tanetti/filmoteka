@@ -1,12 +1,19 @@
 <div class="modal-backdrop" data-modal_backdrop></div>
 
-<div class="modal" data-modal="movie">
-  <button class="modal__close-button js-modal-close">
-    <svg class="modal__close-button-icon" width="30" height="30">
+<div class="movie-modal" id="movie-modal" data-modal="movie">
+  <button class="movie-modal__close-button" data-modal_close>
+    <svg class="movie-modal__close-button-icon" width="30" height="30">
       <use href="./images/svg/sprite.svg#close"></use>
     </svg>
   </button>
-  movie
-  
-  </form>
+  <div class="movie-modal__data-container" data-container></div>
+</div>
+
+<div class="trailer-modal" id="trailer-modal" data-modal="trailer">
+  <button class="trailer-modal__close-button" data-modal_close>
+    <svg class="trailer-modal__close-button-icon" width="30" height="30">
+      <use href="./images/svg/sprite.svg#close"></use>
+    </svg>
+  </button>
+  trailer
 </div>

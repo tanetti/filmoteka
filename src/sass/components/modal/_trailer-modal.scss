@@ -1,33 +1,4 @@
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 200;
-
-  width: 100vw;
-  height: 100vh;
-
-  background-color: $backdrop-light-bg-color;
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-
-  opacity: 0;
-  visibility: hidden;
-
-  transition: opacity $transition-timing $transition-function,
-    visibility $transition-timing $transition-function;
-
-  &.is-shown {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  body.dark-mode & {
-    background-color: $backdrop-dark-bg-color;
-  }
-}
-
-.modal__close-button {
+.trailer-modal__close-button {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -62,11 +33,11 @@
   }
 }
 
-.modal__close-button-icon {
+.trailer-modal__close-button-icon {
   stroke: currentColor;
 }
 
-.modal {
+.trailer-modal {
   position: fixed;
   top: 50%;
   left: calc((100% + (100vw - 100%)) / 2);

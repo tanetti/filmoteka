@@ -1,7 +1,7 @@
-const STATE_LS_KEY = 'filmotekaPageState';
-
 export class State {
   constructor() {
+    this._localStorageKey = null;
+
     this._locale = null;
     this._mode = null;
     this._currentPage = 'home';
@@ -98,7 +98,9 @@ export class State {
     this.#recordStateToLS();
   }
 
-  init() {
+  init({ localStorageKey }) {
+    this._localStorageKey = localStorageKey;
+
     const savedState = this.#loadStateFromLS();
 
     if (!savedState) {
@@ -132,7 +134,7 @@ export class State {
   }
 
   #loadStateFromLS() {
-    const loadedState = localStorage.getItem(STATE_LS_KEY);
+    const loadedState = localStorage.getItem(this._localStorageKey);
     if (!loadedState) return;
 
     try {
@@ -155,7 +157,7 @@ export class State {
 
       return parsedState;
     } catch {
-      localStorage.removeItem(STATE_LS_KEY);
+      localStorage.removeItem(this._localStorageKey);
     }
   }
 
@@ -170,6 +172,6 @@ export class State {
       genresUA: this._genresUA,
     };
 
-    localStorage.setItem(STATE_LS_KEY, JSON.stringify(currentState));
+    localStorage.setItem(this._localStorageKey, JSON.stringify(currentState));
   }
 }
