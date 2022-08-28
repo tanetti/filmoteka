@@ -3,9 +3,11 @@ import { onChangePageMode } from '../page-mode';
 import { onScrollToTopClick } from '../scroll';
 import { onMovieClick, onTrailerClick } from '../modal';
 import { onPaginationClick } from '../pagination-actions';
+import { onModalButtonClick } from '../library-actions';
 
 export const documentClickHandler = event => {
   const clickID = event.target.dataset.click;
+  const target = event.target;
 
   if (!clickID) return;
 
@@ -26,17 +28,27 @@ export const documentClickHandler = event => {
     }
 
     case 'movie': {
-      onMovieClick(event.target);
+      onMovieClick(target);
       break;
     }
 
     case 'trailer': {
-      onTrailerClick(event.target);
+      onTrailerClick(target);
       break;
     }
 
     case 'pagination': {
-      onPaginationClick(event.target.dataset);
+      onPaginationClick(target.dataset);
+      break;
+    }
+
+    case 'watched': {
+      onModalButtonClick(target);
+      break;
+    }
+
+    case 'queue': {
+      onModalButtonClick(target);
       break;
     }
   }
