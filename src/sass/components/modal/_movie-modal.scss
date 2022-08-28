@@ -48,16 +48,16 @@
 
 .movie-modal__close-button {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 3px;
+  right: 3px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 30px;
-  height: 30px;
-  padding: 0;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
 
   color: $main-light-text-color;
 
@@ -66,18 +66,20 @@
   border-width: 0;
   cursor: pointer;
 
-  transition: color $transition-timing $transition-function,
-    transform $transition-timing $transition-function;
+  transition: color $transition-timing $transition-function;
 
   &:hover,
   &:focus {
     color: $main-accent-color;
-
-    transform: scale(1.1);
   }
 
   body.dark-mode & {
     color: $main-dark-text-color;
+
+    &:hover,
+    &:focus {
+      color: $main-accent-color;
+    }
   }
 }
 
