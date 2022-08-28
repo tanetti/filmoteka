@@ -56,8 +56,20 @@ export class Fetcher {
     this._calculateMoviesPartialLoadPoints = calculateMoviesPartialLoadPoints;
   }
 
-  async fetchVideos(movie_id) {
-    const url = `/movie/${movie_id}/videos`;
+  async fetchMovieByID(movieID, language) {
+    const url = `/movie/${movieID}`;
+    const urlParams = {
+      api_key: API_KEY,
+      language: language === 'en' ? 'en-US' : 'uk-UA',
+    };
+
+    const fetchData = await axios.get(url, { params: urlParams }).catch();
+
+    return fetchData.data;
+  }
+
+  async fetchVideos(movieID) {
+    const url = `/movie/${movieID}/videos`;
     const urlParams = {
       api_key: API_KEY,
       language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
@@ -241,7 +253,7 @@ export class Fetcher {
       }
     });
   }
-  
+
   async reRenderMovies(isTriggeredByPagination = false) {
     if (isTriggeredByPagination) {
       this._observerIteration = 0;
