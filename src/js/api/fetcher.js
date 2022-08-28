@@ -241,7 +241,7 @@ export class Fetcher {
       }
     });
   }
-
+  
   async reRenderMovies(isTriggeredByPagination = false) {
     if (isTriggeredByPagination) {
       this._observerIteration = 0;
