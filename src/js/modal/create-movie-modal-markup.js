@@ -60,11 +60,31 @@ export const createMovieModalMarkup = ({
     }</p>
     <p class="movie-modal__overview">${overview}</p>
     <div class="movie-modal__button-container">
-      <button class="movie-modal__button is-active" type="button" data-movie="${id}" data-click="watched">${
-    localeDB[pageState.locale].movieModal.addWatched
-  }</button>
-      <button class="movie-modal__button" type="button" data-movie="${id}" data-click="queue">${
-    localeDB[pageState.locale].movieModal.addQueue
-  }</button>
+      ${
+        pageState.isInWatched(id)
+          ? `<button class="movie-modal__button is-active" type="button" data-movie="${id}" data-click="watched">
+              <span class="movie-modal__button-text">${
+                localeDB[pageState.locale].movieModal.removeWatched
+              }</span>
+            </button>`
+          : `<button class="movie-modal__button" type="button" data-movie="${id}" data-click="watched">
+              <span class="movie-modal__button-text">${
+                localeDB[pageState.locale].movieModal.addWatched
+              }</span>
+            </button>`
+      }
+      ${
+        pageState.isInQueue(id)
+          ? `<button class="movie-modal__button is-active" type="button" data-movie="${id}" data-click="queue">
+              <span class="movie-modal__button-text">${
+                localeDB[pageState.locale].movieModal.removeQueue
+              }</span>
+            </button>`
+          : `<button class="movie-modal__button" type="button" data-movie="${id}" data-click="queue">
+              <span class="movie-modal__button-text">${
+                localeDB[pageState.locale].movieModal.addQueue
+              }</span>
+            </button>`
+      }
     </div>
   </div>`;

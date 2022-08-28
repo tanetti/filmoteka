@@ -7,6 +7,7 @@ import { onModalButtonClick } from '../library-actions';
 
 export const documentClickHandler = event => {
   const clickID = event.target.dataset.click;
+  const target = event.target;
 
   if (!clickID) return;
 
@@ -27,27 +28,27 @@ export const documentClickHandler = event => {
     }
 
     case 'movie': {
-      onMovieClick(event.target);
+      onMovieClick(target);
       break;
     }
 
     case 'trailer': {
-      onTrailerClick(event.target);
+      onTrailerClick(target);
       break;
     }
 
     case 'pagination': {
-      onPaginationClick(event.target.dataset);
+      onPaginationClick(target.dataset);
       break;
     }
 
     case 'watched': {
-      onModalButtonClick(clickID, event.target.dataset.movie);
+      onModalButtonClick(target);
       break;
     }
 
     case 'queue': {
-      onModalButtonClick(clickID, event.target.dataset.movie);
+      onModalButtonClick(target);
       break;
     }
   }
