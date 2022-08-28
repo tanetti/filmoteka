@@ -23,7 +23,6 @@ export const onTrailerClick = async target => {
   document
     .querySelector('.frame-wrapper')
     .insertAdjacentHTML('beforeend', markup);
-  // }
 
   openModal(target);
 };
