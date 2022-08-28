@@ -3,6 +3,7 @@ import { openModal } from './';
 
 export const onTrailerClick = async target => {
   const trailersData = await moviesFetcher.fetchVideos(target.dataset.movie);
+  console.log(trailersData);
 
   document.querySelector('.frame-wrapper').innerHTML = '';
   let key;
@@ -15,6 +16,10 @@ export const onTrailerClick = async target => {
 
   trailersData.map(trailerData => {
     if (trailerData.name === 'Official Trailer') {
+      key = trailerData.key;
+    } else if (trailerData.name === 'Trailer') {
+      key = trailerData.key;
+    } else if (trailerData.name === 'Official Teaser Trailer') {
       key = trailerData.key;
     }
   });
