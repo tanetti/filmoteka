@@ -1,7 +1,11 @@
 <header class="header">
   <div class="header__container" data-header>
     <div class="header__settings-container">
-      <button class="header__locale-button" type="button" data-click="page-locale" data-locale_field="locale">
+      <button 
+      class="header__locale-button" 
+      type="button" 
+      data-click="page-locale" 
+      data-locale_field="locale">
         EN
       </button>
       <input class="check" type="checkbox" name="check" id="page-mode" value="Название" data-mode_switch
@@ -40,4 +44,48 @@
     </div>
 
 
+</header>
+
+
+    <div class="header__navigation-container">
+      <a class="header__logo-container" href="#">
+       
+
+        <svg class="logo" width="24px" height="24px">
+          <use class="logo__filmoteka" href="/src/images/svg/sprite.svg#logo" ></use>     
+        </svg>
+
+        <h1 class="header__title ">Filmoteka</h1>
+      </a>
+      <nav class="header__navigation">
+        <a class="header__navigation-link header__navigation-link__active" href="#" data-locale_field="home"
+          >HOME</a
+        >
+        <a class="header__navigation-link  header__navigation-link--library" href="#" data-locale_field="library"
+          >MY LIBRARY</a
+        >
+      </nav>
+
+    </div>
+
+   
+      <div class="form-wrap">
+        <input
+          class="header__search-input"
+          placeholder="Movie search"
+          type="text"
+          autocomplete="off"
+          name="search"
+          data-search_field
+          data-locale_field="placeholder"
+        />
+    
+        <svg class="logo-search" width="15px" height="15px">
+          <use class="logo-search--border" href="/src/images/svg/sprite.svg#search" ></use>
+        </svg>
+      </div>
+    
+  </div>
+
+  
 </header>
