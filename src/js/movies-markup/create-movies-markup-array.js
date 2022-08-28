@@ -33,7 +33,6 @@ export const createMoviesMarkupArray = (moviesData, pageState, localeDB) =>
             ${vote_average.toFixed(1)}
           </span>
           <span class="movie__trailer" aria-expanded="false" aria-controls="trailer-modal" data-movie="${id}" data-click="trailer">
-            Trailer
           </span>
         </button>
     </li>`

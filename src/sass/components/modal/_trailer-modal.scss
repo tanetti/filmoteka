@@ -1,7 +1,8 @@
 .trailer-modal__close-button {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: -50px;
+  right: 0;
+  z-index: 500;
 
   display: flex;
   align-items: center;
@@ -18,8 +19,7 @@
   border-width: 0;
   cursor: pointer;
 
-  transition: color $transition-timing $transition-function,
-    transform $transition-timing $transition-function;
+  transition: color $transition-timing $transition-function, transform $transition-timing $transition-function;
 
   &:hover,
   &:focus {
@@ -40,28 +40,22 @@
 .trailer-modal {
   position: fixed;
   top: 50%;
-  left: calc((100% + (100vw - 100%)) / 2);
+  left: 50%;
   z-index: 300;
 
   width: calc(100% - 40px);
-  max-width: 806px;
-  max-height: 100vh;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  padding-left: 12px;
-  padding-right: 12px;
+  max-width: 560px;
+  max-height: 315px;
 
   opacity: 0;
   visibility: hidden;
 
-  overflow-y: auto;
+  overflow: visible;
 
   transform: translate(-50%, -50%);
 
-  background-color: $main-light-bg-color;
-
-  transition: opacity $transition-timing $transition-function,
-    visibility $transition-timing $transition-function;
+  background-color: transparent;
+  transition: opacity $transition-timing $transition-function, visibility $transition-timing $transition-function;
 
   &.is-shown {
     opacity: 1;
@@ -71,4 +65,9 @@
   body.dark-mode & {
     background-color: $main-dark-bg-color;
   }
+}
+
+.frame-wrapper {
+  display: flex;
+  justify-content: center;
 }
