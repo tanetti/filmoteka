@@ -3,95 +3,86 @@
   justify-content: center;
 }
 
-// ...
 .pagination__delimiter {
-padding-top: 6px;
-margin-right: 5px;
+  margin-right: 5px;
+  padding-top: 8px;
+
+  font-weight: 500;
+  @include font-size(12, 18);
 }
 
 .pagination__button {
-  background-color: $white-text-color;
-  color: $main-light-text-color;
-  margin-right: 5px;
-  
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.33;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   width: 40px;
   height: 40px;
-  border: none;
+
+  font-weight: 500;
+  @include font-size(12, 18);
+
+  color: $main-light-text-color;
+  background-color: $white-text-color;
+
+  border-width: 0;
   border-radius: 5px;
 
   cursor: pointer;
 
+  transition: color $transition-timing $transition-function,
+    background-color $transition-timing $transition-function;
 
-  &:last-child {
-    margin-right: 0px;
+  &:hover,
+  &:focus,
+  &:disabled {
+    color: $white-text-color;
+    background-color: $main-accent-color;
   }
 
-  &:hover {
-    background-color: $main-accent-color;
-    color: $white-text-color;
-    transition:  background-color $transition-timing $transition-function;
+  &:disabled {
+    cursor: auto;
   }
 
   body.dark-mode & {
-    background-color: $modal-caption-text-color;   
-    color: $main-light-text-color;
+    color: $main-dark-text-color;
+    background-color: $main-dark-bg-color;
 
-    
-    &:hover {
-      background-color: $main-accent-color;
-      color: $white-text-color;
-      transition:  background-color $transition-timing $transition-function;
-    }
-
-
+    &:hover,
+    &:focus,
     &:disabled {
+      color: $main-light-text-color;
       background-color: $main-accent-color;
-      color: $white-text-color;
-    }  
+    }
   }
 
-
-
-  // disabled = isActive
-
-  &:disabled {
-    color: $white-text-color;
-    background-color: $main-accent-color;    
-  }
-
-  // previous & next buttons
   &--side {
-    // just disabled :)
-    opacity: 1;
-    border-radius: 5px;
     background-color: $secondary-light-bg-color;
 
-    
-    &:disabled { 
-      opacity: 0.5;
-      cursor: auto;
-      transition: opacity $transition-timing $transition-function;
-      background-color: $secondary-light-bg-color;  
-      color: $main-light-text-color;
+    &:disabled {
+      color: $backdrop-dark-bg-color;
+      background-color: $secondary-light-bg-color;
     }
 
-
     body.dark-mode & {
-      color: $white-text-color;
-      background-color: $main-dark-bg-color;  
+      background-color: $secondary-dark-bg-color;
 
-      &:disabled { 
-        opacity: 0.5;
-        cursor: auto;
-        transition: opacity $transition-timing $transition-function;
-        background-color: $main-dark-bg-color;  
-    
+      &:disabled {
+        color: $backdrop-light-bg-color;
+        background-color: $secondary-dark-bg-color;
       }
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    &:not(:last-child) {
+      margin-right: 5px;
     }
   }
 }
 
+.parination__arrow {
+  width: 16px;
+
+  stroke: currentColor;
+}

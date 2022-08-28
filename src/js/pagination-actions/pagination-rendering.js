@@ -7,7 +7,11 @@ export const paginationRendering = (currentPage, totalPages) => {
 
   paginationMarkup += `<button class="pagination__button pagination__button--side" type="button" ${
     currentPage === 1 ? 'disabled="true"' : ''
-  } data-actions="prev" data-click="pagination"><</button>`;
+  } data-actions="prev" data-click="pagination">
+      <svg class="parination__arrow" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+        <path d="M13 8H3m5 5L3 8l5-5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>`;
 
   if (window.innerWidth < TABLET_MIN_WIDTH) {
     for (let i = 1; i < Math.min(6, totalPages); i += 1) {
@@ -93,7 +97,11 @@ export const paginationRendering = (currentPage, totalPages) => {
 
   paginationMarkup += `<button class="pagination__button pagination__button--side" type="button" ${
     currentPage === totalPages ? 'disabled="true"' : ''
-  } data-actions="next" data-click="pagination">></button>`;
+  } data-actions="next" data-click="pagination">
+    <svg class="parination__arrow" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+      <path d="M3 8h10m-5 5 5-5-5-5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>`;
 
   return paginationMarkup;
 };
