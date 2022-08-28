@@ -8,15 +8,25 @@ export const localeDB = {
       home: 'HOME',
       library: 'MY LIBRARY',
       placeholder: 'Movie search',
-      modeSwitch: 'Thema',
 
       home: 'HOME',
       library: 'MY LIBRARY',
       placeholder: 'Movie search',
       modeSwitch: 'Thema',
+
+
+      home: 'HOME',
+      library: 'MY LIBRARY',
+      placeholder: 'Movie search',
+
+      home: 'Home',
+      library: 'My library',
+      placeholder: 'Search movies',
+
+
+      modeSwitch: 'Thema',
       watched: 'WATCHED',
       queue: 'QUEUE',
- 
     },
 
     main: {
@@ -52,7 +62,6 @@ export const localeDB = {
 
       watched: 'Переглянуто',
       queue: 'В черзі',
-
     },
 
     main: {
