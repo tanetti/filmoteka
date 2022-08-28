@@ -203,12 +203,14 @@
 }
 
 .description__head {
+  min-width: 85px;
   padding: 0;
 
   font-weight: inherit;
   @include font-size(12, 16);
 
   text-align: left;
+  vertical-align: top;
 
   color: $modal-caption-text-color;
 }
