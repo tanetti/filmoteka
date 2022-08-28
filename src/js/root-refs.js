@@ -18,4 +18,5 @@ export const rootRefs = {
   modals: document.querySelectorAll('[data-modal]'),
   footerButton: document.querySelector('[data-footer_link]'),
   footerModal: document.querySelector('[data-footer_modal]'),
+  footerBackdrop: document.querySelector('[data-footer_backdrop]'),
 };
