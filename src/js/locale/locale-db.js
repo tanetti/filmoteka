@@ -4,10 +4,10 @@ export const localeDB = {
 
     header: {
       locale: 'EN',
-      home: 'Home',
-      library: 'My library',
-      placeholder: 'Search movies',
-      modeSwitch: 'Page mode switch',
+      home: 'HOME',
+      library: 'MY LIBRARY',
+      placeholder: 'Movie search',
+      modeSwitch: 'Thema',
     },
 
     main: {
@@ -39,7 +39,7 @@ export const localeDB = {
       home: 'Головна',
       library: 'Бібліотека',
       placeholder: 'Пошук фільмів',
-      modeSwitch: 'Перемикач теми сторінки',
+      modeSwitch: 'Тема',
     },
 
     main: {
