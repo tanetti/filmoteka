@@ -10,35 +10,64 @@ const refs = {
   myLibraryBtn: document.querySelector('[data-locale_field="library"]'),
   homeBtnEl: document.querySelector('[data-locale_field="home"]'),
   formEl: document.querySelector('.form-wrap'),
-  BtnMyLibraryWatchedEl: document.querySelector('[data-locale_field="watched"]'),
-  BtnMyLibraryQueueEl: document.querySelector('[data-locale_field="queue"]'),
+  BtnMyLibraryWatchedEl: document.querySelector('button[data-locale_field="watched"]'),
+  BtnMyLibraryQueueEl: document.querySelector('button[data-locale_field="queue"]'),
 };
 
 refs.myLibraryBtn.addEventListener('click', onClickBtnLibrary);
 refs.homeBtnEl.addEventListener('click', onClickBtnHome);
+refs.BtnMyLibraryWatchedEl.addEventListener('click', onClickBtnWatch);
+refs.BtnMyLibraryQueueEl.addEventListener('click', onClickBtnQueue);
 
-function onClickBtnLibrary (e) {
-e.preventDefault();
 
-if(refs.myLibraryBtn){
-refs.formEl.classList.add('is-hidden');
-refs.BtnMyLibraryWatchedEl.classList.remove('is-hidden');
-refs.BtnMyLibraryQueueEl.classList.remove('is-hidden');
+function onClickBtnWatch (e){
+  e.preventDefault();
+
+  if(refs.BtnMyLibraryWatchedEl){
+    refs.BtnMyLibraryWatchedEl.classList.add('header__button--active');
+    refs.BtnMyLibraryQueueEl.classList.remove('header__button--active');
+    
+    }
+}
+
+function onClickBtnQueue (e){
+  e.preventDefault();
+
+  if(refs.BtnMyLibraryQueueEl){
+    refs.BtnMyLibraryWatchedEl.classList.remove('header__button--active');
+    refs.BtnMyLibraryQueueEl.classList.add('header__button--active');
+    
+    }
 }
 
 
 
-};
-
-function onClickBtnHome (e) {
+function onClickBtnLibrary (e) {
   e.preventDefault();
   
-  if(refs.homeBtnEl){
-    refs.formEl.classList.remove('is-hidden');
-    refs.BtnMyLibraryWatchedEl.classList.add('is-hidden');
-    refs.BtnMyLibraryQueueEl.classList.add('is-hidden');
-    }
+  if(refs.myLibraryBtn){
+  refs.BtnMyLibraryWatchedEl.classList.add('header__button--active');
+  refs.formEl.classList.add('is-hidden');
+  refs.BtnMyLibraryWatchedEl.classList.remove('is-hidden');
+  refs.BtnMyLibraryQueueEl.classList.remove('is-hidden');
+  } 
+  
+  
+  
+  
   };
+  
+  function onClickBtnHome (e) {
+    e.preventDefault();
+    
+    if(refs.homeBtnEl){
+      refs.formEl.classList.remove('is-hidden');
+      refs.BtnMyLibraryWatchedEl.classList.add('is-hidden');
+      refs.BtnMyLibraryQueueEl.classList.add('is-hidden');
+      }
+    };
+
+
 
 export const setHeaderLocaleFields = locale => {
   for (const localeField of refs.headerLocaleFields) {
