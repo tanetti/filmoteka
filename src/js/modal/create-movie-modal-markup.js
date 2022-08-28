@@ -56,7 +56,7 @@ export const createMovieModalMarkup = ({
       </tbody>
     </table>
     <p class="movie-modal__about">${
-      localeDB[pageState.locale].movieModal.about
+      overview ? localeDB[pageState.locale].movieModal.about : ''
     }</p>
     <p class="movie-modal__overview">${overview}</p>
     <div class="movie-modal__button-container">

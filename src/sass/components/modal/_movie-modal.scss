@@ -119,6 +119,16 @@
   margin-left: auto;
   margin-right: auto;
 
+  background-color: $secondary-light-bg-color;
+
+  border-radius: 5px;
+
+  overflow: hidden;
+
+  body.dark-mode & {
+    background-color: $secondary-dark-bg-color;
+  }
+
   @media screen and (min-width: 768px) {
     flex-shrink: 0;
 
@@ -143,7 +153,6 @@
   width: 100%;
   height: 100%;
 
-  border-radius: 5px;
   object-fit: cover;
 }
 

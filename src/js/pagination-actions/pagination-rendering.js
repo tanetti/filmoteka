@@ -5,7 +5,7 @@ import { TABLET_MIN_WIDTH } from '../constants';
 export const paginationRendering = (currentPage, totalPages) => {
   if (totalPages === 1 || !totalPages) return '';
 
-  let paginationMarkup = '';
+  let paginationMarkup = '<div class="main__pagination-container">';
 
   paginationMarkup += `<button class="pagination__button pagination__button--side" type="button" ${
     currentPage === 1 ? 'disabled="true"' : ''
@@ -108,6 +108,8 @@ export const paginationRendering = (currentPage, totalPages) => {
       <path d="M3 8h10m-5 5 5-5-5-5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>`;
+
+  paginationMarkup += '</>';
 
   return paginationMarkup;
 };
