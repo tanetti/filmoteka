@@ -12,6 +12,7 @@ const refs = {
   formEl: document.querySelector('.form-wrap'),
   BtnMyLibraryWatchedEl: document.querySelector('button[data-locale_field="watched"]'),
   BtnMyLibraryQueueEl: document.querySelector('button[data-locale_field="queue"]'),
+  headerEl: document.querySelector('header'),
 };
 
 refs.myLibraryBtn.addEventListener('click', onClickBtnLibrary);
@@ -46,13 +47,16 @@ function onClickBtnLibrary (e) {
   e.preventDefault();
   
   if(refs.myLibraryBtn){
+    refs.headerEl.classList.remove('header__background--home');
+    refs.headerEl.classList.add('header__background--library');
+    
+    refs.homeBtnEl.classList.remove('header__navigation-link__active');
+    refs.myLibraryBtn.classList.add('header__navigation-link__active');
   refs.BtnMyLibraryWatchedEl.classList.add('header__button--active');
   refs.formEl.classList.add('is-hidden');
   refs.BtnMyLibraryWatchedEl.classList.remove('is-hidden');
   refs.BtnMyLibraryQueueEl.classList.remove('is-hidden');
   } 
-  
-  
   
   
   };
@@ -61,6 +65,10 @@ function onClickBtnLibrary (e) {
     e.preventDefault();
     
     if(refs.homeBtnEl){
+      refs.headerEl.classList.remove('header__background--library');
+      refs.headerEl.classList.add('header__background--home');
+      refs.homeBtnEl.classList.add('header__navigation-link__active');
+    refs.myLibraryBtn.classList.remove('header__navigation-link__active');
       refs.formEl.classList.remove('is-hidden');
       refs.BtnMyLibraryWatchedEl.classList.add('is-hidden');
       refs.BtnMyLibraryQueueEl.classList.add('is-hidden');

@@ -61,12 +61,7 @@
 
     }
 
-    // &:hover,
-    // &:focus {
-    //     background-color: $main-accent-color;
-    //     border: 1px solid $main-accent-color;
-    //     box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
-    // }
+
 
 
 
@@ -108,28 +103,15 @@
 
     }
 
-    &--active {
-
-        background-color: $main-accent-color;
-        border: 1px solid $main-accent-color;
-        box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
 
 
-    }
 
-
-    // &:hover,
-    // &:focus {
-    //     background-color: $main-accent-color;
-    //     border: 1px solid $main-accent-color;
-    //     box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
-    // }
 }
 
-.header__button--active{
+.header__button--active {
     background-color: $main-accent-color;
-        border: 1px solid $main-accent-color;
-        box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
+    border: 1px solid $main-accent-color;
+    box-shadow: 0px 8px 43px rgba(255, 107, 1, 0.6);
 }
 
 

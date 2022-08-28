@@ -4,12 +4,14 @@
  
   color: $white-text-color; 
  
- 
   background-repeat: no-repeat; 
 background-size: cover; 
 background-position: 50% 50%; 
   background-color: $main-dark-bg-color; 
 
+} 
+
+.header__background--home{
   @media screen and (min-width:320px) {
     background-image: url(/src/images/header/abstract-background-s.png) 
   }
@@ -21,8 +23,20 @@ background-position: 50% 50%;
   @media screen and (min-width:1280px) {
     background-image: url(/src/images/header/abstract-background-with-red-lines\ 1.png) 
   }
-  
-} 
+}
+.header__background--library{
+   @media screen and (min-width:320px) {
+    background-image: url(/src/images/header/Rectangle-s.png) 
+  }
+
+  @media screen and (min-width:768px) {
+    background-image: url(/src/images/header/Rectangle-m.png) 
+  }
+
+  @media screen and (min-width:1280px) {
+    background-image: url(/src/images/header/Rectangle-l.png) 
+  }
+}
  
 .header__container { 
   @extend .container; 
