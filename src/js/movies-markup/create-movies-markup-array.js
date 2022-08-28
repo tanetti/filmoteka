@@ -2,12 +2,9 @@ import { choseImageSize, createGenresDescription, truncateTitle } from '.';
 import * as noImage from '../../images/no-image.png';
 
 export const createMoviesMarkupArray = (moviesData, pageState, localeDB) =>
-  moviesData.map(movieData => {
-    const { id, title, poster_path, release_date, vote_average, genre_ids } =
-      movieData;
-
-    return `
-    <li class="movie">
+  moviesData.map(
+    ({ id, title, poster_path, release_date, vote_average, genre_ids }) =>
+      `<li class="movie">
         <button class="movie__container" type="button" aria-label="${title}" aria-expanded="false" aria-controls="movie-modal" data-movie="${id}" data-click="movie">
           <span class="movie__image-container">  
             <img class="movie__image is-loading" src="${
@@ -39,5 +36,5 @@ export const createMoviesMarkupArray = (moviesData, pageState, localeDB) =>
             Trailer
           </span>
         </button>
-    </li>`;
-  });
+    </li>`
+  );

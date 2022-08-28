@@ -19,6 +19,18 @@ export const localeDB = {
       noGenre: 'Genres not specified',
     },
 
+    movieModal: {
+      votes: 'Vote / Votes',
+      popularity: 'Popularity',
+      originalTitle: 'Original title',
+      genre: 'Genre',
+      about: 'About',
+      addWatched: 'Add to watched',
+      removeWatched: 'Remove from watched',
+      addQueue: 'Add to queue',
+      removeQueue: 'Remove from queue',
+    },
+
     footer: {
       rights: 'All Rights Reserved',
     },
@@ -49,6 +61,18 @@ export const localeDB = {
     movie: {
       others: 'Інші',
       noGenre: 'Жанри не вказані',
+    },
+
+    movieModal: {
+      votes: 'Рейтинг / Голоси',
+      popularity: 'Популярність',
+      originalTitle: 'Оригінальна назва',
+      genre: 'Жанри',
+      about: 'Сюжет',
+      addWatched: 'Додати до переглянутих',
+      removeWatched: 'Видалити з переглянутих',
+      addQueue: 'Додати в чергу',
+      removeQueue: 'Видалити з черги',
     },
 
     footer: {

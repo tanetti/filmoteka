@@ -1,3 +1,51 @@
+.movie-modal {
+  position: fixed;
+  top: 50%;
+  left: calc((100% + (100vw - 100%)) / 2);
+  z-index: 300;
+
+  width: calc(100% - 40px);
+  max-width: 440px;
+  max-height: calc(100% - 40px);
+  padding-top: 48px;
+  padding-bottom: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translate(-50%, -50%);
+
+  background-color: $main-light-bg-color;
+
+  transition: opacity $transition-timing $transition-function,
+    visibility $transition-timing $transition-function;
+
+  &.is-shown {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  body.dark-mode & {
+    background-color: $main-dark-bg-color;
+  }
+
+  @media screen and (min-width: 768px) {
+    max-width: 704px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    max-width: 806px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
 .movie-modal__close-button {
   position: absolute;
   top: 8px;
@@ -37,38 +85,280 @@
   stroke: currentColor;
 }
 
-.movie-modal {
-  position: fixed;
-  top: 50%;
-  left: calc((100% + (100vw - 100%)) / 2);
-  z-index: 300;
-
-  width: calc(100% - 40px);
-  max-width: 806px;
-  max-height: 100vh;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  padding-left: 12px;
-  padding-right: 12px;
-
-  opacity: 0;
-  visibility: hidden;
+.movie-modal__data-container {
+  width: 100%;
+  max-height: calc(100vh - 188px);
 
   overflow-y: auto;
 
-  transform: translate(-50%, -50%);
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
 
-  background-color: $main-light-bg-color;
+  &::-webkit-scrollbar-track {
+    background: $backdrop-dark-bg-color;
+    border-radius: 5px;
+  }
 
-  transition: opacity $transition-timing $transition-function,
-    visibility $transition-timing $transition-function;
+  &::-webkit-scrollbar-thumb {
+    background-color: $main-accent-color;
+    border-radius: 5px;
+  }
 
-  &.is-shown {
-    opacity: 1;
-    visibility: visible;
+  @media screen and (min-width: 768px) {
+    display: flex;
+  }
+}
+
+.movie-modal__image-container {
+  width: 232px;
+  height: 357px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media screen and (min-width: 768px) {
+    flex-shrink: 0;
+
+    margin: 0;
+    margin-right: 68px;
+
+    width: 264px;
+    height: 374px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 375px;
+    height: 478px;
+
+    margin-right: 16px;
+  }
+}
+
+.movie-modal__image {
+  @extend .image;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.movie-modal__info-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.movie-modal__title {
+  @extend %no-margin;
+
+  display: block;
+
+  width: 232px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+
+  font-weight: 500;
+  @include font-size(20, 23);
+
+  text-transform: uppercase;
+
+  @media screen and (min-width: 768px) {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    @include font-size(30, 35);
+  }
+}
+
+.description {
+  width: 232px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+
+  font-weight: 500;
+
+  border-collapse: collapse;
+
+  @media screen and (min-width: 768px) {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+}
+
+.description__line:not(:last-child) > th,
+.description__line:not(:last-child) > td {
+  padding-bottom: 8px;
+}
+
+.description__head {
+  padding: 0;
+
+  font-weight: inherit;
+  @include font-size(12, 16);
+
+  text-align: left;
+
+  color: $modal-caption-text-color;
+}
+
+.description__data {
+  padding: 0;
+
+  @include font-size(12, 14);
+}
+
+.description__vote {
+  margin-right: 3px;
+  padding-top: 2px;
+  padding-bottom: 1px;
+  padding-left: 8px;
+  padding-right: 8px;
+
+  color: $white-text-color;
+  background-color: $main-accent-color;
+
+  border-radius: 5px;
+
+  body.dark-mode & {
+    color: $main-light-text-color;
+  }
+}
+
+.movie-modal__about {
+  @extend %no-margin;
+
+  width: 232px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 8px;
+
+  font-weight: 500;
+  @include font-size(12, 16);
+  text-transform: uppercase;
+
+  @media screen and (min-width: 768px) {
+    width: 100%;
+  }
+}
+
+.movie-modal__overview {
+  @extend %no-margin;
+  width: 232px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+
+  font-weight: 500;
+  @include font-size(12, 20);
+
+  @media screen and (min-width: 768px) {
+    flex-grow: 1;
+
+    width: 100%;
+  }
+}
+
+.movie-modal__button-container {
+  display: flex;
+  justify-content: center;
+
+  @media screen and (min-width: 768px) {
+    justify-content: flex-start;
+  }
+
+  @media screen and (min-width: 1280px) {
+    justify-content: center;
+  }
+}
+
+.movie-modal__button {
+  display: block;
+
+  width: 110px;
+  height: 44px;
+  padding: 5px 10px;
+
+  font-weight: 500;
+  @include font-size(12, 16);
+  text-transform: uppercase;
+
+  color: $white-text-color;
+  background-color: $main-accent-color;
+
+  border-width: 1px;
+  border-radius: 5px;
+  border-color: transparent;
+
+  cursor: pointer;
+
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 125px;
+
+    &:not(:last-child) {
+      margin-right: 15 px;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 136px;
+  }
+
+  transition: color $transition-timing $transition-function,
+    background-color $transition-timing $transition-function,
+    border-color $transition-timing $transition-function;
+
+  &:hover,
+  &:focus {
+    color: $main-light-text-color;
+    background-color: $main-hovered-accent-color;
   }
 
   body.dark-mode & {
-    background-color: $main-dark-bg-color;
+    color: $main-light-text-color;
+
+    &:hover,
+    &:focus {
+      color: $main-dark-text-color;
+    }
+  }
+
+  &.is-active {
+    color: $main-light-text-color;
+    background-color: $main-light-bg-color;
+    border-color: $main-light-text-color;
+
+    &:hover,
+    &:focus {
+      color: $main-accent-color;
+      border-color: $main-accent-color;
+    }
+
+    body.dark-mode & {
+      color: $main-dark-text-color;
+      background-color: $main-dark-bg-color;
+      border-color: $main-dark-text-color;
+
+      &:hover,
+      &:focus {
+        color: $main-accent-color;
+        border-color: $main-accent-color;
+      }
+    }
   }
 }
