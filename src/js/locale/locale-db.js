@@ -17,6 +17,7 @@ export const localeDB = {
     movie: {
       others: 'Others',
       noGenre: 'Genres not specified',
+      trailer: 'Watch trailer',
     },
 
     movieModal: {
@@ -29,6 +30,11 @@ export const localeDB = {
       removeWatched: 'Remove from watched',
       addQueue: 'Add to queue',
       removeQueue: 'Remove from queue',
+    },
+
+    pagination: {
+      previous: 'Previous page',
+      next: 'Next page',
     },
 
     footer: {
@@ -61,6 +67,7 @@ export const localeDB = {
     movie: {
       others: 'Інші',
       noGenre: 'Жанри не вказані',
+      trailer: 'Дивитися трейлер',
     },
 
     movieModal: {
@@ -73,6 +80,11 @@ export const localeDB = {
       removeWatched: 'Видалити з переглянутих',
       addQueue: 'Додати в чергу',
       removeQueue: 'Видалити з черги',
+    },
+
+    pagination: {
+      previous: 'Попередня сторінка',
+      next: 'Наступна сторінка',
     },
 
     footer: {
