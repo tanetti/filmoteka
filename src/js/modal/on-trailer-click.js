@@ -8,9 +8,6 @@ export const onTrailerClick = async target => {
   function renderTrailer() {
     document.querySelector('.frame-wrapper').innerHTML = '';
     let key;
-    // if (trailersData.length === 0) {
-    //   key = '2U76x2fD_tE';
-    // }
 
     trailersData.length === 0 ? (key = '2U76x2fD_tE') : trailersData[0].key;
 
