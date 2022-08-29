@@ -14,13 +14,23 @@ export const onModalButtonClick = async target => {
 
   if (pageState.locale === 'en') {
     movieDataUA = await moviesFetcher.fetchMovieByID(id, 'ua');
-    if (!movieDataUA) return;
+    if (!movieDataUA || movieDataUA === 'error') {
+      target.disabled = false;
+      target.offsetParent.classList.remove('is-shown');
+
+      return;
+    }
 
     movieDataEN = moviesFetcher.queryData.find(movie => movie.id === id);
   }
   if (pageState.locale === 'ua') {
     movieDataEN = await moviesFetcher.fetchMovieByID(id, 'en');
-    if (!movieDataEN) return;
+    if (!movieDataEN || movieDataEN === 'error') {
+      target.disabled = false;
+      target.offsetParent.classList.remove('is-shown');
+
+      return;
+    }
 
     movieDataUA = moviesFetcher.queryData.find(movie => movie.id === id);
   }

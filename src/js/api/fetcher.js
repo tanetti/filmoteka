@@ -63,7 +63,11 @@ export class Fetcher {
       language: language === 'en' ? 'en-US' : 'uk-UA',
     };
 
-    const fetchData = await axios.get(url, { params: urlParams }).catch();
+    const fetchData = await axios
+      .get(url, { params: urlParams })
+      .catch(() => 'error');
+
+    if (fetchData === 'error') return fetchData;
 
     return fetchData.data;
   }
@@ -93,7 +97,11 @@ export class Fetcher {
       language: 'en-US',
     };
 
-    const fetchDataEN = await axios.get(url, { params: urlParamsEN }).catch();
+    const fetchDataEN = await axios
+      .get(url, { params: urlParamsEN })
+      .catch(() => 'error');
+
+    if (fetchDataEN === 'error') return fetchDataEN;
 
     return fetchDataEN.data.results;
   }
@@ -105,9 +113,13 @@ export class Fetcher {
       language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
     };
 
-    const fetchData = await axios.get(url, { params: urlParams }).catch();
+    const fetchData = await axios
+      .get(url, { params: urlParams })
+      .catch(() => this.#error('generic'));
 
-    return fetchData.data.genres;
+    if (!fetchData) return;
+
+    return fetchData?.data?.genres;
   }
 
   async #fetchMovies(url, urlParams) {
