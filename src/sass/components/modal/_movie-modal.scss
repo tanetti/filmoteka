@@ -314,6 +314,8 @@
   opacity: 0;
   visibility: hidden;
 
+  overflow: hidden;
+
   transition: opacity $transition-timing $transition-function,
     visibility $transition-timing $transition-function;
 
