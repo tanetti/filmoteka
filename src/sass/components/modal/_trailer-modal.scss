@@ -57,8 +57,7 @@
 
   cursor: pointer;
 
-  transition: color $transition-timing $transition-function,
-    transform $transition-timing $transition-function;
+  transition: color $transition-timing $transition-function;
 
   &:hover,
   &:focus {
@@ -75,6 +74,14 @@
   z-index: 2;
 
   width: 100%;
+
+  transition: opacity $transition-timing $transition-function,
+    visibility $transition-timing $transition-function;
+
+  &.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
 
   @media screen and (min-width: 768px) {
     height: 396px;

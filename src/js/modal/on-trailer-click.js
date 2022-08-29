@@ -24,9 +24,12 @@ export const onTrailerClick = async target => {
     }
   }
 
-  const markup = `<iframe class="trailer-modal__farame" type="text/html" width="560" height="315" src="https://www.youtube.com/embed/${key}" frameborder="0" showinfo="0" hl="${
+  const markup = `<iframe class="trailer-modal__farame is-hidden" type="text/html" width="560" height="315" src="https://www.youtube.com/embed/${key}" frameborder="0" showinfo="0" hl="${
     pageState.locale === 'en' ? 'en' : 'uk'
   }" controls="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
   document.querySelector('.trailer-modal__farame-container').innerHTML = markup;
+  document
+    .querySelector('.trailer-modal__farame')
+    .classList.remove('is-hidden');
 };
