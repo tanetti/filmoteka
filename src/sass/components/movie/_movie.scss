@@ -202,6 +202,8 @@
   opacity: 0;
   visibility: hidden;
 
+  pointer-events: none;
+
   transition: opacity $transition-timing $transition-function,
     visibility $transition-timing $transition-function;
 
