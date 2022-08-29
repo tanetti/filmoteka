@@ -32,42 +32,72 @@
       <div class="team-slider__container">
         <div class="team-slider__slide">
           <div class="team-slider__image-container">
-            <img
-              class="team-slider__image"
-              srcset="
-                ./images/footer/ukrl-mob.jpg     300w,
-                ./images/footer/ukrl-tabl.jpg    450w,
-                ./images/footer/ukrl-desk.jpg    525w,
-                ./images/footer/ukrl-mob2x.jpg   600w,
-                ./images/footer/ukrl-tabl2x.jpg  900w,
-                ./images/footer/ukrl-desk2x.jpg 1050w
-              "
-              sizes="(min-width:1280px) 520px, (min-width:768px) 500px, 300px"
-              src="./images/footer/ukrl-mob.jpg"
-              width="300"
-              height="474"
-              alt="Ukrainian landscape"
-            />
+            <picture>
+              <source
+                srcset="
+                  ./images/footer/ukrl-mob.jpg   1x,
+                  ./images/footer/ukrl-mob2x.jpg 2x
+                "
+                media="(max-width: 767.98px)"
+                type="image/jpeg"
+              />
+              <source
+                srcset="
+                  ./images/footer/ukrl-tabl.jpg   1x,
+                  ./images/footer/ukrl-tabl2x.jpg 2x
+                "
+                media="(min-width: 768px)"
+                type="image/jpeg"
+              />
+              <source
+                srcset="
+                  ./images/footer/ukrl-desk.jpg   1x,
+                  ./images/footer/ukrl-desk2x.jpg 2x
+                "
+                media="(min-width: 1280px)"
+                type="image/jpeg"
+              />
+              <img
+                class="team-slider__image"
+                src="./images/footer/ukrl-mob.jpg"
+                alt="Ukrainian landscape"
+              />
+            </picture>
           </div>
         </div>
         <div class="team-slider__slide">
           <div class="team-slider__image-container">
-            <img
-              class="team-slider__image"
-              srcset="
-                ./images/footer/alex-mob.jpg     300w,
-                ./images/footer/alex-tabl.jpg    450w,
-                ./images/footer/alex-desk.jpg    525w,
-                ./images/footer/alex-mob2x.jpg   600w,
-                ./images/footer/alex-tabl2x.jpg  900w,
-                ./images/footer/alex-desk2x.jpg 1050w
-              "
-              sizes="(min-width:1280px) 520px, (min-width:768px) 500px, 300px"
-              src="./images/footer/alex-mob.jpg"
-              width="300"
-              height="474"
-              alt="Alexey Melnik"
-            />
+            <picture>
+              <source
+                srcset="
+                  ./images/footer/alex-mob.jpg   1x,
+                  ./images/footer/alex-mob2x.jpg 2x
+                "
+                media="(max-width: 767.98px)"
+                type="image/jpeg"
+              />
+              <source
+                srcset="
+                  ./images/footer/alex-tabl.jpg   1x,
+                  ./images/footer/alex-tabl2x.jpg 2x
+                "
+                media="(min-width: 768px)"
+                type="image/jpeg"
+              />
+              <source
+                srcset="
+                  ./images/footer/alex-desk.jpg   1x,
+                  ./images/footer/alex-desk2x.jpg 2x
+                "
+                media="(min-width: 1280px)"
+                type="image/jpeg"
+              />
+              <img
+                class="team-slider__image"
+                src="./images/footer/alex-mob.jpg"
+                alt="Alexey Melnik"
+              />
+            </picture>
           </div>
         </div>
         <div class="team-slider__slide">
@@ -84,8 +114,6 @@
               "
               sizes="(min-width:1280px) 520px, (min-width:768px) 500px, 300px"
               src="./images/footer/igor-mob.jpg"
-              width="300"
-              height="474"
               alt="Igor Igomar"
             />
           </div>
@@ -104,8 +132,6 @@
               "
               sizes="(min-width:1280px) 520px, (min-width:768px) 500px, 300px"
               src="./images/footer/nat-mob.jpg"
-              width="300"
-              height="474"
               alt="Natalia Novak"
             />
           </div>
@@ -124,8 +150,6 @@
               "
               sizes="(min-width:1280px) 520px, (min-width:768px) 500px, 300px"
               src="./images/footer/vova-mob.jpg"
-              width="300"
-              height="474"
               alt="Vladimir Dudka"
             />
           </div>
@@ -144,8 +168,6 @@
               "
               sizes="(min-width:1280px) 520px, (min-width:768px) 500px, 300px"
               src="./images/footer/andry-mob.jpg"
-              width="300"
-              height="474"
               alt="Andrey Skorohod"
             />
           </div>
@@ -164,8 +186,6 @@
               "
               sizes="(min-width:1280px) 520px, (min-width:768px) 500px, 300px"
               src="./images/footer/julia-mob.jpg"
-              width="300"
-              height="474"
               alt="Julia Onufrieva"
             />
           </div>
@@ -184,8 +204,6 @@
               "
               sizes="(min-width:1280px) 520px, (min-width:768px) 500px, 300px"
               src="./images/footer/vitya-mob.jpg"
-              width="300"
-              height="474"
               alt="Viktor Chekirko"
             />
           </div>
@@ -204,8 +222,6 @@
               "
               sizes="(min-width:1280px) 520px, (min-width:768px) 500px, 300px"
               src="./images/footer/serg-mob.jpg"
-              width="300"
-              height="474"
               alt="Sergey Poberejnui"
             />
           </div>
@@ -224,8 +240,6 @@
               "
               sizes="(min-width:1280px) 520px, (min-width:768px) 500px, 300px"
               src="./images/footer/dan-mob.jpg"
-              width="300"
-              height="474"
               alt="Danylo Altukhov"
             />
           </div>
@@ -244,8 +258,6 @@
               "
               sizes="(min-width:1280px) 520px, (min-width:768px) 500px, 300px"
               src="./images/footer/ukrf-mob.jpg"
-              width="300"
-              height="474"
               alt="Ukrainian Flag"
             />
           </div>
