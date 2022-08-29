@@ -24,9 +24,9 @@ export const onTrailerClick = async target => {
     }
   }
 
-  const markup = `<iframe class="trailer-modal__farame is-hidden" type="text/html" width="560" height="315" src="https://www.youtube.com/embed/${key}?origin=https://tanetti.github.io&showinfo=0" frameborder="0" showinfo="0" hl="${
+  const markup = `<iframe class="trailer-modal__farame is-hidden" type="text/html" width="560" height="315" src="https://www.youtube.com/embed/${key}&origin=https://tanetti.github.io&showinfo=0&hl=${
     pageState.locale === 'en' ? 'en' : 'uk'
-  }" controls="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  }&controls=2" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
   document.querySelector('.trailer-modal__farame-container').innerHTML = markup;
   document
