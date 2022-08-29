@@ -38,8 +38,10 @@ export const localeDB = {
     },
 
     footer: {
-      rights: 'All Rights Reserved |',
+      rights: 'All Rights Reserved',
       develop: 'Developed with',
+      by: 'by',
+      student: 'GoIT Students',
     },
 
     fetcher: {
@@ -89,8 +91,10 @@ export const localeDB = {
     },
 
     footer: {
-      rights: 'Bсі Права Захищено |',
-      develop: 'Розроблений з',
+      rights: 'Bсі Права Захищено',
+      develop: 'Розроблено з',
+      by: '',
+      student: 'Студентами GoIT',
     },
 
     fetcher: {

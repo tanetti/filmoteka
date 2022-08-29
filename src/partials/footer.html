@@ -1,17 +1,24 @@
 <footer class="footer">
   <div class="footer__container" data-footer>
-    <p class="footer__year">© 2022 |</p>
-    <p class="footer__rights" data-locale_field="rights">
-      All Rights Reserved|
+    <p class="footer__copyright">
+      &#169;
+      <span class="footer__year">2022</span>
+      <span class="footer__rights" data-locale_field="rights"
+        >All Rights Reserved</span
+      >
     </p>
-    <p data-locale_field="develop">Developed with</p>
-    <svg class="footer__svg" width="14" height="13">
-      <use href="./images/svg/sprite.svg#heart"></use>
-    </svg>
-
-    <p>
-      by
-      <button class="footer__button" data-footer_link type="button">
+    <p class="footer__dev-team">
+      <span data-locale_field="develop">Developed with</span>
+      <svg class="footer__icon" width="14" height="13">
+        <use href="./images/svg/sprite.svg#heart" />
+      </svg>
+      <span data-locale_field="by">by</span>
+      <button
+        class="footer__button"
+        data-footer_link
+        type="button"
+        data-locale_field="student"
+      >
         GoIT Students
       </button>
     </p>
@@ -19,7 +26,7 @@
       <div class="footer__modal" data-footer_modal>
         <button class="modal__close-button" data-footer_close>
           <svg class="modal__close-button-icon" width="15" height="15">
-            <use href="./images/svg/sprite.svg#close"></use>
+            <use href="./images/svg/sprite.svg#close" />
           </svg>
         </button>
         <div class="embla" id="main-carousel">

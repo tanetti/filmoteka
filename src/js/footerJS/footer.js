@@ -5,7 +5,7 @@ const closeBtn = document.querySelector('[data-footer_close]');
 
 rootRefs.footerButton.addEventListener('click', onOpenModal);
 
-function onOpenModal() {
+export function onOpenModal() {
   rootRefs.footerBackdrop.classList.add('is-shown');
   rootRefs.footerModal.classList.add('is-shown');
   carousel();
