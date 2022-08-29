@@ -3,6 +3,8 @@ import { pageState } from '../state';
 import { openModal } from './';
 
 export const onTrailerClick = async target => {
+  openModal(target);
+
   const trailersData = await moviesFetcher.fetchVideos(target.dataset.movie);
 
   let key = null;
@@ -27,6 +29,4 @@ export const onTrailerClick = async target => {
   }" controls="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
 
   document.querySelector('.trailer-modal__farame-container').innerHTML = markup;
-
-  openModal(target);
 };

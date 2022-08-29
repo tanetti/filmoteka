@@ -13,7 +13,7 @@
 
   transform: translate(-50%, -50%);
 
-  background-color: transparent;
+  background-color: $main-light-text-color;
 
   transition: opacity $transition-timing $transition-function,
     visibility $transition-timing $transition-function;
@@ -25,10 +25,12 @@
 
   @media screen and (min-width: 768px) {
     max-width: 704px;
+    height: 396px;
   }
 
   @media screen and (min-width: 1280px) {
     max-width: 806px;
+    height: 454px;
   }
 }
 
@@ -69,6 +71,9 @@
 }
 
 .trailer-modal__farame {
+  position: relative;
+  z-index: 2;
+
   width: 100%;
 
   @media screen and (min-width: 768px) {

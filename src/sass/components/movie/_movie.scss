@@ -205,7 +205,8 @@
   transition: opacity $transition-timing $transition-function,
     visibility $transition-timing $transition-function;
 
-  .movie__image.is-loading + & {
+  .movie__image.is-loading + &,
+  &.in-trailer-modal {
     opacity: 1;
     visibility: initial;
   }
