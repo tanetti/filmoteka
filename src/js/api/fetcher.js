@@ -75,7 +75,11 @@ export class Fetcher {
       language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
     };
 
-    const fetchData = await axios.get(url, { params: urlParams }).catch();
+    const fetchData = await axios
+      .get(url, { params: urlParams })
+      .catch(() => 'error');
+
+    if (fetchData === 'error') return fetchData;
 
     if (
       (fetchData.data.results.length === 0 &&

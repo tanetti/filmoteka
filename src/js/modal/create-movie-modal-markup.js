@@ -60,6 +60,11 @@ export const createMovieModalMarkup = ({
     }</p>
     <p class="movie-modal__overview">${overview}</p>
     <div class="movie-modal__button-container">
+      <div class="movie-modal__button-loader">
+        <span class="movie__loader in-movie-modal">
+          <span></span><span></span><span></span><span></span>
+        </span>
+      </div>
       ${
         pageState.isInWatched(id)
           ? `<button class="movie-modal__button is-active" type="button" data-movie="${id}" data-click="watched">

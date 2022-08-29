@@ -1,6 +1,7 @@
 import { moviesFetcher } from '../api';
 import { pageState } from '../state';
 import { watchedButtonChanges, queueButtonChanges } from './';
+import { MAIN_TRANSITION_TIME } from '../constants';
 
 export const onModalButtonClick = async target => {
   const id = Number(target.dataset.movie);
@@ -9,6 +10,7 @@ export const onModalButtonClick = async target => {
   let movieDataUA = null;
 
   target.disabled = true;
+  target.offsetParent.classList.add('is-shown');
 
   if (pageState.locale === 'en') {
     movieDataUA = await moviesFetcher.fetchMovieByID(id, 'ua');
@@ -35,4 +37,8 @@ export const onModalButtonClick = async target => {
   }
 
   target.disabled = false;
+  setTimeout(
+    () => target.offsetParent.classList.remove('is-shown'),
+    MAIN_TRANSITION_TIME
+  );
 };

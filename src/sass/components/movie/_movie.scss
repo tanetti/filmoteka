@@ -208,7 +208,8 @@
     visibility $transition-timing $transition-function;
 
   .movie__image.is-loading + &,
-  &.in-trailer-modal {
+  &.in-trailer-modal,
+  &.in-movie-modal {
     opacity: 1;
     visibility: initial;
   }
