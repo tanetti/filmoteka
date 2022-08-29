@@ -13,4 +13,111 @@
 
   padding-top: 28px;
   padding-bottom: 28px;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width:767px){
+    max-width: 304px;
+  }
+  @media screen and (min-width: 768px){
+    padding-bottom: 30px;
+    padding-top: 30px;
+  }
 }
+.footer__year{
+  margin-right: 10px;
+}
+.footer__rights{
+  margin-right: 10px;
+}
+.footer__svg{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.footer__link{
+  color: currentColor;
+}
+.footer__button{
+  color: currentColor;
+  text-decoration: underline;
+  cursor: pointer;
+  background-color: $secondary-light-bg-color;
+  border: none;
+  body.dark-mode & {
+      background-color: $secondary-dark-bg-color;
+    }
+}
+
+.footer__backdrop{
+  position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+  
+    width: 100vw;
+    height: 100vh;
+  
+    background-color: $backdrop-light-bg-color;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  
+    opacity: 0;
+    visibility: hidden;
+  
+    transition: opacity $transition-timing $transition-function,
+      visibility $transition-timing $transition-function;
+  
+    &.is-shown {
+      opacity: 1;
+      visibility: visible;
+    }
+  
+    body.dark-mode & {
+      background-color: $backdrop-dark-bg-color;
+    }
+}
+
+.footer__modal {
+  position: fixed;
+    top: 50%;
+    left: calc((100% + (100vw - 100%)) / 2);
+    z-index: 300;
+  
+    width: calc(100% - 40px);
+   
+    max-width: 400px;
+    max-height: 100vh;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 12px;
+    padding-right: 12px;
+  
+    opacity: 0;
+    visibility: hidden;
+  
+    overflow-y: auto;
+  
+    transform: translate(-50%, -50%);
+  
+    background-color: $main-light-bg-color;
+  
+    transition: opacity $transition-timing $transition-function,
+      visibility $transition-timing $transition-function;
+  @media screen and (min-width:768px){
+    max-width: 650px;
+  }
+      @media screen and (min-width:1280px){
+        max-width: 806px;
+      }
+    &.is-shown {
+      opacity: 1;
+      visibility: visible;
+    }
+  
+    body.dark-mode & {
+      background-color: $main-dark-bg-color;
+    }
+}
+

@@ -5,5 +5,5 @@
   "reporters": [
     "...",
     "parcel-reporter-clean-dist"
-  ]
+  ] 
 }
