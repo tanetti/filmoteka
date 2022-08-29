@@ -15,6 +15,10 @@
 
   background-color: $main-light-text-color;
 
+  border-radius: 5px;
+
+  overflow: hidden;
+
   transition: opacity $transition-timing $transition-function,
     visibility $transition-timing $transition-function;
 
