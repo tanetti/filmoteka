@@ -5,6 +5,9 @@
     max-width: 670px;
     margin-left: auto;
     margin-right: auto;
+    body.dark-mode &{
+        background-color: #47474760;
+    }
 }
 
 .embla__viewport {
@@ -52,6 +55,7 @@
     min-width: 100%;
     max-width: none;
     transform: translate(-50%, -50%);
+    border-radius: 20px;
 }
 
 .embla--thumb {
@@ -76,7 +80,7 @@
     outline: 0;
     margin: 0;
     padding: 0;
-    height: 100px;
+    height: 40px;
     width: 100%;
     background-color: transparent;
     position: relative;
