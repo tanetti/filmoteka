@@ -1,12 +1,11 @@
 import { moviesFetcher } from '../api';
+import { pageState } from '../state';
 import { openModal } from './';
 
 export const onTrailerClick = async target => {
   const trailersData = await moviesFetcher.fetchVideos(target.dataset.movie);
-  console.log(trailersData);
 
-  document.querySelector('.frame-wrapper').innerHTML = '';
-  let key;
+  let key = null;
 
   if (trailersData.length === 0) {
     key = '2U76x2fD_tE';
@@ -14,20 +13,20 @@ export const onTrailerClick = async target => {
     key = trailersData[0].key;
   }
 
-  trailersData.map(trailerData => {
-    if (trailerData.name === 'Official Trailer') {
-      key = trailerData.key;
-    } else if (trailerData.name === 'Trailer') {
-      key = trailerData.key;
-    } else if (trailerData.name === 'Official Teaser Trailer') {
-      key = trailerData.key;
-    }
-  });
-  const markup = `<iframe width="560" height="315" src='https://www.youtube.com/embed/${key}'frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  for (const trailer of trailersData) {
+    const name = trailer.name.toLowerCase();
 
-  document
-    .querySelector('.frame-wrapper')
-    .insertAdjacentHTML('beforeend', markup);
+    if (name.includes('official') || name.includes('офіційний')) {
+      key = trailer.key;
+      break;
+    }
+  }
+
+  const markup = `<iframe class="trailer-modal__farame" type="text/html" width="560" height="315" src="https://www.youtube.com/embed/${key}" frameborder="0" showinfo="0" hl="${
+    pageState.locale === 'en' ? 'en' : 'uk'
+  }" controls="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+
+  document.querySelector('.trailer-modal__farame-container').innerHTML = markup;
 
   openModal(target);
 };

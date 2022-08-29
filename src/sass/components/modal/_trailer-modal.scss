@@ -1,35 +1,66 @@
+.trailer-modal {
+  position: fixed;
+  top: 50%;
+  left: calc((100% + (100vw - 100%)) / 2);
+  z-index: 300;
+
+  width: calc(100% - 40px);
+  max-width: 440px;
+  max-height: calc(100% - 40px);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translate(-50%, -50%);
+
+  background-color: transparent;
+
+  transition: opacity $transition-timing $transition-function,
+    visibility $transition-timing $transition-function;
+
+  &.is-shown {
+    opacity: 1;
+    visibility: initial;
+  }
+
+  @media screen and (min-width: 768px) {
+    max-width: 704px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    max-width: 806px;
+  }
+}
+
 .trailer-modal__close-button {
   position: absolute;
-  top: -50px;
-  right: 0;
+  top: 5px;
+  right: 5px;
   z-index: 500;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   padding: 0;
 
-  color: $main-light-text-color;
+  color: $main-dark-text-color;
 
-  background-color: transparent;
+  background-color: $main-light-text-color;
 
   border-width: 0;
+  border-radius: 5px;
+
   cursor: pointer;
 
-  transition: color $transition-timing $transition-function, transform $transition-timing $transition-function;
+  transition: color $transition-timing $transition-function,
+    transform $transition-timing $transition-function;
 
   &:hover,
   &:focus {
     color: $main-accent-color;
-
-    transform: scale(1.1);
-  }
-
-  body.dark-mode & {
-    color: $main-dark-text-color;
   }
 }
 
@@ -37,37 +68,15 @@
   stroke: currentColor;
 }
 
-.trailer-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 300;
+.trailer-modal__farame {
+  width: 100%;
 
-  width: calc(100% - 40px);
-  max-width: 560px;
-  max-height: 315px;
-
-  opacity: 0;
-  visibility: hidden;
-
-  overflow: visible;
-
-  transform: translate(-50%, -50%);
-
-  background-color: transparent;
-  transition: opacity $transition-timing $transition-function, visibility $transition-timing $transition-function;
-
-  &.is-shown {
-    opacity: 1;
-    visibility: visible;
+  @media screen and (min-width: 768px) {
+    height: 396px;
+    max-height: calc(100vh - 100px);
   }
 
-  body.dark-mode & {
-    background-color: $main-dark-bg-color;
+  @media screen and (min-width: 1280px) {
+    height: 454px;
   }
-}
-
-.frame-wrapper {
-  display: flex;
-  justify-content: center;
 }

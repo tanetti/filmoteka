@@ -35,6 +35,8 @@
   border-width: 0;
 
   cursor: pointer;
+
+  outline-offset: 5px;
 }
 
 .movie__image-container {
@@ -76,7 +78,8 @@
     height: calc($movie-desktop-width * 1.5);
   }
 
-  transition: transform $transition-timing $transition-function, opacity $transition-timing $transition-function,
+  transition: transform $transition-timing $transition-function,
+    opacity $transition-timing $transition-function,
     visibility $transition-timing $transition-function;
 
   .movie__container:hover &,
@@ -116,7 +119,7 @@
 }
 
 .movie__year::before {
-  content: "| ";
+  content: '| ';
 }
 
 .movie__rating {
@@ -155,15 +158,33 @@
 
 .movie__trailer {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0;
+  right: 0;
 
-  width: 35px;
-  height: 30px;
+  color: $white-text-color;
 
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-image: url(/src/images/svg/YouTube-Icon-Full-Color-Logo.wine.svg);
+  width: 50px;
+  height: 50px;
+
+  transition: color $transition-timing $transition-function;
+
+  body.dark-mode & {
+    color: $main-light-text-color;
+  }
+}
+
+.movie__trailer-icon {
+  display: block;
+  padding-top: 10px;
+  padding-left: 10px;
+
+  fill: currentColor;
+
+  pointer-events: none;
+
+  @media screen and (min-width: 1280px) {
+    padding-left: 5px;
+  }
 }
 
 .movie__loader {
@@ -181,7 +202,8 @@
   opacity: 0;
   visibility: hidden;
 
-  transition: opacity $transition-timing $transition-function, visibility $transition-timing $transition-function;
+  transition: opacity $transition-timing $transition-function,
+    visibility $transition-timing $transition-function;
 
   .movie__image.is-loading + & {
     opacity: 1;
