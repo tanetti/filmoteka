@@ -84,5 +84,7 @@
 .parination__arrow {
   width: 16px;
 
+  pointer-events: none;
+
   stroke: currentColor;
 }
