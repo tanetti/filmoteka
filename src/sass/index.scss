@@ -10,16 +10,24 @@
 @import './components/shared/image';
 
 @import './components/header/header';
+
 @import './components/main/main';
 @import './components/main/main-list';
 @import './components/main/main-pagination';
 @import './components/main/main-error';
+
 @import './components/loader/loader';
+
 @import './components/movie/movie';
 @import './components/pagination/pagination';
+
 @import './components/scroll-to-top/scroll-to-top';
+
 @import './components/modal/backdrop';
 @import './components/modal/movie-modal';
 @import './components/modal/trailer-modal';
+@import './components/modal/team-modal';
+
 @import './components/footer/footer';
-@import './components/footer/embla';
+
+@import './components/team-slider/slider';

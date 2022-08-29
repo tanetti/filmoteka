@@ -1,0 +1,92 @@
+.team-modal {
+  position: fixed;
+  top: 50%;
+  left: calc((100% + (100vw - 100%)) / 2);
+  z-index: 300;
+
+  min-width: 280px;
+  width: 340px;
+  max-width: calc(100% - 40px);
+  max-height: calc(100% - 40px);
+  padding-top: 48px;
+  padding-bottom: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translate(-50%, -50%);
+
+  background-color: $main-light-bg-color;
+
+  border-radius: 5px;
+
+  transition: opacity $transition-timing $transition-function,
+    visibility $transition-timing $transition-function;
+
+  &.is-shown {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  body.dark-mode & {
+    background-color: $main-dark-bg-color;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: auto;
+    max-width: 520px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    max-width: 580px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+.team-modal__close-button {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+
+  color: $main-light-text-color;
+
+  background-color: transparent;
+
+  border-width: 0;
+  cursor: pointer;
+
+  transition: color $transition-timing $transition-function;
+
+  &:hover,
+  &:focus {
+    color: $main-accent-color;
+  }
+
+  body.dark-mode & {
+    color: $main-dark-text-color;
+
+    &:hover,
+    &:focus {
+      color: $main-accent-color;
+    }
+  }
+}
+
+.team-modal__close-button-icon {
+  stroke: currentColor;
+}
