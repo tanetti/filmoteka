@@ -1,4 +1,5 @@
 .stt {
+
   position: fixed;
   bottom: $scroll-to-top-offset;
   right: $scroll-to-top-offset;
@@ -6,6 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
   width: $scroll-to-top-size;
   height: $scroll-to-top-size;
@@ -21,6 +23,11 @@
     visibility $transition-timing $transition-function,
     transform $transition-timing $transition-function;
 
+  color: $button-up-text-color;
+  background-color: $main-accent-color;
+  background-image: linear-gradient(to right, $main-accent-color 0%,  $secondary-accent-color 51%, $main-accent-color  100%);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+
   cursor: pointer;
 
   &.is-shown {
@@ -28,4 +35,25 @@
     visibility: initial;
     transform: translateX(0);
   }
+
+  &:hover,
+  &:focus {  
+    background-color:  $secondary-accent-color;
+    background-image: linear-gradient(to right,  $secondary-accent-color 0%, $main-accent-color 51%, $secondary-accent-color 100%);
+  }
+
+  body.dark-mode &:hover,  
+  body.dark-mode &:focus {
+    -webkit-box-shadow: inset 0 0 6px $secondary-button-up-shadow, inset 0px 2px 5px $secondary-button-up-shadow, 0 0 28px 6px $button-up-shadow;
+    -moz-box-shadow: inset 0 0 6px $secondary-button-up-shadow, inset 0px 2px 5px $secondary-button-up-shadow, 0 0 28px 6px $button-up-shadow;
+    box-shadow: inset 0 0 6px $secondary-button-up-shadow, inset 0px 2px 5px $secondary-button-up-shadow, 0 0 28px 6px $button-up-shadow;
+    transition: box-shadow $transition-timing $transition-function;
+  }
+}
+
+
+.arrow__up {
+  width: 16px;
+  stroke: currentColor;
+  transform: rotate(90deg);
 }
