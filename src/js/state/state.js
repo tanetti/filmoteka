@@ -1,7 +1,7 @@
-const STATE_LS_KEY = 'filmotekaPageState';
-
 export class State {
   constructor() {
+    this._localStorageKey = null;
+
     this._locale = null;
     this._mode = null;
     this._currentPage = 'home';
@@ -10,6 +10,9 @@ export class State {
 
     this._genresEN = null;
     this._genresUA = null;
+
+    this._watched = { en: [], ua: [] };
+    this._queue = { en: [], ua: [] };
 
     this._windowWidth = window.innerWidth;
   }
@@ -43,7 +46,8 @@ export class State {
   }
 
   set currentPage(currentPage) {
-    if (!['home', 'libraryA', 'libraryB'].includes(currentPage)) return;
+    if (!['home', 'libraryWatched', 'libraryQueue'].includes(currentPage))
+      return;
 
     this._currentPage = currentPage;
 
@@ -98,7 +102,87 @@ export class State {
     this.#recordStateToLS();
   }
 
-  init() {
+  isInWatched(movieID) {
+    return (
+      (this._watched || false) &&
+      (this._watched[this.locale] || false) &&
+      this._watched[this.locale].find(movie => movie.id === movieID)
+    );
+  }
+
+  toWached(movieID, movieDataEN, movieDataUA) {
+    if (this.isInWatched(movieID)) {
+      this.#removeFromWatched(movieID);
+      return 'remove';
+    }
+
+    let action = 'add';
+
+    if (this.isInQueue(movieID)) {
+      this.#removeFromQueue(movieID);
+      action = 'switch';
+    }
+
+    this._watched['en'].unshift(movieDataEN);
+    this._watched['ua'].unshift(movieDataUA);
+
+    this.#recordStateToLS();
+
+    return action;
+  }
+
+  #removeFromWatched(movieID) {
+    this._watched['en'] = this._watched['en'].filter(
+      movie => movie.id !== movieID
+    );
+
+    this._watched['ua'] = this._watched['ua'].filter(
+      movie => movie.id !== movieID
+    );
+
+    this.#recordStateToLS();
+  }
+
+  isInQueue(movieID) {
+    return (
+      (this._queue || false) &&
+      (this._queue[this.locale] || false) &&
+      this._queue[this.locale].find(movie => movie.id === movieID)
+    );
+  }
+
+  toQueue(movieID, movieDataEN, movieDataUA) {
+    if (this.isInQueue(movieID)) {
+      this.#removeFromQueue(movieID);
+      return 'remove';
+    }
+
+    let action = 'add';
+
+    if (this.isInWatched(movieID)) {
+      this.#removeFromWatched(movieID);
+      action = 'switch';
+    }
+
+    this._queue['en'].unshift(movieDataEN);
+    this._queue['ua'].unshift(movieDataUA);
+
+    this.#recordStateToLS();
+
+    return action;
+  }
+
+  #removeFromQueue(movieID) {
+    this._queue['en'] = this._queue['en'].filter(movie => movie.id !== movieID);
+
+    this._queue['ua'] = this._queue['ua'].filter(movie => movie.id !== movieID);
+
+    this.#recordStateToLS();
+  }
+
+  init({ localStorageKey }) {
+    this._localStorageKey = localStorageKey;
+
     const savedState = this.#loadStateFromLS();
 
     if (!savedState) {
@@ -129,10 +213,12 @@ export class State {
     this._currentQuery = savedState.currentQuery;
     this._genresEN = savedState.genresEN;
     this._genresUA = savedState.genresUA;
+    this._watched = savedState.watched;
+    this._queue = savedState.queue;
   }
 
   #loadStateFromLS() {
-    const loadedState = localStorage.getItem(STATE_LS_KEY);
+    const loadedState = localStorage.getItem(this._localStorageKey);
     if (!loadedState) return;
 
     try {
@@ -148,6 +234,8 @@ export class State {
             'currentQuery',
             'genresEN',
             'genresUA',
+            'watched',
+            'queue',
           ].includes(key)
         )
           throw new Error();
@@ -155,7 +243,7 @@ export class State {
 
       return parsedState;
     } catch {
-      localStorage.removeItem(STATE_LS_KEY);
+      localStorage.removeItem(this._localStorageKey);
     }
   }
 
@@ -168,8 +256,10 @@ export class State {
       currentQuery: this._currentQuery,
       genresEN: this._genresEN,
       genresUA: this._genresUA,
+      watched: this._watched,
+      queue: this._queue,
     };
 
-    localStorage.setItem(STATE_LS_KEY, JSON.stringify(currentState));
+    localStorage.setItem(this._localStorageKey, JSON.stringify(currentState));
   }
 }

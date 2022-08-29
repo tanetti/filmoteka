@@ -6,12 +6,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
   width: $scroll-to-top-size;
   height: $scroll-to-top-size;
 
   border-width: 0;
-  border-radius: 50%;
+  border-radius: 5px;
 
   opacity: 0;
   visibility: hidden;
@@ -19,13 +20,40 @@
 
   transition: opacity $transition-timing $transition-function,
     visibility $transition-timing $transition-function,
-    transform $transition-timing $transition-function;
+    transform $transition-timing $transition-function,
+    color $transition-timing $transition-function,
+    background-color $transition-timing $transition-function;
+
+  color: $white-text-color;
+  background-color: $main-accent-color;
+
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 
   cursor: pointer;
+
+  body.dark-mode & {
+    color: $main-dark-bg-color;
+
+    &:hover,
+    &:focus {
+      color: $main-light-text-color;
+    }
+  }
 
   &.is-shown {
     opacity: 1;
     visibility: initial;
     transform: translateX(0);
   }
+
+  &:hover,
+  &:focus {
+    background-color: $secondary-accent-color;
+  }
+}
+
+.stt_icon {
+  fill: currentColor;
+
+  pointer-events: none;
 }

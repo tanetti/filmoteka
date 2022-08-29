@@ -35,55 +35,243 @@
   border-width: 0;
 
   cursor: pointer;
+
+  outline-offset: 5px;
 }
 
 .movie__image-container {
+  position: relative;
+
+  display: block;
+
   border-radius: 5px;
 
   overflow: hidden;
+  pointer-events: none;
+
+  background-color: $secondary-light-bg-color;
+
+  margin-bottom: 10px;
+
+  @media screen and (min-width: 1280px) {
+    margin-bottom: 12px;
+  }
+
+  body.dark-mode & {
+    background-color: $secondary-dark-bg-color;
+  }
 }
 
 .movie__image {
   @extend .image;
 
   width: 100%;
-  height: calc($movie-mobile-width / 16 * 24);
+  height: calc($movie-mobile-width * 1.5);
 
   object-fit: cover;
 
-  transition: transform $transition-timing $transition-function;
+  @media screen and (min-width: 768px) {
+    height: calc($movie-tablet-width * 1.5);
+  }
+
+  @media screen and (min-width: 1280px) {
+    height: calc($movie-desktop-width * 1.5);
+  }
+
+  transition: transform $transition-timing $transition-function,
+    opacity $transition-timing $transition-function,
+    visibility $transition-timing $transition-function;
 
   .movie__container:hover &,
   .movie__container:focus & {
     transform: scale(1.1);
   }
 
-  @media screen and (min-width: 768px) {
-    height: calc($movie-tablet-width / 16 * 24);
-  }
-
-  @media screen and (min-width: 1280px) {
-    height: calc($movie-desktop-width / 16 * 24);
+  &.is-loading {
+    opacity: 0;
+    visibility: hidden;
   }
 }
 
 .movie__data {
+  display: block;
+
+  font-weight: 500;
+  @include font-size(12, 16);
+
+  text-align: left;
+
+  pointer-events: none;
+
+  @media screen and (min-width: 1280px) {
+    @include font-size(20, 24);
+  }
 }
 
 .movie__title {
+  display: block;
+
+  text-transform: uppercase;
 }
 
 .movie__description {
+  color: $main-accent-color;
 }
 
-.movie__ganres {
-}
-
-.movie__year {
+.movie__year::before {
+  content: '| ';
 }
 
 .movie__rating {
   position: absolute;
   top: 10px;
-  right: 10px;
+  left: 10px;
+
+  padding-top: 2px;
+  padding-left: 8px;
+  padding-right: 8px;
+
+  font-weight: 500;
+  line-height: 1.1;
+
+  text-align: left;
+
+  color: $main-dark-text-color;
+  background-color: $main-accent-color;
+
+  border-radius: 5px;
+
+  pointer-events: none;
+
+  transition: color $transition-timing $transition-function;
+
+  @media screen and (min-width: 1280px) {
+    @include font-size(20, 24);
+
+    padding: 0 10px;
+  }
+
+  body.dark-mode & {
+    color: $main-light-text-color;
+  }
+}
+
+.movie__trailer {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  color: $white-text-color;
+
+  width: 50px;
+  height: 50px;
+
+  transition: color $transition-timing $transition-function;
+
+  body.dark-mode & {
+    color: $main-light-text-color;
+  }
+}
+
+.movie__trailer-icon {
+  display: block;
+  padding-top: 10px;
+  padding-left: 10px;
+
+  fill: currentColor;
+
+  pointer-events: none;
+
+  @media screen and (min-width: 1280px) {
+    padding-left: 5px;
+  }
+}
+
+.movie__loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: inline-block;
+
+  width: 80px;
+  height: 80px;
+
+  transform: translate(-50%, -50%);
+
+  opacity: 0;
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transition: opacity $transition-timing $transition-function,
+    visibility $transition-timing $transition-function;
+
+  .movie__image.is-loading + &,
+  &.in-trailer-modal,
+  &.in-movie-modal {
+    opacity: 1;
+    visibility: initial;
+  }
+}
+
+.movie__loader span {
+  position: absolute;
+  top: 33px;
+
+  width: 18px;
+  height: 18px;
+
+  background: $main-accent-color;
+
+  border-radius: 50%;
+
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.movie__loader span:nth-child(1) {
+  left: 8px;
+  animation: movie-loader1 0.6s infinite;
+}
+
+.movie__loader span:nth-child(2) {
+  left: 8px;
+  animation: movie-loader2 0.6s infinite;
+}
+
+.movie__loader span:nth-child(3) {
+  left: 32px;
+  animation: movie-loader2 0.6s infinite;
+}
+
+.movie__loader span:nth-child(4) {
+  left: 56px;
+  animation: movie-loader3 0.6s infinite;
+}
+
+@keyframes movie-loader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes movie-loader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes movie-loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
 }
