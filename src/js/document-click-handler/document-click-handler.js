@@ -5,7 +5,7 @@ import { onScrollToTopClick } from '../scroll';
 import { onMovieClick, onTrailerClick } from '../modal';
 import { onLibraryClick } from '../header-actions';
 import { onPaginationClick } from '../pagination-actions';
-import { onModalButtonClick } from '../library-actions';
+import { onModalButtonClick } from '../modal-actions';
 import { openModal } from '../modal';
 
 export const documentClickHandler = event => {
