@@ -92,20 +92,28 @@
       <ul class="header__library-button-container">
         <li class="header__library-button-item">
           <button
-            class="header__library-button header__library-button--active"
+            class="header__library-button header__library-button--watched"
             type="button"
-            data-locale_field="watched"
+            data-section="watched"
+            data-click="library"
           >
-            Watched
+            <span
+              class="header__library-button-text"
+              data-locale_field="watched"
+              >Watched</span
+            >
           </button>
         </li>
         <li class="header__library-button-item">
           <button
-            class="header__library-button"
+            class="header__library-button header__library-button--queue"
             type="button"
-            data-locale_field="queue"
+            data-section="queue"
+            data-click="library"
           >
-            Queue
+            <span class="header__library-button-text" data-locale_field="queue"
+              >Queue</span
+            >
           </button>
         </li>
       </ul>

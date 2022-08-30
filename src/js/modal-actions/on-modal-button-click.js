@@ -1,6 +1,6 @@
 import { moviesFetcher } from '../api';
 import { pageState } from '../state';
-import { watchedButtonChanges, queueButtonChanges } from './';
+import { watchedButtonChanges, queueButtonChanges } from '.';
 import { MAIN_TRANSITION_TIME } from '../constants';
 
 export const onModalButtonClick = async target => {

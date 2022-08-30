@@ -294,7 +294,11 @@
 
   cursor: pointer;
 
-  transition: color $transition-timing $transition-function;
+  body.is-loaded & {
+    transition: color $transition-timing $transition-function,
+      opacity $transition-timing $transition-function,
+      visibility $transition-timing $transition-function;
+  }
 
   &:hover {
     color: $white-text-color;
@@ -314,7 +318,7 @@
 
   display: inline-block;
 
-  width: 26px;
+  width: 28px;
   height: 16px;
 
   background-color: $white-text-color;
@@ -354,7 +358,7 @@
   body.dark-mode & {
     background-color: $main-hovered-accent-color;
 
-    transform: translateX(12px);
+    transform: translateX(14px);
   }
 }
 
@@ -487,7 +491,9 @@
 
   body.is-loaded & {
     transition: color $transition-timing $transition-function,
-      border-color $transition-timing $transition-function;
+      border-color $transition-timing $transition-function,
+      opacity $transition-timing $transition-function,
+      visibility $transition-timing $transition-function;
   }
 
   &:hover,
@@ -657,10 +663,12 @@
   @include font-size(12, 18);
   text-transform: uppercase;
 
-  transition: color $transition-timing $transition-function,
-    background-color $transition-timing $transition-function,
-    border-color $transition-timing $transition-function,
-    box-shadow $transition-timing $transition-function;
+  body.is-loaded & {
+    transition: color $transition-timing $transition-function,
+      background-color $transition-timing $transition-function,
+      border-color $transition-timing $transition-function,
+      box-shadow $transition-timing $transition-function;
+  }
 
   &:hover,
   &:focus {
@@ -668,15 +676,31 @@
     border-color: $main-accent-color;
   }
 
-  &--active {
-    background-color: $main-accent-color;
-    border-color: $main-accent-color;
+  &--watched {
+    .header:not(.in-queue) & {
+      background-color: $main-accent-color;
+      border-color: $main-accent-color;
 
-    box-shadow: (0px 8px 43px rgba(255, 107, 1, 0.6));
+      box-shadow: (0px 8px 43px rgba(255, 107, 1, 0.6));
 
-    &:hover,
-    &:focus {
-      color: $main-light-text-color;
+      &:hover,
+      &:focus {
+        color: $main-light-text-color;
+      }
+    }
+  }
+
+  &--queue {
+    .header.in-queue & {
+      background-color: $main-accent-color;
+      border-color: $main-accent-color;
+
+      box-shadow: (0px 8px 43px rgba(255, 107, 1, 0.6));
+
+      &:hover,
+      &:focus {
+        color: $main-light-text-color;
+      }
     }
   }
 
@@ -687,5 +711,14 @@
   @media screen and (min-width: 1280px) {
     width: 148px;
     height: 42px;
+  }
+}
+
+.header__library-button-text {
+  pointer-events: none;
+
+  body.is-loaded & {
+    transition: opacity $transition-timing $transition-function,
+      visibility $transition-timing $transition-function;
   }
 }

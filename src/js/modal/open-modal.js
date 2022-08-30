@@ -1,10 +1,17 @@
 import { rootRefs } from '../root-refs';
+import { pageState } from '../state';
+import { loadContent } from '../on-load';
 
 export const openModal = target => {
   const backdrop = rootRefs.modalBackdrop;
   let modal = null;
 
   const closeModal = () => {
+    if (pageState.currentPage === 'library' && pageState.localChanges) {
+      loadContent();
+      pageState.localChanges = false;
+    }
+
     backdrop.classList.remove('is-shown');
     modal.classList.remove('is-shown');
     target.ariaExpanded = false;

@@ -3,10 +3,10 @@ import { onChangePageMode } from '../page-mode';
 import { onNavigationClick } from '../header-actions';
 import { onScrollToTopClick } from '../scroll';
 import { onMovieClick, onTrailerClick } from '../modal';
+import { onLibraryClick } from '../header-actions';
 import { onPaginationClick } from '../pagination-actions';
 import { onModalButtonClick } from '../library-actions';
 import { openModal } from '../modal';
-import { onHomeClick } from '../header-actions/header-actions';
 
 export const documentClickHandler = event => {
   event.preventDefault();
@@ -29,6 +29,11 @@ export const documentClickHandler = event => {
 
     case 'navigation': {
       onNavigationClick(target.dataset.page);
+      break;
+    }
+
+    case 'library': {
+      onLibraryClick(target.dataset.section);
       break;
     }
 

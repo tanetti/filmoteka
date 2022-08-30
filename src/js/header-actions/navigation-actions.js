@@ -1,14 +1,14 @@
 import { rootRefs } from '../root-refs';
 import { pageState } from '../state';
-import { onPageLoad } from '../on-load';
+import { loadContent } from '../on-load';
 
 export const onNavigationClick = page => {
   if (
     pageState.currentPage === page ||
     (pageState.currentPage === 'home' &&
       page === 'homeBlank' &&
-      pageState.currentQuery === null &&
-      pageState.currentPage === 1)
+      !pageState.currentQuery &&
+      pageState.currentMoviePage === 1)
   )
     return;
 
@@ -20,7 +20,7 @@ export const onNavigationClick = page => {
     rootRefs.searchField.value = '';
     rootRefs.headerContainer.classList.remove('in-library');
 
-    onPageLoad();
+    loadContent();
 
     return;
   }
@@ -30,7 +30,7 @@ export const onNavigationClick = page => {
 
     rootRefs.headerContainer.classList.remove('in-library');
 
-    onPageLoad();
+    loadContent();
 
     return;
   }
@@ -40,7 +40,7 @@ export const onNavigationClick = page => {
 
     rootRefs.headerContainer.classList.add('in-library');
 
-    onPageLoad();
+    loadContent();
 
     return;
   }

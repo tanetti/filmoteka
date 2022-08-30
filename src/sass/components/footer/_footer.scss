@@ -78,7 +78,11 @@
 
   cursor: pointer;
 
-  transition: color $transition-timing $transition-function;
+  body.is-loaded & {
+    transition: color $transition-timing $transition-function,
+      opacity $transition-timing $transition-function,
+      visibility $transition-timing $transition-function;
+  }
 
   &:hover,
   &:focus {

@@ -6,6 +6,7 @@ import {
   MOVIES_TRANSITION_TIME,
   TABLET_MIN_WIDTH,
   DESKTOP_MIN_WIDTH,
+  MAIN_TRANSITION_TIME,
 } from '../constants';
 
 axios.defaults.baseURL = API_BASE_URL;
@@ -68,6 +69,10 @@ export class Fetcher {
       .catch(() => 'error');
 
     if (fetchData === 'error') return fetchData;
+
+    fetchData.data.genre_ids = fetchData.data.genres.map(
+      genreObj => genreObj.id
+    );
 
     return fetchData.data;
   }
@@ -182,9 +187,14 @@ export class Fetcher {
     rootRefs.moviesContainer.classList.remove('is-shown');
     rootRefs.moviesPagination.classList.remove('is-shown');
     rootRefs.moviesError.classList.add('is-shown');
+
+    setTimeout(
+      () => (rootRefs.moviesContainer.innerHTML = ''),
+      MAIN_TRANSITION_TIME
+    );
   }
 
-  #onImageLoad(rest = false, { currentTarget }) {
+  #onImageLoad(rest = false, dataLenght, { currentTarget }) {
     currentTarget.classList.remove('is-loading');
 
     if (rest) return;
@@ -199,11 +209,13 @@ export class Fetcher {
       window.innerWidth < DESKTOP_MIN_WIDTH &&
       window.innerWidth >= TABLET_MIN_WIDTH
     ) {
-      if (this._currentImagesLoaded === 2) this.#showContent();
+      if (this._currentImagesLoaded === Math.min(2, dataLenght))
+        this.#showContent();
     }
 
     if (window.innerWidth >= DESKTOP_MIN_WIDTH) {
-      if (this._currentImagesLoaded === 3) this.#showContent();
+      if (this._currentImagesLoaded === Math.min(3, dataLenght))
+        this.#showContent();
     }
   }
 
@@ -237,15 +249,23 @@ export class Fetcher {
       rootRefs.mainContainer.querySelectorAll('[data-movie_image]');
 
     for (let i = 0; i < needToLoad; i += 1) {
-      images[i]?.addEventListener('load', this.#onImageLoad.bind(this, false), {
-        once: true,
-      });
+      images[i]?.addEventListener(
+        'load',
+        this.#onImageLoad.bind(this, false, moviesMarkupArray.length),
+        {
+          once: true,
+        }
+      );
     }
 
     for (let i = needToLoad; i < images.length; i += 1) {
-      images[i]?.addEventListener('load', this.#onImageLoad.bind(this, true), {
-        once: true,
-      });
+      images[i]?.addEventListener(
+        'load',
+        this.#onImageLoad.bind(this, true, moviesMarkupArray.length),
+        {
+          once: true,
+        }
+      );
     }
   }
 
@@ -270,6 +290,23 @@ export class Fetcher {
     });
   }
 
+  #identifyCurrentPage() {
+    if (this._pageState.currentPage === 'home')
+      return this._pageState.currentMoviePage;
+
+    if (
+      this._pageState.currentPage === 'library' &&
+      this._pageState.currentLibrarySection === 'watched'
+    )
+      return this._pageState.currentLibraryWatchedPage;
+
+    if (
+      this._pageState.currentPage === 'library' &&
+      this._pageState.currentLibrarySection === 'queue'
+    )
+      return this._pageState.currentLibraryQueuePage;
+  }
+
   async reRenderMovies(isTriggeredByPagination = false) {
     if (isTriggeredByPagination) {
       this._observerIteration = 0;
@@ -282,9 +319,17 @@ export class Fetcher {
       query: this._query,
     };
 
-    const fetchData = await this.#fetchMovies(this._lastURL, urlParams);
+    let fetchData = null;
 
-    if (!fetchData) return;
+    if (this._pageState.currentPage === 'library') {
+      this.#hideContent();
+      fetchData = this._pageState.getLibrary(this.#identifyCurrentPage());
+    } else {
+      fetchData = await this.#fetchMovies(this._lastURL, urlParams);
+    }
+
+    if (!fetchData) return this.#error('generic');
+    if (fetchData.results.length === 0) return this.#error('no-results');
 
     this._lastQueryData = fetchData;
 
@@ -294,7 +339,7 @@ export class Fetcher {
     );
 
     rootRefs.moviesPagination.innerHTML = this._renderPagination(
-      this._pageState.currentMoviePage,
+      this.#identifyCurrentPage(),
       fetchData.total_pages
     );
   }
@@ -302,7 +347,7 @@ export class Fetcher {
   reRenderMoviesByResizing() {
     this.#renderMovies(this._lastQueryData.results, true);
     rootRefs.moviesPagination.innerHTML = this._renderPagination(
-      this._pageState.currentMoviePage,
+      this.#identifyCurrentPage(),
       this._lastQueryData.total_pages
     );
   }
@@ -326,7 +371,8 @@ export class Fetcher {
 
     const fetchData = await this.#fetchMovies(url, urlParams);
 
-    if (!fetchData) return;
+    if (!fetchData) return this.#error('generic');
+    if (fetchData.results.length === 0) return this.#error('no-results');
 
     this._lastQueryData = fetchData;
 
@@ -366,7 +412,8 @@ export class Fetcher {
 
     const fetchData = await this.#fetchMovies(url, urlParams);
 
-    if (!fetchData) return;
+    if (!fetchData) return this.#error('generic');
+    if (fetchData.results.length === 0) return this.#error('no-results');
 
     this._lastQueryData = fetchData;
 
@@ -382,5 +429,30 @@ export class Fetcher {
 
     this._lastQueryType = 'searched';
     this._pageState.currentQuery = this._query;
+  }
+
+  renderLibrary(page) {
+    this.#hideContent();
+
+    this._observerIteration = 0;
+
+    const fetchData = this._pageState.getLibrary(
+      page ? page : this.#identifyCurrentPage()
+    );
+
+    if (!fetchData) return this.#error('generic');
+    if (fetchData.results.length === 0) return this.#error('no-results');
+
+    this._lastQueryData = fetchData;
+
+    setTimeout(
+      () => this.#renderMovies(fetchData.results),
+      MOVIES_TRANSITION_TIME
+    );
+
+    rootRefs.moviesPagination.innerHTML = this._renderPagination(
+      this.#identifyCurrentPage(),
+      fetchData.total_pages
+    );
   }
 }
