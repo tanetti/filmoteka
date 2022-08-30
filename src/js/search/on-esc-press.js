@@ -4,7 +4,11 @@ import { onScrollToTopClick } from '../scroll';
 import { PAGINATION_ACTION_DELAY } from '../constants';
 
 export const onEscPress = ({ code }) => {
-  if (code !== 'Escape' || document.body.classList.contains('modal-is-open'))
+  if (
+    code !== 'Escape' ||
+    document.body.classList.contains('modal-is-open') ||
+    rootRefs.headerContainer.classList.contains('in-library')
+  )
     return;
 
   onScrollToTopClick();

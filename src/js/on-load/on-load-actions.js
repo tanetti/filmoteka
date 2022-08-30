@@ -28,4 +28,8 @@ export const onPageLoad = () => {
 
     return;
   }
+
+  if (pageState.currentPage === 'library') {
+    rootRefs.headerContainer.classList.add('in-library');
+  }
 };
