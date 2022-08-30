@@ -1,65 +1,114 @@
-<header class="header header__background--home">
-  <div class="header__container" data-header>
+<header class="header" data-header>
+  <div class="header__library-bg"></div>
+  <div class="header__container">
     <div class="header__settings-container">
-      <button 
-      class="header__locale-button" 
-      type="button" 
-      data-click="page-locale" 
-      data-locale_field="locale">
+      <button
+        class="header__locale-button"
+        type="button"
+        data-click="page-locale"
+        data-locale_field="locale"
+      >
         EN
       </button>
-      <input
-      class="check"
-        type="checkbox"
-        name="mode"
-        id="page-mode"
-        data-mode_switch
-        data-click="page-mode"
-      />
-      <label
-        for="page-mode"
-        data-locale_field="modeSwitch"
-        >Page mode switch</label
+
+      <label class="header__mode-container" data-click="page-mode">
+        <input
+          class="visually-hidden"
+          type="checkbox"
+          name="mode"
+          id="page-mode"
+          data-mode_switch
+        />
+        <span class="header__mode-nest">
+          <span class="header__mode-pointer pointer">
+            <svg class="pointer__sun" width="16" height="16">
+              <use href="./images/svg/sprite.svg#sun" />
+            </svg>
+            <svg class="pointer__moon" width="16" height="16">
+              <use href="./images/svg/sprite.svg#moon" />
+            </svg>
+          </span>
+        </span>
+        <span class="visually-hidden" data-locale_field="modeSwitch"
+          >Page mode switch</span
+        >
+      </label>
+    </div>
+
+    <div class="header__navigation-container">
+      <a
+        class="header__logo-container"
+        href="#"
+        data-page="home"
+        data-click="navigation"
       >
+        <svg class="header__logo-icon" width="26px" height="26px">
+          <use href="/src/images/svg/sprite.svg#logo" />
+        </svg>
+        <h1 class="header__title">Filmoteka</h1>
+      </a>
+      <nav>
+        <ul class="header__navigation-list">
+          <li class="header__navigation-list-item">
+            <a
+              class="header__navigation-link header__navigation-link--home"
+              href="#"
+              data-locale_field="home"
+              data-page="home"
+              data-click="navigation"
+              >Home</a
+            >
+          </li>
+          <li class="header__navigation-list-item">
+            <a
+              class="header__navigation-link header__navigation-link--library"
+              href="#"
+              data-locale_field="library"
+              data-page="library"
+              data-click="navigation"
+              >My library</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
 
-      <div class="header__navigation-container">
-        <a class="header__logo-container" href="#">
-
-
-          <svg class="logo" width="24px" height="24px">
-            <use class="logo__filmoteka" href="/src/images/svg/sprite.svg#logo"></use>
-          </svg>
-
-          <h1 class="header__title ">Filmoteka</h1>
-        </a>
-        <nav class="header__navigation">
-          <a class="header__navigation-link header__navigation-link__active" href="#" data-locale_field="home">HOME</a>
-          <a class="header__navigation-link  header__navigation-link--library" href="#" data-locale_field="library">MY
-            LIBRARY</a>
-        </nav>
-
-      </div>
-
-
-      <div class="form-wrap">
-        <input class="header__search-input" placeholder="Movie search" type="text" autocomplete="off" name="search"
-          data-search_field data-locale_field="placeholder" />
-
-        <svg class="logo-search" width="15px" height="15px">
-          <use class="logo-search--border" href="/src/images/svg/sprite.svg#search"></use>
+    <div class="header__content">
+      <div class="header__search-container">
+        <input
+          class="header__search-input"
+          placeholder="Movie search"
+          type="text"
+          autocomplete="off"
+          name="search"
+          data-search_field
+          data-locale_field="placeholder"
+        />
+        <svg class="header__search-icon" width="14px" height="14px">
+          <use href="/src/images/svg/sprite.svg#search" />
         </svg>
       </div>
 
-      <div class="header__navigation-library">
-        <button class="header__button-watched is-hidden" type="button"
-          data-locale_field="watched">WATCHED</button>
-        <button class="header__button-queue  is-hidden" type="button"
-          data-locale_field="queue">QUEUE</button>
-      </div>
-
+      <ul class="header__library-button-container">
+        <li class="header__library-button-item">
+          <button
+            class="header__library-button header__library-button--active"
+            type="button"
+            data-locale_field="watched"
+          >
+            Watched
+          </button>
+        </li>
+        <li class="header__library-button-item">
+          <button
+            class="header__library-button"
+            type="button"
+            data-locale_field="queue"
+          >
+            Queue
+          </button>
+        </li>
+      </ul>
     </div>
-
-
-   
-
+  </div>
 </header>

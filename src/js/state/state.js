@@ -46,8 +46,7 @@ export class State {
   }
 
   set currentPage(currentPage) {
-    if (!['home', 'libraryWatched', 'libraryQueue'].includes(currentPage))
-      return;
+    if (!['home', 'library', 'library'].includes(currentPage)) return;
 
     this._currentPage = currentPage;
 
