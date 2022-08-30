@@ -485,8 +485,10 @@
   border-style: solid;
   border-color: transparent;
 
-  transition: color $transition-timing $transition-function,
-    border-color $transition-timing $transition-function;
+  body.is-loaded & {
+    transition: color $transition-timing $transition-function,
+      border-color $transition-timing $transition-function;
+  }
 
   &:hover,
   &:focus {

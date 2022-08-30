@@ -5,7 +5,10 @@ import { onPageLoad } from '../on-load';
 export const onNavigationClick = page => {
   if (
     pageState.currentPage === page ||
-    (pageState.currentPage === 'home' && page === 'homeBlank')
+    (pageState.currentPage === 'home' &&
+      page === 'homeBlank' &&
+      pageState.currentQuery === null &&
+      pageState.currentPage === 1)
   )
     return;
 
@@ -36,6 +39,8 @@ export const onNavigationClick = page => {
     pageState.currentPage = 'library';
 
     rootRefs.headerContainer.classList.add('in-library');
+
+    onPageLoad();
 
     return;
   }
