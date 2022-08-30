@@ -16,4 +16,7 @@ export const rootRefs = {
 
   modalBackdrop: document.querySelector('[data-modal_backdrop]'),
   modals: document.querySelectorAll('[data-modal]'),
+
+  teamSliderView: document.querySelector('[data-team_slider_view]'),
+  teamSliderNavigation: document.querySelector('[data-team_slider_navigation]'),
 };

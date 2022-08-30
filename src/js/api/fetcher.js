@@ -56,14 +56,34 @@ export class Fetcher {
     this._calculateMoviesPartialLoadPoints = calculateMoviesPartialLoadPoints;
   }
 
-  async fetchVideos(movie_id) {
-    const url = `/movie/${movie_id}/videos`;
+  async fetchMovieByID(movieID, language) {
+    const url = `/movie/${movieID}`;
+    const urlParams = {
+      api_key: API_KEY,
+      language: language === 'en' ? 'en-US' : 'uk-UA',
+    };
+
+    const fetchData = await axios
+      .get(url, { params: urlParams })
+      .catch(() => 'error');
+
+    if (fetchData === 'error') return fetchData;
+
+    return fetchData.data;
+  }
+
+  async fetchVideos(movieID) {
+    const url = `/movie/${movieID}/videos`;
     const urlParams = {
       api_key: API_KEY,
       language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
     };
 
-    const fetchData = await axios.get(url, { params: urlParams }).catch();
+    const fetchData = await axios
+      .get(url, { params: urlParams })
+      .catch(() => 'error');
+
+    if (fetchData === 'error') return fetchData;
 
     if (
       (fetchData.data.results.length === 0 &&
@@ -77,7 +97,11 @@ export class Fetcher {
       language: 'en-US',
     };
 
-    const fetchDataEN = await axios.get(url, { params: urlParamsEN }).catch();
+    const fetchDataEN = await axios
+      .get(url, { params: urlParamsEN })
+      .catch(() => 'error');
+
+    if (fetchDataEN === 'error') return fetchDataEN;
 
     return fetchDataEN.data.results;
   }
@@ -89,9 +113,13 @@ export class Fetcher {
       language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
     };
 
-    const fetchData = await axios.get(url, { params: urlParams }).catch();
+    const fetchData = await axios
+      .get(url, { params: urlParams })
+      .catch(() => this.#error('generic'));
 
-    return fetchData.data.genres;
+    if (!fetchData) return;
+
+    return fetchData?.data?.genres;
   }
 
   async #fetchMovies(url, urlParams) {

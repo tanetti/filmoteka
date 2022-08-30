@@ -13,4 +13,75 @@
 
   padding-top: 28px;
   padding-bottom: 28px;
+
+  @include font-size(14, 16);
+  text-align: center;
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+    justify-content: center;
+
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    @include font-size(16, 19);
+  }
+}
+
+.footer__copyright {
+  margin: 0;
+  margin-bottom: 10px;
+
+  @media screen and (min-width: 768px) {
+    margin: 0;
+  }
+}
+
+.footer__year {
+  padding-left: 6px;
+  padding-right: 6px;
+  border-right: 1px solid;
+}
+
+.footer__rights {
+  padding-left: 2px;
+
+  @media screen and (min-width: 768px) {
+    padding-right: 6px;
+
+    border-right: 1px solid;
+  }
+}
+
+.footer__dev-team {
+  margin: 0;
+
+  @media screen and (min-width: 768px) {
+    padding-left: 6px;
+  }
+}
+
+.footer__icon {
+  width: 28px;
+  padding: 0 7px;
+}
+
+.footer__button {
+  padding: 0;
+
+  color: inherit;
+  background-color: transparent;
+
+  border-width: 0;
+
+  text-decoration: underline;
+
+  cursor: pointer;
+
+  transition: color $transition-timing $transition-function;
+
+  &:hover,
+  &:focus {
+    color: $main-accent-color;
+  }
 }

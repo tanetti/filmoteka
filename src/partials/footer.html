@@ -1,5 +1,28 @@
 <footer class="footer">
   <div class="footer__container" data-footer>
-    <p data-locale_field="rights">All Rights Reserved</p>
+    <p class="footer__copyright">
+      &#169;
+      <span class="footer__year">2022</span>
+      <span class="footer__rights" data-locale_field="rights"
+        >All Rights Reserved</span
+      >
+    </p>
+    <p class="footer__dev-team">
+      <span data-locale_field="develop">Developed with</span>
+      <svg class="footer__icon" width="14" height="13">
+        <use href="./images/svg/sprite.svg#heart" />
+      </svg>
+      <span data-locale_field="by">by</span>
+      <button
+        class="footer__button"
+        aria-expanded="false"
+        aria-controls="team-modal"
+        type="button"
+        data-locale_field="student"
+        data-click="team"
+      >
+        GoIT Students
+      </button>
+    </p>
   </div>
 </footer>

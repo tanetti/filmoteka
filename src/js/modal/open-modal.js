@@ -10,6 +10,9 @@ export const openModal = target => {
     target.ariaExpanded = false;
     document.body.classList.remove('modal-is-open');
 
+    if (target.dataset.click === 'trailer')
+      document.querySelector('.trailer-modal__farame-container').innerHTML = '';
+
     window.removeEventListener('keydown', onEscPress);
   };
 
