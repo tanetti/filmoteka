@@ -67,8 +67,6 @@
     display: block;
 
     height: 80px;
-    margin: 0;
-    padding: 0;
 
     background-color: transparent;
 
@@ -104,14 +102,12 @@
   left: -10000%;
   right: -10000%;
 
-  max-width: none;
-  min-width: 1000%;
-  min-height: 1000%;
+  width: 300px;
   margin: auto;
 
   opacity: 0.5;
 
-  transform: scale(0.1);
+  transform: scale(0.27);
 
   transition: opacity 0.2s;
 
