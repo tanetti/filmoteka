@@ -79,6 +79,10 @@
     outline: 0;
     overflow: hidden;
 
+    @media screen and (min-width: 1280px) {
+      height: 100px;
+    }
+
     .team-slider__slide--navigation.is-selected & {
       border: 2px solid $main-accent-color;
     }
@@ -110,6 +114,10 @@
   transform: scale(0.27);
 
   transition: opacity 0.2s;
+
+  @media screen and (min-width: 1280px) {
+    transform: scale(0.32);
+  }
 
   .team-slider__slide--navigation.is-selected & {
     opacity: 1;
