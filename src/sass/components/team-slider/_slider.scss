@@ -1,13 +1,10 @@
 .team-slider {
   width: 100%;
-  max-height: calc(100vh - 188px);
 
   overflow: hidden;
 }
 
 .team-slider__view-container {
-  max-height: calc(100vh - 318px);
-
   margin-bottom: 20px;
 
   &.is-draggable {
@@ -91,7 +88,7 @@
 .team-slider__image {
   @extend .image;
 
-  max-height: calc(100vh - 328px);
+  max-height: calc(100vh - 208px);
 
   border-radius: 5px;
 }
