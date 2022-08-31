@@ -85,6 +85,8 @@
 .team-slider__image {
   @extend .image;
 
+  width: auto;
+
   max-height: calc(100vh - 288px);
 
   border-radius: 5px;
