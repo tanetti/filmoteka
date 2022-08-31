@@ -1,15 +1,59 @@
 .main__error {
   position: absolute;
+  left: 50%;
+  z-index: -1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   opacity: 0;
 
   visibility: hidden;
 
+  transform: translateX(-50%);
+
   transition: opacity $transition-timing $transition-function,
     visibility $transition-timing $transition-function;
+
+  @media screen and (min-width: 768px) {
+    top: -30px;
+
+    flex-direction: row;
+  }
 
   &.is-shown {
     opacity: 1;
     visibility: initial;
   }
+}
+
+.error__icon {
+  display: block;
+
+  margin-bottom: 20px;
+
+  width: 120px;
+  height: 120px;
+  fill: $secondary-accent-color;
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: 0;
+    margin-right: 20px;
+
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.error__text {
+  width: 100%;
+
+  font-weight: 500;
+  @include font-size(22, 24);
+
+  text-align: center;
+
+  color: $secondary-accent-color;
 }

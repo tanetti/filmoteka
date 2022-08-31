@@ -16,6 +16,8 @@ export const localeDB = {
 
     main: {
       title: 'Movies library',
+      errorGeneral: 'Whooops, something went wrong.',
+      errorNotFound: 'Sorry, nothing was found.',
     },
 
     movie: {
@@ -47,13 +49,6 @@ export const localeDB = {
       by: 'by',
       student: 'GoIT Students',
     },
-
-    fetcher: {
-      errors: {
-        general: 'Whooops, something went wrong',
-        notFound: 'Nothing was found',
-      },
-    },
   },
 
   ua: {
@@ -72,6 +67,8 @@ export const localeDB = {
 
     main: {
       title: 'Бібліотека фільмів',
+      errorGeneral: 'Тай біда, щось пішло не так.',
+      errorNotFound: 'Вибачте, нічого не знайдено.',
     },
 
     movie: {
@@ -102,13 +99,6 @@ export const localeDB = {
       develop: 'Розроблено з',
       by: '',
       student: 'Студентами GoIT',
-    },
-
-    fetcher: {
-      errors: {
-        general: 'Тай біда, щось пішло не так',
-        notFound: 'Нічого не знайдено',
-      },
     },
   },
 };

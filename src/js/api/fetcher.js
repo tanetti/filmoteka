@@ -120,7 +120,7 @@ export class Fetcher {
 
     const fetchData = await axios
       .get(url, { params: urlParams })
-      .catch(() => this.#error('generic'));
+      .catch(() => this.#error('general'));
 
     if (!fetchData) return;
 
@@ -157,7 +157,7 @@ export class Fetcher {
           return;
         }
 
-        this.#error('generic');
+        this.#error('general');
       })
       .finally(() => (this._abortController = null));
 
@@ -183,15 +183,25 @@ export class Fetcher {
   }
 
   #error(error) {
+    rootRefs.moviesErrorTextContainer.innerHTML = `<span data-locale_field="${
+      error === 'general' ? 'errorGeneral' : 'errorNotFound'
+    }">${
+      error === 'general'
+        ? this._localeDB[this._pageState.locale].main.errorGeneral
+        : this._localeDB[this._pageState.locale].main.errorNotFound
+    }</span>`;
+
     rootRefs.moviesLoader.classList.remove('is-shown');
     rootRefs.moviesContainer.classList.remove('is-shown');
     rootRefs.moviesPagination.classList.remove('is-shown');
     rootRefs.moviesError.classList.add('is-shown');
 
-    setTimeout(
-      () => (rootRefs.moviesContainer.innerHTML = ''),
-      MAIN_TRANSITION_TIME
-    );
+    this._lastQueryData = null;
+
+    setTimeout(() => {
+      rootRefs.moviesContainer.innerHTML = '';
+      rootRefs.moviesPagination.innerHTML = '';
+    }, MAIN_TRANSITION_TIME);
   }
 
   #onImageLoad(rest = false, dataLenght, { currentTarget }) {
@@ -328,7 +338,7 @@ export class Fetcher {
       fetchData = await this.#fetchMovies(this._lastURL, urlParams);
     }
 
-    if (!fetchData) return this.#error('generic');
+    if (!fetchData) return this.#error('general');
     if (fetchData.results.length === 0) return this.#error('no-results');
 
     this._lastQueryData = fetchData;
@@ -345,6 +355,8 @@ export class Fetcher {
   }
 
   reRenderMoviesByResizing() {
+    if (!this._lastQueryData) return;
+
     this.#renderMovies(this._lastQueryData.results, true);
     rootRefs.moviesPagination.innerHTML = this._renderPagination(
       this.#identifyCurrentPage(),
@@ -371,7 +383,7 @@ export class Fetcher {
 
     const fetchData = await this.#fetchMovies(url, urlParams);
 
-    if (!fetchData) return this.#error('generic');
+    if (!fetchData) return this.#error('general');
     if (fetchData.results.length === 0) return this.#error('no-results');
 
     this._lastQueryData = fetchData;
@@ -412,7 +424,7 @@ export class Fetcher {
 
     const fetchData = await this.#fetchMovies(url, urlParams);
 
-    if (!fetchData) return this.#error('generic');
+    if (!fetchData) return this.#error('general');
     if (fetchData.results.length === 0) return this.#error('no-results');
 
     this._lastQueryData = fetchData;
@@ -440,7 +452,7 @@ export class Fetcher {
       page ? page : this.#identifyCurrentPage()
     );
 
-    if (!fetchData) return this.#error('generic');
+    if (!fetchData) return this.#error('general');
     if (fetchData.results.length === 0) return this.#error('no-results');
 
     this._lastQueryData = fetchData;
