@@ -1,10 +1,13 @@
 .team-slider {
   width: 100%;
+  max-height: calc(100vh - 188px);
 
   overflow: hidden;
 }
 
 .team-slider__view-container {
+  max-height: calc(100vh - 318px);
+
   margin-bottom: 20px;
 
   &.is-draggable {
@@ -54,72 +57,70 @@
 
   &--navigation {
     min-width: 20%;
+
     padding-left: 8px;
   }
 }
 
 .team-slider__image-container {
+  display: flex;
+  justify-content: center;
+
   width: 100%;
 
   &--navigation {
-    position: relative;
+    @extend %no-padding;
 
     display: block;
 
-    height: 80px;
+    width: auto;
+
+    box-sizing: content-box;
 
     background-color: transparent;
 
     border: 0;
-    border-radius: 5px;
+
+    overflow: hidden;
 
     touch-action: manipulation;
     cursor: pointer;
-
-    outline: 0;
-    overflow: hidden;
-
-    @media screen and (min-width: 1280px) {
-      height: 100px;
-    }
-
-    .team-slider__slide--navigation.is-selected & {
-      border: 2px solid $main-accent-color;
-    }
   }
 }
 
 .team-slider__image {
   @extend .image;
 
-  max-height: calc(100vh - 218px);
-  margin-left: auto;
-  margin-right: auto;
+  max-height: calc(100vh - 328px);
 
   border-radius: 5px;
 }
 
 .team-slider__thumb-image {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -10000%;
-  right: -10000%;
+  @extend .image;
 
-  width: 300px;
-  margin: auto;
+  object-fit: cover;
+
+  max-height: 100px;
+  border-radius: 5px;
+
+  outline-width: 2px;
+  outline-style: solid;
+  outline-offset: -2px;
+  outline-color: $main-dark-bg-color;
 
   opacity: 0.5;
 
-  transform: scale(0.27);
+  transition: outline-color $transition-timing $transition-function,
+    opacity $transition-timing $transition-function;
 
-  transition: opacity 0.2s;
-
-  @media screen and (min-width: 1280px) {
-    transform: scale(0.32);
+  body.dark-mode & {
+    outline-color: $secondary-dark-bg-color;
   }
 
   .team-slider__slide--navigation.is-selected & {
     opacity: 1;
+
+    outline-color: $main-accent-color;
   }
 }

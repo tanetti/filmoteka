@@ -9,7 +9,7 @@
   max-width: calc(100% - 40px);
   max-height: calc(100% - 40px);
   padding-top: 48px;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
   padding-left: 20px;
   padding-right: 20px;
 
@@ -35,16 +35,8 @@
   }
 
   @media screen and (min-width: 768px) {
-    width: auto;
-    max-width: 520px;
     padding-top: 40px;
-    padding-bottom: 40px;
-    padding-left: 36px;
-    padding-right: 36px;
-  }
-
-  @media screen and (min-width: 1280px) {
-    max-width: 580px;
+    padding-bottom: 30px;
     padding-left: 30px;
     padding-right: 30px;
   }
