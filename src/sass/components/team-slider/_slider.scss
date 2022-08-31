@@ -5,6 +5,10 @@
 .team-slider__view-container {
   margin-bottom: 20px;
 
+  @media screen and (max-height: 380px) {
+    display: none;
+  }
+
   &.is-draggable {
     cursor: move;
     cursor: grab;
@@ -65,9 +69,6 @@
 
     display: block;
 
-    margin-left: auto;
-    margin-right: auto;
-
     box-sizing: content-box;
 
     background-color: transparent;
@@ -84,7 +85,7 @@
 .team-slider__image {
   @extend .image;
 
-  max-height: calc(100vh - 208px);
+  max-height: calc(100vh - 288px);
 
   border-radius: 5px;
 }
@@ -94,7 +95,6 @@
 
   object-fit: cover;
 
-  max-height: 100px;
   border-radius: 5px;
 
   outline-width: 2px;
