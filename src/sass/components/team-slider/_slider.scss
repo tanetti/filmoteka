@@ -1,6 +1,4 @@
 .team-slider {
-  width: 100%;
-
   overflow: hidden;
 }
 
@@ -18,7 +16,6 @@
 }
 
 .team-slider__navigation-container {
-  width: 100%;
   overflow: hidden;
 
   &.is-draggable {
@@ -63,14 +60,13 @@
   display: flex;
   justify-content: center;
 
-  width: 100%;
-
   &--navigation {
     @extend %no-padding;
 
     display: block;
 
-    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 
     box-sizing: content-box;
 
