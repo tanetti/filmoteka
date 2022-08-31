@@ -38,10 +38,15 @@
   }
 
   @media screen and (min-width: 768px) {
+    max-width: 510px;
     padding-top: 40px;
     padding-bottom: 30px;
     padding-left: 30px;
     padding-right: 30px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    max-width: 585px;
   }
 }
 
