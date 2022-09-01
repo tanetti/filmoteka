@@ -38,7 +38,14 @@
 
   width: 120px;
   height: 120px;
-  fill: $secondary-accent-color;
+
+  &--error {
+    fill: $secondary-accent-color;
+  }
+
+  &--notify {
+    fill: $main-accent-color;
+  }
 
   @media screen and (min-width: 768px) {
     margin-bottom: 0;
@@ -57,5 +64,11 @@
 
   text-align: center;
 
-  color: $secondary-accent-color;
+  &--error {
+    color: $secondary-accent-color;
+  }
+
+  &--notify {
+    color: $main-accent-color;
+  }
 }

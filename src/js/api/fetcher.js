@@ -16,6 +16,7 @@ export class Fetcher {
     this._pageState = null;
     this._localeDB = null;
     this._renderPagination = null;
+    this._renderError = null;
     this._createMoviesMarkupArray = null;
     this._calculateMoviesPartialLoadPoints = null;
 
@@ -47,6 +48,7 @@ export class Fetcher {
       localeDB,
       createMoviesMarkupArray,
       paginationRendering,
+      errorRendering,
       calculateMoviesPartialLoadPoints,
     } = settings;
 
@@ -54,6 +56,7 @@ export class Fetcher {
     this._localeDB = localeDB;
     this._createMoviesMarkupArray = createMoviesMarkupArray;
     this._renderPagination = paginationRendering;
+    this._renderError = errorRendering;
     this._calculateMoviesPartialLoadPoints = calculateMoviesPartialLoadPoints;
   }
 
@@ -183,13 +186,11 @@ export class Fetcher {
   }
 
   #error(error) {
-    rootRefs.moviesErrorTextContainer.innerHTML = `<span data-locale_field="${
-      error === 'general' ? 'errorGeneral' : 'errorNotFound'
-    }">${
-      error === 'general'
-        ? this._localeDB[this._pageState.locale].main.errorGeneral
-        : this._localeDB[this._pageState.locale].main.errorNotFound
-    }</span>`;
+    rootRefs.moviesError.innerHTML = this._renderError(
+      error,
+      this._localeDB,
+      this._pageState
+    );
 
     rootRefs.moviesLoader.classList.remove('is-shown');
     rootRefs.moviesContainer.classList.remove('is-shown');

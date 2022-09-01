@@ -14,6 +14,9 @@ export const loadContent = () => {
 
   if (pageState.currentPage === 'home') {
     if (!pageState.currentQuery) {
+      window.removeEventListener('keydown', onEscPress);
+      rootRefs.searchField.value = '';
+
       moviesFetcher.renderTrending();
 
       return;

@@ -7,7 +7,7 @@ export const onNavigationClick = page => {
     pageState.currentPage === page ||
     (pageState.currentPage === 'home' &&
       page === 'homeBlank' &&
-      !pageState.currentQuery &&
+      !rootRefs.searchField.value &&
       pageState.currentMoviePage === 1)
   )
     return;

@@ -18,6 +18,8 @@ export const localeDB = {
       title: 'Movies library',
       errorGeneral: 'Whooops, something went wrong.',
       errorNotFound: 'Sorry, nothing was found.',
+      notifyWatchedEmpty: 'Watched list is empty.',
+      notifyQueueEmpty: 'Queue list is empty.',
     },
 
     movie: {
@@ -69,6 +71,8 @@ export const localeDB = {
       title: 'Бібліотека фільмів',
       errorGeneral: 'Тай біда, щось пішло не так.',
       errorNotFound: 'Вибачте, нічого не знайдено.',
+      notifyWatchedEmpty: 'Список переглянутого порожній.',
+      notifyQueueEmpty: 'Список черги перегляду порожній.',
     },
 
     movie: {
