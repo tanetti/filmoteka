@@ -1,5 +1,6 @@
 .header {
-  position: relative;
+  position: fixed;
+  z-index: 200;
 
   width: 100vw;
   height: $header-height;
@@ -13,6 +14,14 @@
 
   body.dark-mode & {
     border-bottom: 1px solid $backdrop-dark-bg-color;
+  }
+
+  body.is-loaded & {
+    transition: transform $transition-timing $transition-function;
+  }
+
+  &.is-fixed {
+    transform: translateY(-150px);
   }
 
   background-image: url('/src/images/header/main/mobile/main-mobile-left@1x.jpg'),
@@ -425,6 +434,14 @@
   align-items: center;
 
   margin-bottom: 40px;
+
+  body.is-loaded & {
+    transition: transform $transition-timing $transition-function;
+  }
+
+  .header.is-fixed & {
+    transform: translateY(118px);
+  }
 }
 
 .header__logo-container {
@@ -555,17 +572,37 @@
 
   width: 280px;
 
+  .header.is-fixed & {
+    opacity: 0;
+    visibility: hidden;
+  }
+
   @media screen and (min-width: 768px) {
     width: 336px;
+
+    .header.is-fixed & {
+      width: 250px;
+
+      opacity: 1;
+      visibility: initial;
+
+      transform: translateY(52px);
+    }
   }
 
   @media screen and (min-width: 1280px) {
     width: 394px;
+
+    .header.is-fixed & {
+      width: 394px;
+    }
   }
 
   body.is-loaded & {
     transition: opacity $transition-timing $transition-function,
-      visibility $transition-timing $transition-function;
+      visibility $transition-timing $transition-function,
+      width $transition-timing $transition-function,
+      transform$transition-timing $transition-function;
   }
 
   .header.in-library & {
@@ -683,9 +720,21 @@
 
   body.is-loaded & {
     transition: color $transition-timing $transition-function,
+      opacity $transition-timing $transition-function,
+      width $transition-timing $transition-function,
+      height $transition-timing $transition-function,
+      transform $transition-timing $transition-function,
+      visibility $transition-timing $transition-function,
       background-color $transition-timing $transition-function,
       border-color $transition-timing $transition-function,
       box-shadow $transition-timing $transition-function;
+  }
+
+  .header.is-fixed & {
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
   }
 
   &:hover,
@@ -724,11 +773,29 @@
 
   @media screen and (min-width: 768px) {
     width: 152px;
+
+    .header.is-fixed & {
+      width: 130px;
+      height: 38px;
+
+      opacity: 1;
+      visibility: initial;
+
+      transform: translateY(42px);
+    }
+
+    .header.in-library & {
+      pointer-events: initial;
+    }
   }
 
   @media screen and (min-width: 1280px) {
     width: 148px;
     height: 42px;
+
+    .header.is-fixed & {
+      width: 148px;
+    }
   }
 }
 
