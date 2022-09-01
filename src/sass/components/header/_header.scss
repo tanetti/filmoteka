@@ -120,6 +120,10 @@
   background-size: 100%, cover;
   background-repeat: no-repeat;
 
+  body.dark-mode & {
+    border-bottom: 1px solid $backdrop-light-bg-color;
+  }
+
   background-image: linear-gradient(
       to right,
       rgba(0, 0, 0, 0.56),
