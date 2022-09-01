@@ -7,6 +7,9 @@ import {
   TABLET_MIN_WIDTH,
   DESKTOP_MIN_WIDTH,
   MAIN_TRANSITION_TIME,
+  MOBILE_MOVIES_WAIT_TO_LOAD,
+  TABLET_MOVIES_WAIT_TO_LOAD,
+  DESKTOP_MOVIES_WAIT_TO_LOAD,
 } from '../constants';
 
 axios.defaults.baseURL = API_BASE_URL;
@@ -213,19 +216,29 @@ export class Fetcher {
     this._currentImagesLoaded += 1;
 
     if (window.innerWidth < TABLET_MIN_WIDTH) {
-      if (this._currentImagesLoaded === 1) this.#showContent();
+      if (
+        this._currentImagesLoaded ===
+        Math.min(MOBILE_MOVIES_WAIT_TO_LOAD, dataLenght)
+      )
+        this.#showContent();
     }
 
     if (
       window.innerWidth < DESKTOP_MIN_WIDTH &&
       window.innerWidth >= TABLET_MIN_WIDTH
     ) {
-      if (this._currentImagesLoaded === Math.min(2, dataLenght))
+      if (
+        this._currentImagesLoaded ===
+        Math.min(TABLET_MOVIES_WAIT_TO_LOAD, dataLenght)
+      )
         this.#showContent();
     }
 
     if (window.innerWidth >= DESKTOP_MIN_WIDTH) {
-      if (this._currentImagesLoaded === Math.min(3, dataLenght))
+      if (
+        this._currentImagesLoaded ===
+        Math.min(DESKTOP_MOVIES_WAIT_TO_LOAD, dataLenght)
+      )
         this.#showContent();
     }
   }
