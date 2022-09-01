@@ -33,7 +33,7 @@ export const createMoviesMarkupArray = (moviesData, pageState, localeDB) =>
           <span class="movie__image-container">  
             <img class="movie__image is-loading" src="${
               poster_path ? choseImageSize(poster_path) : noImage
-            }" width="400" height="600" alt="${title}" ${
+            }" width="500" height="750" alt="${title}" ${
         isImageShouldByLazy(elementIdx) ? 'loading="lazy"' : ''
       } data-movie_image />
             <span class="movie__loader"><span></span><span></span><span></span><span></span></span>
