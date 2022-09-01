@@ -10,9 +10,9 @@ export const MOVIES_TRANSITION_TIME = 300;
 export const TABLET_MIN_WIDTH = 768;
 export const DESKTOP_MIN_WIDTH = 1280;
 
-export const MOBILE_MAX_MOVIES_RENDER = 4;
-export const TABLET_MAX_MOVIES_RENDER = 6;
-export const DESKTOP_MAX_MOVIES_RENDER = 9;
+export const MOBILE_MAX_MOVIES_RENDER = 3;
+export const TABLET_MAX_MOVIES_RENDER = 4;
+export const DESKTOP_MAX_MOVIES_RENDER = 6;
 
 export const MOBILE_MOVIES_WAIT_TO_LOAD = 1;
 export const TABLET_MOVIES_WAIT_TO_LOAD = 2;
