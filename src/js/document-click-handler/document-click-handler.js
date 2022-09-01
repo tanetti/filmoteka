@@ -8,6 +8,7 @@ import { onPaginationClick } from '../pagination-actions';
 import { onModalButtonClick } from '../modal-actions';
 import { teamSlider } from '../team-slider';
 import { openModal } from '../modal';
+import { PAGINATION_ACTION_DELAY } from '../constants';
 
 export const documentClickHandler = event => {
   event.preventDefault();
@@ -29,12 +30,20 @@ export const documentClickHandler = event => {
     }
 
     case 'navigation': {
-      onNavigationClick(target.dataset.page);
+      onScrollToTopClick();
+      setTimeout(
+        () => onNavigationClick(target.dataset.page),
+        PAGINATION_ACTION_DELAY
+      );
       break;
     }
 
     case 'library': {
-      onLibraryClick(target.dataset.section);
+      onScrollToTopClick();
+      setTimeout(
+        () => onLibraryClick(target.dataset.section),
+        PAGINATION_ACTION_DELAY
+      );
       break;
     }
 
