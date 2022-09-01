@@ -43,4 +43,12 @@ export const onTrailerClick = async target => {
   document
     .querySelector('.trailer-modal__farame')
     .classList.remove('is-hidden');
+
+  const frame = document.querySelector('.trailer-modal__farame');
+
+  frame.addEventListener('mouseover', () =>
+    console.dir(
+      frame.contentWindow.document.body.querySelector('#movie_player')
+    )
+  );
 };
