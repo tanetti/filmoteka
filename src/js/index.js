@@ -26,14 +26,12 @@ window
 
 window.addEventListener(
   'scroll',
-  throttle(onWindowScroll, SCROLL_THROTTLE_DELAY),
-  { passive: true }
+  throttle(onWindowScroll, SCROLL_THROTTLE_DELAY)
 );
 
 window.addEventListener(
   'resize',
-  throttle(onWindowResize, RESIZE_THROTTLE_DELAY),
-  { passive: true }
+  throttle(onWindowResize, RESIZE_THROTTLE_DELAY)
 );
 
 rootRefs.searchField.addEventListener(
