@@ -20,6 +20,7 @@ export class Fetcher {
     this._localeDB = null;
     this._renderPagination = null;
     this._renderError = null;
+    this._noImage = null;
     this._createMoviesMarkupArray = null;
     this._calculateMoviesPartialLoadPoints = null;
 
@@ -52,6 +53,7 @@ export class Fetcher {
       createMoviesMarkupArray,
       paginationRendering,
       errorRendering,
+      noImage,
       calculateMoviesPartialLoadPoints,
     } = settings;
 
@@ -60,6 +62,7 @@ export class Fetcher {
     this._createMoviesMarkupArray = createMoviesMarkupArray;
     this._renderPagination = paginationRendering;
     this._renderError = errorRendering;
+    this._noImage = noImage;
     this._calculateMoviesPartialLoadPoints = calculateMoviesPartialLoadPoints;
   }
 
@@ -280,12 +283,32 @@ export class Fetcher {
           once: true,
         }
       );
+      images[i]?.addEventListener(
+        'error',
+        event => {
+          event.currentTarget.src = this._noImage;
+          this.#onImageLoad(false, moviesMarkupArray.length, event);
+        },
+        {
+          once: true,
+        }
+      );
     }
 
     for (let i = needToLoad; i < images.length; i += 1) {
       images[i]?.addEventListener(
         'load',
         this.#onImageLoad.bind(this, true, moviesMarkupArray.length),
+        {
+          once: true,
+        }
+      );
+      images[i]?.addEventListener(
+        'error',
+        event => {
+          event.currentTarget.src = this._noImage;
+          this.#onImageLoad(true, moviesMarkupArray.length, event);
+        },
         {
           once: true,
         }
