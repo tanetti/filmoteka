@@ -4,6 +4,9 @@ import {
   MOBILE_MAX_MOVIES_RENDER,
   TABLET_MAX_MOVIES_RENDER,
   DESKTOP_MAX_MOVIES_RENDER,
+  MOBILE_MOVIES_WAIT_TO_LOAD,
+  TABLET_MOVIES_WAIT_TO_LOAD,
+  DESKTOP_MOVIES_WAIT_TO_LOAD,
 } from '../constants';
 
 export const calculateMoviesPartialLoadPoints = (
@@ -16,7 +19,7 @@ export const calculateMoviesPartialLoadPoints = (
   let needToLoad = null;
 
   if (window.innerWidth < TABLET_MIN_WIDTH) {
-    needToLoad = 1;
+    needToLoad = MOBILE_MOVIES_WAIT_TO_LOAD;
     start = isReRender ? 0 : observerIteration * MOBILE_MAX_MOVIES_RENDER;
     end =
       observerIteration * MOBILE_MAX_MOVIES_RENDER + MOBILE_MAX_MOVIES_RENDER >=
@@ -30,7 +33,7 @@ export const calculateMoviesPartialLoadPoints = (
     window.innerWidth < DESKTOP_MIN_WIDTH &&
     window.innerWidth >= TABLET_MIN_WIDTH
   ) {
-    needToLoad = 2;
+    needToLoad = TABLET_MOVIES_WAIT_TO_LOAD;
     start = isReRender ? 0 : observerIteration * TABLET_MAX_MOVIES_RENDER;
     end =
       observerIteration * TABLET_MAX_MOVIES_RENDER + TABLET_MAX_MOVIES_RENDER >=
@@ -41,7 +44,7 @@ export const calculateMoviesPartialLoadPoints = (
   }
 
   if (window.innerWidth >= DESKTOP_MIN_WIDTH) {
-    needToLoad = 3;
+    needToLoad = DESKTOP_MOVIES_WAIT_TO_LOAD;
     start = isReRender ? 0 : observerIteration * DESKTOP_MAX_MOVIES_RENDER;
     end =
       observerIteration * DESKTOP_MAX_MOVIES_RENDER +

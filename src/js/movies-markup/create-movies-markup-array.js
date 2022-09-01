@@ -1,15 +1,41 @@
 import { choseImageSize, createGenresDescription, truncateTitle } from '.';
 import * as noImage from '../../images/no-image.png';
+import {
+  TABLET_MIN_WIDTH,
+  DESKTOP_MIN_WIDTH,
+  MOBILE_MOVIES_WAIT_TO_LOAD,
+  TABLET_MOVIES_WAIT_TO_LOAD,
+  DESKTOP_MOVIES_WAIT_TO_LOAD,
+} from '../constants';
+
+const isImageShouldByLazy = idx => {
+  if (window.innerWidth >= DESKTOP_MIN_WIDTH) {
+    return idx + 1 > DESKTOP_MOVIES_WAIT_TO_LOAD ? true : false;
+  }
+
+  if (window.innerWidth >= TABLET_MIN_WIDTH) {
+    return idx + 1 > TABLET_MOVIES_WAIT_TO_LOAD ? true : false;
+  }
+
+  if (window.innerWidth < TABLET_MIN_WIDTH) {
+    return idx + 1 > MOBILE_MOVIES_WAIT_TO_LOAD ? true : false;
+  }
+};
 
 export const createMoviesMarkupArray = (moviesData, pageState, localeDB) =>
   moviesData.map(
-    ({ id, title, poster_path, release_date, vote_average, genre_ids }) =>
+    (
+      { id, title, poster_path, release_date, vote_average, genre_ids },
+      elementIdx
+    ) =>
       `<li class="movie">
         <button class="movie__container" type="button" aria-label="${title}" aria-expanded="false" aria-controls="movie-modal" data-movie="${id}" data-click="movie">
           <span class="movie__image-container">  
             <img class="movie__image is-loading" src="${
               poster_path ? choseImageSize(poster_path) : noImage
-            }" width="400" height="600" alt="${title}" loading="lazy" data-movie_image />
+            }" width="400" height="600" alt="${title}" ${
+        isImageShouldByLazy(elementIdx) ? 'loading="lazy"' : ''
+      } data-movie_image />
             <span class="movie__loader"><span></span><span></span><span></span><span></span></span>
           </span>
           <span class="movie__data">

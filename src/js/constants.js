@@ -14,6 +14,10 @@ export const MOBILE_MAX_MOVIES_RENDER = 4;
 export const TABLET_MAX_MOVIES_RENDER = 6;
 export const DESKTOP_MAX_MOVIES_RENDER = 9;
 
+export const MOBILE_MOVIES_WAIT_TO_LOAD = 1;
+export const TABLET_MOVIES_WAIT_TO_LOAD = 2;
+export const DESKTOP_MOVIES_WAIT_TO_LOAD = 3;
+
 export const MOBILE_MAX_TITLE_LENGTH = 36;
 export const TABLET_MAX_TITLE_LENGTH = 48;
 export const DESKTOP_MAX_TITLE_LENGTH = 30;
