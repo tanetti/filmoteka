@@ -54,18 +54,23 @@
 
   color: $main-dark-text-color;
 
-  background-color: $main-light-text-color;
+  background-color: #00000080;
 
   border-width: 0;
   border-radius: 5px;
 
   cursor: pointer;
 
-  transition: color $transition-timing $transition-function;
+  transition: color $transition-timing $transition-function,
+    transform $transition-timing $transition-function;
 
   &:hover,
   &:focus {
     color: $main-accent-color;
+  }
+
+  .trailer-modal:hover & {
+    transform: translateY(150%);
   }
 }
 
