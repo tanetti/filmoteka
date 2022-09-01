@@ -157,7 +157,7 @@ export class State {
   }
 
   toWached(movieID, movieDataEN, movieDataUA) {
-    this.localChanges = true;
+    if (this._currentPage === 'library') this.localChanges = true;
 
     if (this.isInWatched(movieID)) {
       this.#removeFromWatched(movieID);
@@ -200,7 +200,7 @@ export class State {
   }
 
   toQueue(movieID, movieDataEN, movieDataUA) {
-    this.localChanges = true;
+    if (this._currentPage === 'library') this.localChanges = true;
 
     if (this.isInQueue(movieID)) {
       this.#removeFromQueue(movieID);

@@ -382,16 +382,17 @@ export class Fetcher {
     if (this._lastQueryType === 'searched') {
       this._pageState.currentMoviePage = 1;
       this._pageState.currentQuery = null;
-      this._observerIteration = 0;
-      this._lastQueryData = null;
     }
+
+    this._observerIteration = 0;
+    this._lastQueryData = null;
 
     if (page) this._pageState.currentMoviePage = page;
 
     const url = '/trending/movie/week';
     const urlParams = {
       api_key: API_KEY,
-      page: page ? page : this._pageState.currentMoviePage,
+      page: this._pageState.currentMoviePage,
       language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
     };
 
@@ -422,16 +423,17 @@ export class Fetcher {
       (this._lastQuery !== this._query && this._lastQuery !== null)
     ) {
       this._pageState.currentMoviePage = 1;
-      this._observerIteration = 0;
-      this._lastQueryData = null;
     }
+
+    this._observerIteration = 0;
+    this._lastQueryData = null;
 
     if (page) this._pageState.currentMoviePage = page;
 
     const url = '/search/movie';
     const urlParams = {
       api_key: API_KEY,
-      page: page ? page : this._pageState.currentMoviePage,
+      page: this._pageState.currentMoviePage,
       language: this._pageState.locale === 'en' ? 'en-US' : 'uk-UA',
       query: this._query,
     };
@@ -480,5 +482,7 @@ export class Fetcher {
       this.#identifyCurrentPage(),
       fetchData.total_pages
     );
+
+    this._lastQueryType = 'library';
   }
 }

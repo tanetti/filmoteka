@@ -2,7 +2,7 @@
   position: fixed;
   top: 50%;
   left: calc((100% + (100vw - 100%)) / 2);
-  z-index: 300;
+  z-index: 40;
 
   width: calc(100% - 40px);
   max-width: 440px;
@@ -42,7 +42,7 @@
   position: absolute;
   top: 5px;
   right: 5px;
-  z-index: 500;
+  z-index: 50;
 
   display: flex;
   align-items: center;
