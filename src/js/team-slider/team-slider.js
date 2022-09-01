@@ -17,7 +17,7 @@ export function initTeamModalSlider() {
 
   sliderNavigation.slideNodes().forEach((navNode, index) => {
     const onClick = onNavigationClick(sliderView, sliderNavigation, index);
-    navNode.addEventListener('click', onClick, false);
+    navNode.addEventListener('click', onClick);
   });
 
   const syncSliderNavigation = followSliderView(sliderView, sliderNavigation);
