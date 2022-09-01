@@ -319,6 +319,16 @@
   padding-left: 20px;
 
   cursor: pointer;
+
+  border-radius: 5px;
+
+  outline-width: 0;
+  outline-style: solid;
+  outline-offset: 3px;
+
+  &:focus-within {
+    outline-width: 1px;
+  }
 }
 
 .header__mode-nest {
