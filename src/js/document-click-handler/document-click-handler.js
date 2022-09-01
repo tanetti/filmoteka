@@ -6,6 +6,7 @@ import { onMovieClick, onTrailerClick } from '../modal';
 import { onLibraryClick } from '../header-actions';
 import { onPaginationClick } from '../pagination-actions';
 import { onModalButtonClick } from '../modal-actions';
+import { teamSlider } from '../team-slider';
 import { openModal } from '../modal';
 
 export const documentClickHandler = event => {
@@ -53,7 +54,7 @@ export const documentClickHandler = event => {
     }
 
     case 'team': {
-      openModal(target);
+      openModal(target, teamSlider);
       break;
     }
 

@@ -7,14 +7,11 @@ import { onSearchMoviesInputChange } from './search';
 import { onWindowScroll } from './scroll';
 import { documentClickHandler } from './document-click-handler';
 import { onWindowResize } from './resize';
-import { initTeamModalSlider } from './team-slider';
 import {
   SEARCH_DEBOUNCE_DELAY,
   SCROLL_THROTTLE_DELAY,
   RESIZE_THROTTLE_DELAY,
 } from './constants';
-
-initTeamModalSlider();
 
 loadContent();
 

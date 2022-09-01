@@ -1,4 +1,4 @@
-export const onNavigationClick =
+export const onSliderNavigationClick =
   (sliderView, sliderNavigation, index) => () => {
     if (!sliderNavigation.clickAllowed()) return;
 

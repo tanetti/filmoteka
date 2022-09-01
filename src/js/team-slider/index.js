@@ -1,2 +1,2 @@
 export * from './team-slider';
-export * from './navigation-actions';
+export * from './slider-navigation-actions';

@@ -2,7 +2,7 @@ import { rootRefs } from '../root-refs';
 import { pageState } from '../state';
 import { loadContent } from '../on-load';
 
-export const openModal = target => {
+export const openModal = (target, teamSlider) => {
   const backdrop = rootRefs.modalBackdrop;
   let modal = null;
 
@@ -11,6 +11,8 @@ export const openModal = target => {
       loadContent();
       pageState.localChanges = false;
     }
+
+    if (teamSlider) teamSlider.plugins().autoplay.stop();
 
     backdrop.classList.remove('is-shown');
     modal.classList.remove('is-shown');
@@ -49,4 +51,6 @@ export const openModal = target => {
     .addEventListener('click', closeModal, { once: true });
 
   window.addEventListener('keydown', onEscPress);
+
+  if (teamSlider) teamSlider.plugins().autoplay.play();
 };
