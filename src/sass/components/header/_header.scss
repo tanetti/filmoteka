@@ -11,6 +11,10 @@
   background-size: 160px, 160px;
   background-repeat: no-repeat;
 
+  body.dark-mode & {
+    border-bottom: 1px solid $backdrop-dark-bg-color;
+  }
+
   background-image: url('/src/images/header/main/mobile/main-mobile-left@1x.jpg'),
     url('/src/images/header/main/mobile/main-mobile-right@1x.jpg');
   background-image: url('/src/images/header/main/mobile/main-mobile-left@1x.webp'),
