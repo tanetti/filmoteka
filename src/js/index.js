@@ -26,7 +26,7 @@ window
 
 window.addEventListener(
   'scroll',
-  throttle(onWindowScroll, SCROLL_THROTTLE_DELAY)
+  throttle(onWindowScroll, SCROLL_THROTTLE_DELAY, { passive: true })
 );
 
 window.addEventListener(
