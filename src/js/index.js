@@ -17,6 +17,11 @@ loadContent();
 
 document.body.addEventListener('click', documentClickHandler);
 
+rootRefs.searchField.addEventListener(
+  'input',
+  debounce(onSearchMoviesInputChange, SEARCH_DEBOUNCE_DELAY)
+);
+
 window
   .matchMedia('(prefers-color-scheme: dark)')
   .addEventListener('change', onSystemModeChange);
@@ -29,9 +34,4 @@ window.addEventListener(
 window.addEventListener(
   'resize',
   throttle(onWindowResize, RESIZE_THROTTLE_DELAY)
-);
-
-rootRefs.searchField.addEventListener(
-  'input',
-  debounce(onSearchMoviesInputChange, SEARCH_DEBOUNCE_DELAY)
 );
