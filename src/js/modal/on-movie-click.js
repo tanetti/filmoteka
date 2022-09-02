@@ -1,6 +1,7 @@
 import { rootRefs } from '../root-refs';
 import { moviesFetcher } from '../api';
 import { openModal, createMovieModalMarkup } from './';
+import * as noImage from '../../images/no-image.png';
 
 export const onMovieClick = target => {
   for (const movie of moviesFetcher.queryData) {
@@ -11,6 +12,11 @@ export const onMovieClick = target => {
 
       modal.querySelector('[data-container]').innerHTML =
         createMovieModalMarkup(movie);
+
+      const image = modal.querySelector('.movie-modal__image');
+      image.addEventListener('error', () => (image.src = noImage), {
+        once: true,
+      });
     }
 
     break;
