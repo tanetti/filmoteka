@@ -52,7 +52,7 @@ export const paginationRendering = (currentPage, totalPages) => {
       currentPage === 1 ? 'disabled="true"' : ''
     } data-actions="1" data-click="pagination">1</button>`;
 
-    for (let i = 2; i <= Math.min(6, totalPages); i += 1) {
+    for (let i = 2; i < Math.min(7, totalPages); i += 1) {
       if (currentPage <= 4 || totalPages < 7) {
         paginationMarkup += `<button class="pagination__button" type="button" ${
           currentPage === i ? 'disabled="true"' : ''
