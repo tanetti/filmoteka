@@ -12,12 +12,18 @@
   background-size: 160px, 160px;
   background-repeat: no-repeat;
 
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+
   body.dark-mode & {
-    border-bottom: 1px solid $backdrop-dark-bg-color;
+    border-color: $backdrop-dark-bg-color;
   }
 
   body.is-loaded & {
-    transition: transform $transition-timing $transition-function;
+    transition: transform $transition-timing $transition-function,
+      border-color $transition-timing $transition-function;
   }
 
   &.is-fixed {
@@ -115,7 +121,8 @@
 
   body.is-loaded & {
     transition: opacity $transition-timing $transition-function,
-      visibility $transition-timing $transition-function;
+      visibility $transition-timing $transition-function,
+      border-color $transition-timing $transition-function;
   }
 
   .header.in-library & {
@@ -129,8 +136,13 @@
   background-size: 100%, cover;
   background-repeat: no-repeat;
 
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+
   body.dark-mode & {
-    border-bottom: 1px solid $backdrop-light-bg-color;
+    border-color: $backdrop-light-bg-color;
   }
 
   background-image: linear-gradient(
