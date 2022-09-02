@@ -3,6 +3,14 @@ import { moviesFetcher } from '../api';
 import { openModal, createMovieModalMarkup } from './';
 import * as noImage from '../../images/no-image.png';
 
+const onImageLoaded = ({ target }) => {
+  target.removeEventListener('error', onImageErrorLoading);
+};
+
+const onImageErrorLoading = ({ target }) => {
+  target.src = noImage;
+};
+
 export const onMovieClick = target => {
   for (const movie of moviesFetcher.queryData) {
     if (movie.id !== Number(target.dataset.movie)) continue;
@@ -14,7 +22,12 @@ export const onMovieClick = target => {
         createMovieModalMarkup(movie);
 
       const image = modal.querySelector('.movie-modal__image');
-      image.addEventListener('error', () => (image.src = noImage), {
+
+      image.addEventListener('load', onImageLoaded, {
+        once: true,
+      });
+
+      image.addEventListener('error', onImageErrorLoading, {
         once: true,
       });
     }

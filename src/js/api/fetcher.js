@@ -211,8 +211,10 @@ export class Fetcher {
     }, MAIN_TRANSITION_TIME);
   }
 
-  #onImageLoad(rest = false, dataLenght, { currentTarget }) {
-    currentTarget.classList.remove('is-loading');
+  #onImageLoad(rest = false, dataLenght, { target }) {
+    target.classList.remove('is-loading');
+
+    target.removeEventListener('error', this.#onImageError);
 
     if (rest) return;
 
@@ -244,6 +246,10 @@ export class Fetcher {
       )
         this.#showContent();
     }
+  }
+
+  #onImageError({ target }) {
+    target.src = this._noImage;
   }
 
   #renderMovies(moviesData, isReRender = false) {
@@ -283,16 +289,10 @@ export class Fetcher {
           once: true,
         }
       );
-      images[i]?.addEventListener(
-        'error',
-        event => {
-          event.currentTarget.src = this._noImage;
-          this.#onImageLoad(false, moviesMarkupArray.length, event);
-        },
-        {
-          once: true,
-        }
-      );
+
+      images[i]?.addEventListener('error', this.#onImageError.bind(this), {
+        once: true,
+      });
     }
 
     for (let i = needToLoad; i < images.length; i += 1) {
@@ -303,16 +303,10 @@ export class Fetcher {
           once: true,
         }
       );
-      images[i]?.addEventListener(
-        'error',
-        event => {
-          event.currentTarget.src = this._noImage;
-          this.#onImageLoad(true, moviesMarkupArray.length, event);
-        },
-        {
-          once: true,
-        }
-      );
+
+      images[i]?.addEventListener('error', this.#onImageError.bind(this), {
+        once: true,
+      });
     }
   }
 
