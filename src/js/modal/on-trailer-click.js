@@ -1,5 +1,4 @@
 import { moviesFetcher } from '../api';
-import { rootRefs } from '../root-refs';
 import { openModal } from './';
 import { createTrailerModalMarkup } from './';
 
@@ -45,7 +44,16 @@ export const onTrailerClick = async target => {
 
   frameContainer.innerHTML = createTrailerModalMarkup(mainVideo, playList);
 
-  const frame = frameContainer.querySelector('.trailer-modal__farame');
+  if (playList.length > 0) {
+    setTimeout(() => {
+      frameContainer.innerHTML = createTrailerModalMarkup(mainVideo, playList);
+      const frame = frameContainer.querySelector('.trailer-modal__farame');
 
-  frame.classList.remove('is-hidden');
+      frame.classList.remove('is-hidden');
+    }, 200);
+  } else {
+    const frame = frameContainer.querySelector('.trailer-modal__farame');
+
+    frame.classList.remove('is-hidden');
+  }
 };
