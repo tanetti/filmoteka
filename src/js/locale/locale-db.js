@@ -26,6 +26,7 @@ export const localeDB = {
       others: 'Others',
       noGenre: 'Genres not specified',
       trailer: 'Watch trailer',
+      next: 'Next page',
     },
 
     movieModal: {
@@ -79,6 +80,7 @@ export const localeDB = {
       others: 'Інші',
       noGenre: 'Жанри не вказані',
       trailer: 'Дивитися трейлер',
+      next: 'Наступна сторінка',
     },
 
     movieModal: {

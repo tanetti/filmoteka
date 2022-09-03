@@ -22,6 +22,7 @@ export class Fetcher {
     this._renderError = null;
     this._noImage = null;
     this._createMoviesMarkupArray = null;
+    this._nextPageDesktopMovie = null;
     this._calculateMoviesPartialLoadPoints = null;
 
     this._query = null;
@@ -51,6 +52,7 @@ export class Fetcher {
       pageState,
       localeDB,
       createMoviesMarkupArray,
+      nextPageDesktopMovie,
       paginationRendering,
       errorRendering,
       noImage,
@@ -60,6 +62,7 @@ export class Fetcher {
     this._pageState = pageState;
     this._localeDB = localeDB;
     this._createMoviesMarkupArray = createMoviesMarkupArray;
+    this._nextPageDesktopMovie = nextPageDesktopMovie;
     this._renderPagination = paginationRendering;
     this._renderError = errorRendering;
     this._noImage = noImage;
@@ -277,6 +280,16 @@ export class Fetcher {
 
     if (end < moviesMarkupArray.length - 1)
       this.#createInfiniteScrollObserver(moviesData);
+
+    if (
+      end >= moviesMarkupArray.length - 1 &&
+      window.innerWidth >= DESKTOP_MIN_WIDTH &&
+      this._lastQueryData.page < this._lastQueryData.total_pages
+    )
+      rootRefs.moviesContainer.insertAdjacentHTML(
+        'beforeend',
+        this._nextPageDesktopMovie(this._localeDB, this._pageState)
+      );
 
     const images =
       rootRefs.mainContainer.querySelectorAll('[data-movie_image]');

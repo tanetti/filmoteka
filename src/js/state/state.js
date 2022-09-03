@@ -269,7 +269,7 @@ export class State {
       (requestedPage - 1) * 20 + 20
     );
 
-    return { requestedPage, total_pages: totalPages, results };
+    return { page: requestedPage, total_pages: totalPages, results };
   }
 
   init({ localStorageKey }) {

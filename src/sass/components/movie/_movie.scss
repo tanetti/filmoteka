@@ -68,6 +68,8 @@
   width: 100%;
   height: calc($movie-mobile-width * 1.5);
 
+  color: $modal-caption-text-color;
+
   object-fit: cover;
 
   @media screen and (min-width: 768px) {
@@ -78,13 +80,22 @@
     height: calc($movie-desktop-width * 1.5);
   }
 
-  transition: transform $transition-timing $transition-function,
+  transition: color $transition-timing $transition-function,
+    transform $transition-timing $transition-function,
     opacity $transition-timing $transition-function,
     visibility $transition-timing $transition-function;
 
   .movie__container:hover &,
   .movie__container:focus & {
     transform: scale(1.1);
+
+    color: $main-accent-color;
+  }
+
+  &--next {
+    padding: 100px;
+
+    fill: currentColor;
   }
 
   &.is-loading {
