@@ -8,7 +8,7 @@ import {
   DESKTOP_MOVIES_WAIT_TO_LOAD,
 } from '../constants';
 
-const isImageShouldByLazy = idx => {
+const isImageShouldBeLazy = idx => {
   if (window.innerWidth >= DESKTOP_MIN_WIDTH) {
     return idx + 1 > DESKTOP_MOVIES_WAIT_TO_LOAD ? true : false;
   }
@@ -34,7 +34,7 @@ export const createMoviesMarkupArray = (moviesData, pageState, localeDB) =>
             <img class="movie__image is-loading" src="${
               poster_path ? choseImageSize(poster_path) : noImage
             }" width="500" height="750" alt="${title}" ${
-        isImageShouldByLazy(elementIdx) ? 'loading="lazy"' : ''
+        isImageShouldBeLazy(elementIdx) ? 'loading="lazy"' : ''
       } data-movie_image />
             <span class="movie__loader"><span></span><span></span><span></span><span></span></span>
           </span>
