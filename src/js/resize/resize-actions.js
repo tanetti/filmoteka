@@ -4,8 +4,8 @@ import { TABLET_MIN_WIDTH, DESKTOP_MIN_WIDTH } from '../constants';
 
 const getWindowCase = width => {
   if (width < TABLET_MIN_WIDTH) return 'mobile';
-  if (width > TABLET_MIN_WIDTH && width < DESKTOP_MIN_WIDTH) return 'tablet';
-  if (width > DESKTOP_MIN_WIDTH) return 'desktop';
+  if (width >= TABLET_MIN_WIDTH && width < DESKTOP_MIN_WIDTH) return 'tablet';
+  if (width >= DESKTOP_MIN_WIDTH) return 'desktop';
 };
 
 export const onWindowResize = () => {
